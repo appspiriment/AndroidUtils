@@ -9,7 +9,8 @@ targetSdk = "35"
 compileSdk = "35"
 javaVersion = "21"
 
-appspiriment = "0.0.3.dev-28"
+appspiriment = "0.0.3.dev-29"
+appspirimentUtils = "0.0.2"
 
 #Classpath Version
 agp = "8.4.2"
@@ -85,6 +86,10 @@ room-common = { group = "androidx.room", name = "room-common", version.ref = "ro
 #Lottie
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+#Utils
+appspiriment-utils-dev = { group = "io.github.appspiriment", name = "utils-dev", version.ref="appspirimentUtils" }
+appspiriment-utils-prod = { group = "io.github.appspiriment", name = "utils-prod", version.ref="appspirimentUtils" }
 
 #Test Dependencies
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

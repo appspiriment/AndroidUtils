@@ -4,7 +4,7 @@
 
 [versions]
 #App Versions
-appspirimentUtils = "0.0.2"
+appspirimentUtils = "0.0.3"
 composeUtils = "0.0.1"
 vanniktechPublish = "0.30.0"
 agp = "8.4.2"
@@ -18,10 +18,6 @@ material = "1.12.0"
 
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 #Appspiriment Libs
@@ -30,5 +26,3 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 [plugins]
 vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechPublish" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

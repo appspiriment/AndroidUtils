@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-//    id("io.github.appspiriment.project") version "0.0.3.dev-28"
+//    id("io.github.appspiriment.project") version "0.0.3.dev-29"
     alias(appspirimentlibs.plugins.google.android.application) apply false
     alias(appspirimentlibs.plugins.google.android.library) apply false
     alias(appspirimentlibs.plugins.kotlin.android) apply false

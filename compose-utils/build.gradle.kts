@@ -1,6 +1,6 @@
 
 plugins {
-    alias(appspirimentlibs.plugins.google.android.library)
+    alias(appspirimentlibs.plugins.appspiriment.library)
     alias(libs.plugins.vanniktech.publish)
 }
 
@@ -17,7 +17,7 @@ mavenPublishing {
     pom {
         name = "Appspiriment Compose Utils"
         description = "A library with some simple compose views which is required for Appspiriment Developers, and some composable util functions."
-        url = "https://github.com/appspiriment/AndroidConventionPlugins/tree/main/"
+        url = "https://github.com/appspiriment/AndroidUtils"
     }
     signAllPublications()
 }
