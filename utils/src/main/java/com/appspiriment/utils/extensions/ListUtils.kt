@@ -41,3 +41,8 @@ fun List<String>.filterNotBlank(): List<String> {
 fun List<String>.filterNotBlankAnd(predicate: (String) -> Boolean): List<String> {
     return this.filter { it.isNotBlank() && predicate(it)}
 }
+
+fun <T> List<T>.plusIf(element: List<T>?, predicate: (List<T>) -> Boolean): List<T> {
+    return if (element.isNullOrEmpty() || predicate(this).not()) return this else
+        this.plus(element)
+}

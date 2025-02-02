@@ -1,26 +1,44 @@
-import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
-import com.vanniktech.maven.publish.SonatypeHost
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
-    alias(appspirimentlibs.plugins.appspiriment.library)
-    alias(libs.plugins.vanniktech.publish)
+    alias(appspirimentlibs.plugins.google.android.library)
+    alias(appspirimentlibs.plugins.kotlin.android)
+//    alias(libs.plugins.vanniktech.publish)
+    `maven-publish`
+    signing
 }
-
-appspiriment {
-    namespace = "com.appspiriment.utils"
-}
-
-
-//Running the ':utils:publishDevRelease' & ':utils:publishProdRelease' task will turn these
-// to Dev Flavour and Prod flavour respectively. After running those tasks, close the build.gradle.kts
-// and the sync. Verify the flavor and variant are correct ones. Then run publish Task (Local / Maven)
-// This is since vanniktech publish library currently don't support publishing different flavour with
-// differnt coordinates like artifact id.
-var flavor = "prod"
-var variant = "prodRelease"
-
 
 android {
+    namespace = "com.appspiriment.utils"
+    compileSdk = appspirimentlibs.versions.compileSdk.get().toInt()
+    val javaVersion = appspirimentlibs.versions.javaVersion.get().toInt().let{
+        JavaVersion.toVersion(it)
+    }
+
+    defaultConfig{
+        appspirimentlibs.versions.minSdk.get().toInt().let {
+            aarMetadata {
+                minCompileSdk = it
+            }
+            minSdk = it
+        }
+    }
+    packaging {
+        resources {
+            resources.excludes.add("META-INF/*")
+        }
+    }
+
+    kotlinOptions{
+            jvmTarget = javaVersion.toString()
+    }
+    compileOptions {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+        isCoreLibraryDesugaringEnabled = false
+    }
+
     productFlavors {
         setFlavorDimensions(listOf("mode"))
         create("dev") {
@@ -40,60 +58,44 @@ android {
             java.srcDirs("src/prod/java")
         }
     }
-}
 
-
-mavenPublishing {
-    coordinates(
-        artifactId = "utils-$flavor",
-        version = libs.versions.appspirimentUtils.get()
-    )
-    configure(
-        AndroidSingleVariantLibrary(
-            sourcesJar = true,
-            publishJavadocJar = true,
-            variant = variant,
-        )
-    )
-
-    pom {
-        name = "Appspiriment Utils"
-        description =
-            "A library with common util functions and extension methods to help kotlin developers easily use them."
-        url =
-            "https://github.com/appspiriment/AndroidUtils"
+    dependencies {
+        implementation(appspirimentlibs.bundles.android.base)
+        testImplementation(appspirimentlibs.bundles.android.test)
     }
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
-    signAllPublications()
 }
 
-tasks.register("publishDevRelease"){
-    buildFile.let{file->
-        val lines = file.readLines().toMutableList()
-        val idIndex = lines.indexOfFirst { it.contains("var flavor =" ) }
-        lines.removeAt(idIndex)
-        lines.add(idIndex, "var flavor = \"dev\"")
+publishing {
+    publications {
+        afterEvaluate {
+            android.libraryVariants.filter { it.buildType.name == "release" }.forEach { variant ->
+                // Only consider release
+                publishing.publications.create<MavenPublication>(variant.name ) {
+                    from(components.findByName(variant.name))
+                    groupId = "io.github.appspiriment"
+                    artifactId = "utils-${variant.flavorName}"
+                    version = project.ext["libVersion"].toString()
+                }
+            }
+        }
+    }
 
-        val variantIndex = lines.indexOfFirst { it.contains("var variant =" ) }
-        lines.removeAt(variantIndex)
-        lines.add(variantIndex, "var variant = \"devRelease\"")
+    // Repository configuration
+    repositories {
+        maven {
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
 
-        file.writeText(lines.joinToString("\n"))
+            credentials {
+                username = project.findProperty("ossrhUsername") as String
+                password = (project.findProperty("ossrhPassword") as String).also{println(it)}
+            }
+        }
     }
 }
 
 
-tasks.register("publishProdRelease"){
-    buildFile.let{file->
-        val lines = file.readLines().toMutableList()
-        val idIndex = lines.indexOfFirst { it.contains("var flavor =" ) }
-        lines.removeAt(idIndex)
-        lines.add(idIndex, "var flavor = \"prod\"")
-
-        val variantIndex = lines.indexOfFirst { it.contains("var variant =" ) }
-        lines.removeAt(variantIndex)
-        lines.add(variantIndex, "var variant = \"prodRelease\"")
-
-        file.writeText(lines.joinToString("\n"))
+signing {
+    android.libraryVariants.filter { it.buildType.name == "release" }.forEach { variant ->
+        sign(publishing.publications[variant.name])
     }
 }

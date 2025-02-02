@@ -1,17 +1,15 @@
-
 plugins {
-    alias(appspirimentlibs.plugins.appspiriment.library)
+    alias(appspirimentlibs.plugins.appspiriment.compose.library)
     alias(libs.plugins.vanniktech.publish)
 }
-
-android{
+android {
     namespace = "com.appspiriment.composeutils"
 }
 
 mavenPublishing {
     coordinates(
         artifactId = "compose-utils",
-        version = libs.versions.composeUtils.get()
+        version = project.ext["libVersion"].toString()
     )
 
     pom {
