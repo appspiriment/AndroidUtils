@@ -5,6 +5,9 @@
     <color name="primary">#C20F2F</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="scrim">#020202</color>
+    <color name="iconTint">#C20F2F</color>
+    <color name="disabledIconTint">#5D1D3B</color>
+    <color name="drawerItem">#5F6368</color>
     <color name="navigationBar">#282828</color>
     <color name="secondary">#03DAC6</color>
     <color name="onSecondary">@color/onMainSurface</color>

@@ -1,6 +1,5 @@
 package com.appspiriment.utils.extensions
 
-import com.appspiriment.utils.printLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -150,7 +149,6 @@ private suspend fun <R> Flow<R>.collect(
     loadingListener.invoke(true)
     try {
         catch {
-            it.printLog()
             errorListener.invoke(it)
             loadingListener.invoke(false)
         }.collect {
@@ -160,7 +158,6 @@ private suspend fun <R> Flow<R>.collect(
         }
 
     } catch (e: Exception) {
-        e.printLog()
         loadingListener.invoke(false)
         errorListener.invoke(e)
     }

@@ -1,6 +1,5 @@
 pluginManagement {
     repositories {
-
         gradlePluginPortal()
         google {
             content {
@@ -31,3 +30,5 @@ dependencyResolutionManagement {
 rootProject.name = "AppsUtils"
 include(":utils")
 include(":compose-utils")
+include(":update-utils")
+include(":logutils")

@@ -11,6 +11,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/compose-utils" />
+            <option value="$PROJECT_DIR$/logutils" />
+            <option value="$PROJECT_DIR$/update-utils" />
             <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>

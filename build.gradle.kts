@@ -1,4 +1,4 @@
-//    Current Appspiriment Plugin version: "0.0.3.dev-88"
+//    Current Appspiriment Plugin version: "0.0.3.dev-135"
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.util.Properties

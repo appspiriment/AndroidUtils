@@ -51,7 +51,6 @@ val TextStyle.roboto: TextStyle
     )
 
 
-
 data class BaseTextStyles(
     val textNormal: TextStyle = TextStyle.Default,
     val textTiny: TextStyle = TextStyle.Default,
@@ -62,6 +61,8 @@ data class BaseTextStyles(
     val textSmallBold: TextStyle = TextStyle.Default,
     val textMedium: TextStyle = TextStyle.Default,
     val textMediumSemiBold: TextStyle = TextStyle.Default,
+    val textMediumLarge: TextStyle = TextStyle.Default,
+    val textMediumLargeSemiBold: TextStyle = TextStyle.Default,
     val textLarge: TextStyle = TextStyle.Default,
     val textLargeSemiBold: TextStyle = TextStyle.Default,
     val textLargeBold: TextStyle = TextStyle.Default,
@@ -104,6 +105,11 @@ fun createBaseTypography(): BaseTextStyles {
         textMedium = textNormalStyle.copy(fontSize = baseSize.fontSizeMedium),
         textMediumSemiBold = textNormalStyle.copy(
             fontSize = baseSize.fontSizeMedium,
+            fontWeight = FontWeight.SemiBold
+        ),
+        textMediumLarge = textNormalStyle.copy(fontSize = baseSize.fontSizeMediumLarge),
+        textMediumLargeSemiBold = textNormalStyle.copy(
+            fontSize = baseSize.fontSizeMediumLarge,
             fontWeight = FontWeight.SemiBold
         ),
         textLarge = textNormalStyle.copy(fontSize = baseSize.fontSizeLarge),

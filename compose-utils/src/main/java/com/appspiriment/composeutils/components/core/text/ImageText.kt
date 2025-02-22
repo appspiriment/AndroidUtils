@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
+import com.appspiriment.composeutils.components.core.HorizontalSpacer
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.components.core.text.types.UiText
 import com.appspiriment.composeutils.components.core.text.types.uiTextResource
@@ -75,7 +76,7 @@ fun ImageText(
             )
 
             iconPadding?.let { iconPadding ->
-                Spacer(Modifier.width(iconPadding))
+                HorizontalSpacer(iconPadding)
             }
         }
         MalayalamText(
@@ -88,8 +89,8 @@ fun ImageText(
 
         trailingImage?.let {
 
-            iconPadding?.let {
-                Spacer(Modifier.width(it))
+            iconPadding?.let {padding ->
+                HorizontalSpacer(padding)
             }
             AppsImage(
                 image = it,
@@ -113,13 +114,13 @@ fun PreviewImageText() {
 
         ImageText(
             startingImage = uiVectorResouce(R.drawable.ic_action_config),
-            text = "Arun Shankar".toUiText()
+            text = "Appspiriment Labs".toUiText()
         )
 
        val annotatedString = buildAnnotatedString {
-            append("Arun ")
+            append("Appspiriment ")
             withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                append("Shankar ")
+                append("Labs ")
             }
             withStyle(style = SpanStyle(color = Color.Red)) {
                 append("Sankara ")

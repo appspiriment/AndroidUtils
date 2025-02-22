@@ -4,8 +4,10 @@
 
 [versions]
 #App Versions
-appspirimentUtils = "0.0.3"
-composeUtils = "0.0.1"
+appspirimentUtils = "0.0.1"
+logUtils = "0.0.1"
+composeUtils = "0.0.2"
+updateUtils = "0.0.1"
 vanniktechPublish = "0.30.0"
 agp = "8.4.2"
 kotlin = "2.0.0"
@@ -17,6 +19,18 @@ appcompat = "1.7.0"
 material = "1.12.0"
 coreKtxVersion = "1.15.0"
 kotlinVersion = "2.0.0"
+agpVersion = "8.4.2"
+kotlin2 = "2.0.0"
+androidxCoreKtx = "1.15.0"
+junitJunit = "4.13.2"
+androidxJunit = "1.2.1"
+espressoCoreVersion = "3.6.1"
+agp2 = "8.4.2"
+kotlin3 = "2.0.0"
+androidxCoreKtxVersion = "1.15.0"
+junitJunitVersion = "4.13.2"
+androidxJunitVersion = "1.2.1"
+androidxEspressoCore = "3.6.1"
 
 
 [libraries]

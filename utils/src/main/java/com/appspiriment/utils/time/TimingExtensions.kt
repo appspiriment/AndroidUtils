@@ -1,7 +1,6 @@
 package com.appspiriment.utils.time
 
 import android.text.format.DateFormat
-import com.appspiriment.utils.printLog
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatterBuilder
@@ -83,7 +82,6 @@ fun (Long?).millisToHmaTime(): String?{
         try {
             DateFormat.format("hh:mm a", it).toString()
         } catch (e: Exception) {
-            e.printLog()
             throw RuntimeException("Invalid Long in millisToHmaTimeFormat - $this - ${e.message}")
         }
     }

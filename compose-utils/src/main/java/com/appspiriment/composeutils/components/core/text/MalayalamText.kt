@@ -60,12 +60,12 @@ fun PreviewMalayalamText() {
     ) {
         MalayalamText(text = uiTextResource(id = R.string.sankara_smrithi))
 
-        MalayalamText(text = "Arun Shankar അരുൺ ശങ്കർ".toUiText())
+        MalayalamText(text = "Appspiriment Labs ആപ്സ്പിരിമെന്റ് ലാബ്സ്".toUiText())
 
         val annotatedString = buildAnnotatedString {
-            append("Arun അരുൺ ")
+            append("Appspiriment ആപ്സ്പിരിമെന്റ് ")
             withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                append("Shankar ശങ്കർ\n")
+                append("Labs ലാബ്സ്\n")
             }
             withStyle(style = SpanStyle(color = Color.Red)) {
                 append("Sankara ശങ്കര ")

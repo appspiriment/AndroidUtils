@@ -1,5 +1,4 @@
 package com.appspiriment.composeutils.components.animation
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -13,22 +12,20 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-
-
-inline fun <reified T : Any>  NavGraphBuilder.animatedComposable(
+inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
     noinline content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable<T> { backStackEntry ->
         var visible by remember { mutableStateOf(false) }
 
-        LaunchedEffect(backStackEntry) {
+        LaunchedEffect(key1 = backStackEntry) {
             visible = true
         }
 
         AnimatedVisibility(
             visible = visible,
-            enter = slideInHorizontally(initialOffsetX = { -600 }), // Slide in from left
-            exit = slideOutHorizontally(targetOffsetX = { 600 }) // Slide out to right
+            enter = slideInHorizontally(initialOffsetX = { -600 }),
+            exit = slideOutHorizontally(targetOffsetX = { 600 })
         ) {
             content(backStackEntry)
         }

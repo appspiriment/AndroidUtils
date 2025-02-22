@@ -1,6 +1,5 @@
 package com.appspiriment.utils.extensions
 
-import com.appspiriment.utils.printLog
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -102,16 +101,15 @@ fun String.toDate(inputFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"): Date? {
  * @return The milliseconds since the epoch, or null if the input string cannot be parsed as a date.
  */
 fun String.toMillis(inputFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"): Long? {
-    try {
-        if (!isEmpty()) {
+    return try {
+        if (isNotEmpty()) {
             return LocalDateTime.parse(this, DateTimeFormatter.ofPattern(inputFormat, Locale.ENGLISH))?.let{
                 it.toEpochSecond(ZoneOffset.UTC) * 1000
             }
-        }
+        } else null
     } catch (e: Exception) {
-        e.printLog()
+        null
     }
-    return null
 }
 
 
@@ -162,10 +160,10 @@ fun String.toLocalDate(dateFormat: String = "yyyy MMM dd hh:mm a"): LocalDate{
  *
  * <p>The input date string should be in the format "dd/MM/yyyy" by default.
  *
- * @param dateFormat The expected date format. Defaults to "dd/MM/yyyy".
+ * The expected date format is "dd/MM/yyyy".
  * @return True if the input string is a valid date, false otherwise.
  */
-fun String.isValidDateInput(dateFormat: String = "dd/MM/yyyy"): Boolean {
+fun String.isValidDateInput(): Boolean {
     val dateArr = this.split("/")
     if (dateArr.size == 3) {
         val day = dateArr[0].toInt()
