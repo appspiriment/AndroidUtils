@@ -1,9 +1,9 @@
-//    Current Appspiriment Plugin version: "0.0.3.dev-135"
+//    Current Appspiriment Plugin version: "0.0.5"
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.util.Properties
 plugins {
-//    id("io.github.appspiriment.project") version "0.0.3.+"
+//    id("io.github.appspiriment.project") version "0.0.5.+"
     alias(appspirimentlibs.plugins.google.android.application) apply false
     alias(appspirimentlibs.plugins.google.android.library) apply false
     alias(appspirimentlibs.plugins.kotlin.android) apply false

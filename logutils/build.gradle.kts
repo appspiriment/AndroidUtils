@@ -40,7 +40,8 @@ android {
     }
 }
 
-val flavour = "dev"
+//val flavour = "dev"
+val flavour = "prod"
 mavenPublishing {
     coordinates(
         artifactId = "logutils-$flavour",
