@@ -187,9 +187,9 @@ private suspend fun <R> Flow<R>.collect(
  */
 fun <R> Flow<R>.collectFlows(
     scope: CoroutineScope,
-    onNext: ((R) -> Unit),
-    onError: ((Throwable?) -> Unit),
-    onLoading: ((Boolean) -> Unit),
+    onNext: ((R) -> Unit) = {},
+    onError: ((Throwable?) -> Unit) = {},
+    onLoading: ((Boolean) -> Unit) = {},
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     scope.launch(dispatcher) {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
@@ -17,7 +18,9 @@ fun PrefixedText(
     text: UiText,
     modifier: Modifier = Modifier,
     prefix: UiText? = null,
-    textStyle: TextStyle = Appspiriment.typography.textNormal,
+    color: Color = Appspiriment.colors.onMainSurface,
+    prefixColor: Color = Appspiriment.colors.onMainSurface,
+    textStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixPadding: Dp = Appspiriment.sizes.paddingSmall,
     prefixModifier: Modifier = Modifier,
@@ -29,6 +32,7 @@ fun PrefixedText(
             (prefixStyle).run {
                 MalayalamText(
                     text = it,
+                    color = prefixColor,
                     style = prefixStyle,
                     modifier = prefixModifier.padding(end = prefixPadding)
                 )
@@ -37,6 +41,7 @@ fun PrefixedText(
         textStyle.run {
             MalayalamText(
                 text = text,
+                color = color,
                 style = textStyle,
                 modifier = textModifier
             )

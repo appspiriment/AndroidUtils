@@ -32,7 +32,7 @@ import com.appspiriment.composeutils.theme.Appspiriment
 fun TitledCardView(
     modifier: Modifier = Modifier,
     title: UiText? = null,
-    titleStyle: TitledCardViewTitleStyle,
+    titleStyle: TitledCardViewTitleStyle = TitleCardViewDefaults.titleAtStart(),
     background: Color = Appspiriment.colors.primaryCardContainer,
     shape: Shape = RoundedCornerShape(8.dp),
     cardElevation: Dp = 0.dp,

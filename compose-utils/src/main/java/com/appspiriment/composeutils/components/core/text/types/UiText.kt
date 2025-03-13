@@ -23,7 +23,11 @@ sealed class UiText {
      *
      * @property value The raw string value.
      */
-    data class DynamicString(val value: String) : UiText()
+    data class DynamicString(val value: String) : UiText(){
+        companion object{
+            val Empty = DynamicString("")
+        }
+    }
 
     /**
      * Represents a string resource ID.
@@ -54,7 +58,11 @@ sealed class UiText {
      *
      * @property value The AnnotatedString value.
      */
-    data class DynamicAnnotatedString(val value: AnnotatedString) : UiText()
+    data class DynamicAnnotatedString(val value: AnnotatedString) : UiText(){
+        companion object{
+            val Empty = DynamicAnnotatedString(AnnotatedString(""))
+        }
+    }
 
     /**
      * Resolves the UiText to a String.
@@ -97,6 +105,8 @@ fun String.toUiText() = UiText.DynamicString(this)
 fun Int.toUiText() = UiText.DynamicString("$this")
 fun List<String>.toUiText() = map{ UiText.DynamicString(it) }
 fun AnnotatedString.toUiText() = UiText.DynamicAnnotatedString(this)
+fun CharSequence.toUiText() = UiText.DynamicString(this.toString())
+
 
 @Composable
 fun uiTextResource(id: Int, vararg formatArgs: Any): UiText {

@@ -1,7 +1,5 @@
 package com.appspiriment.composeutils.components.containers
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,12 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
+import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 
 
@@ -31,12 +29,11 @@ import com.appspiriment.composeutils.theme.Appspiriment
 fun TopBar(
     navMode: NavigationMode = NavigationMode.EMPTY,
     navIconClick: (() -> Unit)? = null,
-    @DrawableRes brandLogoId: Int?,
-    title: UiText?,
+    appBarTitle: AppBarTitle?,
     background: Color = Appspiriment.colors.topAppBar,
     onTopBarColor: Color = Appspiriment.colors.onTopAppBar,
     actions: List<AppsTopBarButton>? = null,
-    actionsContent: @Composable RowScope.(Color) -> Unit = {}
+    actionsContent: @Composable RowScope.(Color) -> Unit = {},
 ) {
 
     TopAppBar(
@@ -46,13 +43,18 @@ fun TopBar(
                     contentDescription = "Back",
                     tint = onTopBarColor,
                     modifier = Modifier
-                        .padding(start = 16.dp)
+                        .padding(end = 16.dp)
                         .clickable { navIconClick?.invoke() })
             }
         },
-        title = { AppBarTitleImage(
-            brandLogoId, title, onTopBarColor
-        ) },
+        title = {
+            appBarTitle?.let {
+                AppBarTitleImage(
+                    appBarTitle = it,
+                    tintColor = onTopBarColor
+                )
+            }
+        },
         colors = TopAppBarColors(
             containerColor = background,
             scrolledContainerColor = background,
@@ -66,7 +68,7 @@ fun TopBar(
                     icon = btn.icon.setTint(tint = onTopBarColor),
                     modifier = btn.modifier
                         .padding(end = 4.dp)
-                        .size(Appspiriment.sizes.iconLarge)
+                        .size(Appspiriment.sizes.actionButtonSize)
                         .clickable { btn.onClick.invoke() }
                         .padding(12.dp),
                 )
@@ -79,26 +81,26 @@ fun TopBar(
 
 @Composable
 fun AppBarTitleImage(
-    @DrawableRes logoResId: Int?,
-    title: UiText?,
+    appBarTitle: AppBarTitle,
     tintColor: Color = Appspiriment.colors.onTopAppBar,
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(start = 16.dp, top = 6.dp, bottom = 6.dp)
+        modifier = appBarTitle.modifier
     ) {
-        logoResId?.let {
-            Image(painter = painterResource(id = it),
-                contentDescription = "",
-                modifier = Modifier.wrapContentWidth()
-            )
-        } ?: title?.let {
-            MalayalamText(
-                text = title,
-                style = Appspiriment.typography.textMediumLargeSemiBold.copy(color = tintColor)
-            )
+        when(appBarTitle){
+            is AppBarTitle.BrandLogo -> {
+                AppsImage(image = appBarTitle.image,
+                    modifier = Modifier.wrapContentWidth()
+                )
+            }
+            is AppBarTitle.ScreenTitle -> {
+                MalayalamText(
+                    text = appBarTitle.title,
+                    style = Appspiriment.typography.textMediumLarge.copy(color = tintColor, fontWeight = FontWeight.SemiBold)
+                )
+            }
         }
     }
 }

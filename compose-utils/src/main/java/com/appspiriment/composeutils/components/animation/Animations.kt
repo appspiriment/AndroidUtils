@@ -27,20 +27,40 @@ val exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> Exit
 
 object SlideInRightToLeft {
     val enter = slideInHorizontally(
-        animationSpec = tween(200),
+        animationSpec = tween(600),
         initialOffsetX = {it}
     )
     val exit = slideOutHorizontally(
-        animationSpec = tween(200),
+        animationSpec = tween(600),
         targetOffsetX = {-it}
     )
 
     val popEnter = slideInHorizontally(
-        animationSpec = tween(200),
+        animationSpec = tween(600),
         initialOffsetX = {-it}
     )
     val popExit = slideOutHorizontally(
-        animationSpec = tween(200),
+        animationSpec = tween(600),
         targetOffsetX = {it}
+    )
+}
+
+object SlideInLeftToRight {
+    val enter = slideInHorizontally(
+        animationSpec = tween(600),
+        initialOffsetX = {-it}
+    )
+    val exit = slideOutHorizontally(
+        animationSpec = tween(600),
+        targetOffsetX = {it}
+    )
+
+    val popEnter = slideInHorizontally(
+        animationSpec = tween(600),
+        initialOffsetX = {it}
+    )
+    val popExit = slideOutHorizontally(
+        animationSpec = tween(600),
+        targetOffsetX = {-it}
     )
 }

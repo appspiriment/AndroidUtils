@@ -46,6 +46,7 @@
     <color name="onTopAppBar">@color/onMainSurface</color>
     <color name="disabledText">#616161</color>
     <color name="subText">#BDBDBD</color>
+    <color name="hintText">#99DADADA</color>
     <color name="dividerColor">#99636363</color>
     <color name="holidayTextColor">#CCFF9F9F</color>
     <color name="kaalaTitleBgColor">#CCFFD69F</color>

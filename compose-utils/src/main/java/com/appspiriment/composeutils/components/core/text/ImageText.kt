@@ -41,7 +41,8 @@ import com.appspiriment.composeutils.theme.Appspiriment
 fun ImageText(
     text: UiText,
     modifier: Modifier = Modifier,
-    style: TextStyle = Appspiriment.typography.textNormal,
+    color: Color = Appspiriment.colors.onMainSurface,
+    style: TextStyle = Appspiriment.typography.textMedium,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -81,6 +82,7 @@ fun ImageText(
         }
         MalayalamText(
             text = text,
+            color = color,
             style = style, letterSpacing = letterSpacing,
             textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
             overflow = overflow, softWrap = softWrap, maxLines = maxLines,

@@ -1,5 +1,7 @@
 package com.appspiriment.composeutils.components.animation
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
@@ -13,7 +15,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
-    noinline content: @Composable (NavBackStackEntry) -> Unit
+    enterAnimation: EnterTransition =  SlideInLeftToRight.enter,
+    exitAnimation: ExitTransition = SlideInLeftToRight.exit,
+    noinline content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable<T> { backStackEntry ->
         var visible by remember { mutableStateOf(false) }
@@ -24,8 +28,8 @@ inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
 
         AnimatedVisibility(
             visible = visible,
-            enter = slideInHorizontally(initialOffsetX = { -600 }),
-            exit = slideOutHorizontally(targetOffsetX = { 600 })
+            enter = enterAnimation,
+            exit = exitAnimation
         ) {
             content(backStackEntry)
         }

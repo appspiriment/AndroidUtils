@@ -14,9 +14,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.core.graphics.drawable.toBitmap
 import com.appspiriment.composeutils.components.core.image.types.UiImage.DrawableIcon
 import com.appspiriment.composeutils.components.core.image.types.UiImage.DrawableResourceIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage.VectorResourceIcon
 import com.appspiriment.composeutils.components.core.image.types.UiImage.ImageVectorIcon
 import com.appspiriment.composeutils.components.core.image.types.UiImage.PainterIcon
+import com.appspiriment.composeutils.components.core.image.types.UiImage.VectorResourceIcon
 
 sealed class UiImage(
     open val description: String?,

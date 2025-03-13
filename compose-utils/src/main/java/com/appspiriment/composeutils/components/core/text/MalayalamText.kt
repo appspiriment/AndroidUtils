@@ -30,7 +30,8 @@ import com.appspiriment.composeutils.theme.Appspiriment
 fun MalayalamText(
     text: UiText,
     modifier: Modifier = Modifier,
-    style: TextStyle = Appspiriment.typography.textNormal,
+    style: TextStyle = Appspiriment.typography.textMedium,
+    color: Color = Appspiriment.colors.onMainSurface,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -43,7 +44,7 @@ fun MalayalamText(
 ) {
     Text(
         text = text.asAnnotatedString(LocalContext.current, isHtml),
-        modifier = modifier, style = style, letterSpacing = letterSpacing,
+        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color,
         textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
         overflow = overflow, softWrap = softWrap, maxLines = maxLines,
         onTextLayout = onTextLayout

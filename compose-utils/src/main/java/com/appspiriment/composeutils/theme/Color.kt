@@ -47,6 +47,7 @@ data class BaseColors(
     val onTopAppBar : Color = Color.Unspecified,
     val disabledText : Color = Color.Unspecified,
     val subText : Color = Color.Unspecified,
+    val hintText : Color = Color.Unspecified,
     val dividerColor : Color = Color.Unspecified,
 )
 
@@ -92,6 +93,7 @@ fun lightBaseColors() = BaseColors(
     onTopAppBar = colorResource(id = R.color.onTopAppBar),
     disabledText = colorResource(id = R.color.disabledText),
     subText = colorResource(id = R.color.subText),
+    hintText = colorResource(id = R.color.hintText),
     dividerColor = colorResource(id = R.color.dividerColor)
 )
 
@@ -132,6 +134,7 @@ fun darkBaseColors() = BaseColors(
     onTopAppBar = colorResource(id = R.color.onTopAppBar),
     disabledText = colorResource(id = R.color.disabledText),
     subText = colorResource(id = R.color.subText),
+    hintText = colorResource(id = R.color.hintText),
     accentedBlueText = colorResource(id = R.color.accentedBlueText),
     accentedRedText = colorResource(id = R.color.accentedRedText),
     accentedGoldText = colorResource(id = R.color.accentedGoldText),

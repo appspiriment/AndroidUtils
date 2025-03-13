@@ -19,13 +19,13 @@ fun AppsIcon(
         Icon(
             imageVector = it,
             contentDescription = icon.description,
-            tint = icon.tint ?: LocalContentColor.current,
+            tint = icon.tint ?: Appspiriment.colors.iconTint,
             modifier = modifier.height(iconHeight)
         )
     } ?: Icon(
         painter = icon.getPainter(),
         contentDescription = icon.description,
-        tint = icon.tint ?: LocalContentColor.current,
+        tint = icon.tint ?: Appspiriment.colors.iconTint,
         modifier = modifier.height(iconHeight)
     )
 }

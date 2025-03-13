@@ -53,8 +53,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DrawerScaffold(
-    @DrawableRes brandLogoId: Int? = null,
-    title: UiText? = null,
+    appBarTitle: AppBarTitle? = null,
     colors: ScaffoldColors = ScaffoldColors.defaults(),
     gestureEnabled: Boolean = true,
     actions: List<AppsTopBarButton>? = null,
@@ -72,8 +71,7 @@ fun DrawerScaffold(
                 navMode = NavigationMode.DRAWER,
                 navIconClick = onNavClick,
                 actions = actions,
-                brandLogoId = brandLogoId,
-                title = title,
+                appBarTitle = appBarTitle,
                 background = colors.topBarBackground,
                 onTopBarColor = colors.onTopBarColor
             )
@@ -202,7 +200,7 @@ fun DrawerState.DrawerLayoutMenuItem(
 @Composable
 fun DrawerScaffoldPreview() {
     DrawerScaffold(
-        title = "Drawer Example".toUiText(),
+        appBarTitle = AppBarTitle.ScreenTitle("Drawer Example".toUiText()),
         colors = ScaffoldColors.defaults(),
         actions = listOf(
             AppsTopBarButton(

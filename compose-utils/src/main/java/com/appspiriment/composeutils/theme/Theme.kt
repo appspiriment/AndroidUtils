@@ -14,7 +14,7 @@ fun CompositionBaseProvider(
     val colors = if(darkTheme) darkBaseColors() else lightBaseColors()
 
     val sizes = createSizes()
-    val typography = createBaseTypography()
+    val typography = createBaseTypography(sizes)
 
     // Provide custom colors and MaterialTheme
     CompositionLocalProvider(

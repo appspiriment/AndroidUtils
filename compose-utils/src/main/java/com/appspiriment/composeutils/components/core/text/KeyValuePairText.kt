@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -24,6 +25,9 @@ fun KeyValuePairText(
     value: UiText,
     modifier: Modifier = Modifier,
     prefix: UiText? = null,
+    keyColor: Color = Appspiriment.colors.onMainSurface,
+    prefixColor: Color = Appspiriment.colors.onMainSurface,
+    valueColor: Color = Appspiriment.colors.onMainSurface,
     keyStyle: TextStyle = Appspiriment.typography.textMediumSemiBold,
     valueStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
@@ -43,12 +47,15 @@ fun KeyValuePairText(
         PrefixedText(
             text = key,
             prefix = prefix,
+            color = keyColor,
+            prefixColor = prefixColor,
             textStyle = keyStyle,
             prefixStyle = prefixStyle,
             modifier = keyModifier
         )
         MalayalamText(
             text = value,
+            color = valueColor,
             style = valueStyle,
             modifier = valueModifier
         )
