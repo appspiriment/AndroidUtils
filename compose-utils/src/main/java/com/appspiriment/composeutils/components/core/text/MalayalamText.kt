@@ -21,17 +21,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
-import com.appspiriment.composeutils.components.core.text.types.uiTextResource
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
+import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.UiColor
+
+
+@Composable
+fun MalayalamText(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = Appspiriment.typography.textMedium,
+    color: UiColor = Appspiriment.uiColors.onMainSurface,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+) {
+    Text(
+        text = text,
+        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color.asColor(LocalContext.current),
+        textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
+        overflow = overflow, softWrap = softWrap, maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
 
 @Composable
 fun MalayalamText(
     text: UiText,
     modifier: Modifier = Modifier,
     style: TextStyle = Appspiriment.typography.textMedium,
-    color: Color = Appspiriment.colors.onMainSurface,
+    color: UiColor = Appspiriment.uiColors.onMainSurface,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -44,7 +70,7 @@ fun MalayalamText(
 ) {
     Text(
         text = text.asAnnotatedString(LocalContext.current, isHtml),
-        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color,
+        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color.asColor(LocalContext.current),
         textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
         overflow = overflow, softWrap = softWrap, maxLines = maxLines,
         onTextLayout = onTextLayout

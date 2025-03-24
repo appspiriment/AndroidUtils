@@ -6,7 +6,7 @@
 #App Versions
 appspirimentUtils = "0.0.2"
 logUtils = "0.0.1"
-composeUtils = "0.0.2.dev30"
+composeUtils = "0.0.2.dev45"
 updateUtils = "0.0.1"
 vanniktechPublish = "0.30.0"
 agp = "8.4.2"

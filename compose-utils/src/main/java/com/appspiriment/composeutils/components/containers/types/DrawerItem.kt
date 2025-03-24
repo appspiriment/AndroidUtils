@@ -3,8 +3,8 @@ package com.appspiriment.composeutils.components.containers.types
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.text.types.UiText
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 
 data class DrawerItem(

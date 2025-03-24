@@ -3,6 +3,7 @@ package com.appspiriment.utils.extensions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 
 /**
  * Launches the Google Play Store page for the current application.

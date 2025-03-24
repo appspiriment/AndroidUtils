@@ -5,7 +5,7 @@
     <color name="primary">#C20F2F</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="scrim">#020202</color>
-    <color name="iconTint">#C20F2F</color>
+    <color name="iconTint">#888E92</color>
     <color name="disabledIconTint">#5D1D3B</color>
     <color name="drawerItem">#5F6368</color>
     <color name="navigationBar">#282828</color>
@@ -21,6 +21,7 @@
     <color name="onBackground">#1C1B1F</color>
     <color name="primaryCardContainer">#FFFFFF</color>
     <color name="onPrimaryCardContainer">@color/onMainSurface</color>
+    <color name="onPrimaryCardContainerDimmed">#5D6364</color>
     <color name="secondaryCardContainer">#EBEBEB</color>
     <color name="onSecondaryCardContainer">@color/onMainSurface</color>
     <color name="tertiaryCardContainer">#EBEBEB</color>
@@ -49,13 +50,5 @@
     <color name="subText">#757575</color>
     <color name="hintText">#99121212</color>
     <color name="dividerColor">#BDBDBD</color>
-    <color name="holidayTextColor">#ac081d</color>
-    <color name="kaalaTitleBgColor">@color/accentedRedText</color>
-    <color name="kaalaTitleTextColor">@color/mainSurface</color>
-    <color name="todaysPanelBackground">#313131</color>
-    <color name="onTodaysPanel">#DEFFFFFF</color>
-    <color name="onTodaysPanelSecondary">#DDDDDD</color>
-    <color name="onTodaysPanelAccented">#FDEABB</color>
-    <color name="specialHeadBackground">#D6FFFFFF</color>
 
 </resources>

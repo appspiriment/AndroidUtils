@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -14,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.buttons.types.ButtonStyle
 import com.appspiriment.composeutils.components.core.image.AppsImage
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.image.types.uiImageResouce
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.uiImageResouce
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.uiTextResource
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.composeutils.theme.Appspiriment
 
 
@@ -36,11 +37,12 @@ fun IconButton(
 
     Button(
         colors = ButtonDefaults.buttonColors(
-            containerColor = buttonStyle.buttonColor,
+            containerColor = buttonStyle.buttonColor.asColor(LocalContext.current),
+            contentColor = buttonStyle.textColor.asColor(LocalContext.current)
         ),
         modifier = modifier.border(
             width = 2.dp,
-            color = buttonStyle.strokeColor,
+            color = buttonStyle.strokeColor.asColor(LocalContext.current),
         ),
         shape = buttonStyle.buttonShape,
         onClick = { onClick.invoke() }
@@ -53,6 +55,7 @@ fun IconButton(
         MalayalamText(
             text = text,
             style = buttonStyle.textStyle,
+            color = buttonStyle.textColor,
             textAlign = TextAlign.Center,
             modifier = textModifier
         )

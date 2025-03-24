@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +20,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.appspiriment.composeutils.components.core.buttons.TextButton
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
+import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 
 @Composable
@@ -40,13 +39,14 @@ fun MessageDialog(
     listener: (Boolean) -> Unit = {},
     cancellable: Boolean = true,
     dialogBackground: Color = Appspiriment.colors.mainSurface,
-    visibilityState: MutableState<Boolean>? = null,
-    onDismissRequest: () -> Unit = { if (cancellable) visibilityState?.value = false },
+    onDismissRequest: () -> Unit,
     dialogProperties: DialogProperties = DialogProperties(),
     customviewContent: (@Composable () -> Unit)? = null
 ) {
     Dialog(
-        onDismissRequest = onDismissRequest,
+        onDismissRequest = {
+            if(cancellable) onDismissRequest()
+        },
         properties = dialogProperties
     ) {
         Column(
@@ -96,7 +96,7 @@ fun MessageDialog(
                             .padding(end = 16.dp)
                             .defaultMinSize(minWidth = 96.dp)
                     ) {
-                        visibilityState?.value = false
+                        onDismissRequest()
                         listener.invoke(false)
                     }
                 }
@@ -106,7 +106,7 @@ fun MessageDialog(
                         buttonStyle = buttonStyle.positiveStyle,
                         modifier = Modifier.defaultMinSize(minWidth = 96.dp)
                     ) {
-                        visibilityState?.value = false
+                        onDismissRequest()
                         listener.invoke(true)
                     }
                 }

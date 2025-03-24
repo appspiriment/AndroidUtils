@@ -6,7 +6,7 @@
     <color name="primary">#BB86FC</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="scrim">#020202</color>
-    <color name="iconTint">#BB86FC</color>
+    <color name="iconTint">#697075</color>
     <color name="disabledIconTint">#6A4F90</color>
     <color name="drawerItem">#BDBDBD</color>
     <color name="navigationBar">#020202</color>
@@ -18,10 +18,11 @@
     <color name="onMainSurface">#DADADA</color>
     <color name="secondarySurface">#313131</color>
     <color name="onSecondarySurface">@color/onMainSurface</color>
-    <color name="background">#121212</color>
+    <color name="background">#000000</color>
     <color name="onBackground">@color/onMainSurface</color>
-    <color name="primaryCardContainer">#1E1E1E</color>
-    <color name="onPrimaryCardContainer">@color/onMainSurface</color>
+    <color name="primaryCardContainer">#0C1117</color>
+    <color name="onPrimaryCardContainer">#EAEBEE</color>
+    <color name="onPrimaryCardContainerDimmed">#83888E</color>
     <color name="secondaryCardContainer">#313131</color>
     <color name="onSecondaryCardContainer">@color/onMainSurface</color>
     <color name="tertiaryCardContainer">#313131</color>
@@ -31,7 +32,7 @@
 
     <color name="error">#CF6679</color>
     <color name="onError">#31060D</color>
-    <color name="errorCardContainer">#313131</color>
+    <color name="errorCardContainer">#ABCF6679</color>
     <color name="onErrorCardContainer">#ABFFEDDB</color>
 
     <color name="accentedBlueTitle">#C694FF</color>
@@ -46,15 +47,6 @@
     <color name="onTopAppBar">@color/onMainSurface</color>
     <color name="disabledText">#616161</color>
     <color name="subText">#BDBDBD</color>
-    <color name="hintText">#99DADADA</color>
+    <color name="hintText">#8B9096</color>
     <color name="dividerColor">#99636363</color>
-    <color name="holidayTextColor">#CCFF9F9F</color>
-    <color name="kaalaTitleBgColor">#CCFFD69F</color>
-    <color name="kaalaTitleTextColor">#261900</color>
-
-    <color name="todaysPanelBackground">#313131</color>
-    <color name="onTodaysPanel">@color/onPrimaryCardContainer</color>
-    <color name="onTodaysPanelSecondary">@color/onPrimaryCardContainer</color>
-    <color name="onTodaysPanelAccented">@color/accentedBlueTitle</color>
-    <color name="specialHeadBackground">#99121212</color>
 </resources>

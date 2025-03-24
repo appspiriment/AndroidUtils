@@ -12,11 +12,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.components.containers.TitleCardViewDefaults
 import com.appspiriment.composeutils.components.containers.TitledCardView
+import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -25,9 +26,9 @@ fun KeyValuePairText(
     value: UiText,
     modifier: Modifier = Modifier,
     prefix: UiText? = null,
-    keyColor: Color = Appspiriment.colors.onMainSurface,
-    prefixColor: Color = Appspiriment.colors.onMainSurface,
-    valueColor: Color = Appspiriment.colors.onMainSurface,
+    keyColor: UiColor = Appspiriment.uiColors.onMainSurface,
+    prefixColor: UiColor = Appspiriment.uiColors.onMainSurface,
+    valueColor: UiColor = Appspiriment.uiColors.onMainSurface,
     keyStyle: TextStyle = Appspiriment.typography.textMediumSemiBold,
     valueStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
@@ -67,7 +68,7 @@ fun KeyValuePairText(
 @Composable
 fun DetailsListItemPreview() {
     TitledCardView(
-        background = Appspiriment.colors.primaryCardContainer,
+        background = Appspiriment.uiColors.primaryCardContainer,
         titleStyle = TitleCardViewDefaults.titleAtStart()
     ) {
         KeyValuePairText(key = "Appspiriment".toUiText(), value = "Labs".toUiText())

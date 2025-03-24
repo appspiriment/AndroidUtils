@@ -8,18 +8,21 @@ import androidx.compose.runtime.ReadOnlyComposable
 
 @Composable
 fun CompositionBaseProvider(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if(darkTheme) darkBaseColors() else lightBaseColors()
+    val colors = baseColors()
+    val uiColors = baseUiColors()
 
     val sizes = createSizes()
+    val uiSizes = createUiSizes()
     val typography = createBaseTypography(sizes)
 
     // Provide custom colors and MaterialTheme
     CompositionLocalProvider(
         LocalColors provides colors,
+        LocalUiColors provides uiColors,
         LocalSizes provides sizes,
+        LocalUiSizes provides uiSizes,
         LocalTypography provides typography,
         content = content
      )
@@ -28,8 +31,12 @@ fun CompositionBaseProvider(
 object Appspiriment{
     val colors: BaseColors
         @Composable  @ReadOnlyComposable get() = LocalColors.current
+    val uiColors: BaseUiColors
+        @Composable  @ReadOnlyComposable get() = LocalUiColors.current
     val sizes: Sizes
         @Composable  @ReadOnlyComposable get() = LocalSizes.current
+    val uiSizes: UiSizes
+        @Composable  @ReadOnlyComposable get() = LocalUiSizes.current
     val typography: BaseTextStyles
         @Composable @ReadOnlyComposable get() = LocalTypography.current
 }

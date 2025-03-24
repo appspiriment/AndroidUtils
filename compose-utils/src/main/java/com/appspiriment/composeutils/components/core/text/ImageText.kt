@@ -5,9 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,22 +25,24 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
+import com.appspiriment.composeutils.components.core.FillerSpacer
 import com.appspiriment.composeutils.components.core.HorizontalSpacer
 import com.appspiriment.composeutils.components.core.image.AppsImage
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.uiTextResource
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.image.types.uiImageResouce
-import com.appspiriment.composeutils.components.core.image.types.uiVectorResouce
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.uiTextResource
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.uiImageResouce
+import com.appspiriment.composeutils.wrappers.uiVectorResouce
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
 fun ImageText(
     text: UiText,
     modifier: Modifier = Modifier,
-    color: Color = Appspiriment.colors.onMainSurface,
+    color: UiColor = Appspiriment.uiColors.onMainSurface,
     style: TextStyle = Appspiriment.typography.textMedium,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
@@ -86,18 +87,18 @@ fun ImageText(
             style = style, letterSpacing = letterSpacing,
             textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
             overflow = overflow, softWrap = softWrap, maxLines = maxLines,
-            onTextLayout = onTextLayout, modifier = textModifier, isHtml = isHtml
+            onTextLayout = onTextLayout, modifier = textModifier.offset(y=1.dp), isHtml = isHtml
         )
 
         trailingImage?.let {
 
             iconPadding?.let {padding ->
-                HorizontalSpacer(padding)
+                FillerSpacer(minWidth = padding)
             }
             AppsImage(
                 image = it,
                 modifier = trailingImageHeight?.let { h ->
-                    Modifier.height(h)
+                    Modifier.height(h).offset( y=(-1).dp)
                 } ?: Modifier,
                 usePainter = usePainter
             )

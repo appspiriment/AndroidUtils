@@ -1,4 +1,4 @@
-package com.appspiriment.composeutils.components.core.image.types
+package com.appspiriment.composeutils.wrappers
 
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
@@ -12,28 +12,28 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.core.graphics.drawable.toBitmap
-import com.appspiriment.composeutils.components.core.image.types.UiImage.DrawableIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage.DrawableResourceIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage.ImageVectorIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage.PainterIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage.VectorResourceIcon
+import com.appspiriment.composeutils.wrappers.UiImage.DrawableIcon
+import com.appspiriment.composeutils.wrappers.UiImage.DrawableResourceIcon
+import com.appspiriment.composeutils.wrappers.UiImage.ImageVectorIcon
+import com.appspiriment.composeutils.wrappers.UiImage.PainterIcon
+import com.appspiriment.composeutils.wrappers.UiImage.VectorResourceIcon
 
 sealed class UiImage(
     open val description: String?,
-    open val tint: Color?
+    open val tint: UiColor?
 ) {
     abstract fun setDescription(contentDescription: String?): UiImage
-    abstract fun setTint(tint: Color? = null): UiImage
+    abstract fun setTint(tint: UiColor? = null): UiImage
 
     data class ImageVectorIcon(
         val imageVector: ImageVector,
         override val description: String? = null,
-        override val tint: Color? = null
+        override val tint: UiColor? = null
     ): UiImage(description, tint){
-        override fun setDescription(contentDescription: String?): UiImage{
+        override fun setDescription(contentDescription: String?): UiImage {
             return copy(description = description)
         }
-        override fun setTint(tint: Color?): UiImage{
+        override fun setTint(tint: UiColor?): UiImage {
             return copy(tint = tint)
         }
     }
@@ -41,12 +41,12 @@ sealed class UiImage(
     data class DrawableResourceIcon(
         @DrawableRes val resId: Int,
         override val description: String? = null,
-        override val tint: Color? = null
+        override val tint: UiColor? = null
     ): UiImage(description, tint){
-        override fun setDescription(contentDescription: String?): UiImage{
+        override fun setDescription(contentDescription: String?): UiImage {
             return copy(description = description)
         }
-        override fun setTint(tint: Color?): UiImage{
+        override fun setTint(tint: UiColor?): UiImage {
             return copy(tint = tint)
         }
     }
@@ -55,12 +55,12 @@ sealed class UiImage(
     data class VectorResourceIcon(
         @DrawableRes val resId: Int,
         override val description: String? = null,
-        override val tint: Color? = null
+        override val tint: UiColor? = null
     ): UiImage(description, tint){
-        override fun setDescription(contentDescription: String?): UiImage{
+        override fun setDescription(contentDescription: String?): UiImage {
             return copy(description = description)
         }
-        override fun setTint(tint: Color?): UiImage{
+        override fun setTint(tint: UiColor?): UiImage {
             return copy(tint = tint)
         }
     }
@@ -68,12 +68,12 @@ sealed class UiImage(
     data class DrawableIcon(
         val drawable: Drawable,
         override val description: String? = null,
-        override val tint: Color? = null
+        override val tint: UiColor? = null
     ): UiImage(description, tint){
-        override fun setDescription(contentDescription: String?): UiImage{
+        override fun setDescription(contentDescription: String?): UiImage {
             return copy(description = description)
         }
-        override fun setTint(tint: Color?): UiImage{
+        override fun setTint(tint: UiColor?): UiImage {
             return copy(tint = tint)
         }
     }
@@ -81,12 +81,12 @@ sealed class UiImage(
     data class PainterIcon(
         val painter: Painter,
         override val description: String? = null,
-        override val tint: Color? = null
+        override val tint: UiColor? = null
     ): UiImage(description, tint){
-        override fun setDescription(contentDescription: String?): UiImage{
+        override fun setDescription(contentDescription: String?): UiImage {
             return copy(description = description)
         }
-        override fun setTint(tint: Color?): UiImage{
+        override fun setTint(tint: UiColor?): UiImage {
             return copy(tint = tint)
         }
     }
@@ -115,29 +115,29 @@ sealed class UiImage(
 
 fun ImageVector.toUiImage(
     description: String? = null,
-    tint: Color? = null
+    tint: UiColor? = null
 ): UiImage = ImageVectorIcon(this, description, tint)
 
 fun uiImageResouce(
     @DrawableRes resId: Int,
     description: String? = null,
-    tint: Color? = null
+    tint: UiColor? = null
 ): UiImage = DrawableResourceIcon(resId, description, tint)
 
 fun uiVectorResouce(
     @DrawableRes resId: Int,
     description: String? = null,
-    tint: Color? = null
+    tint: UiColor? = null
 ): UiImage = VectorResourceIcon(resId, description, tint)
 
 @Composable
 fun uiImageDrawable(
     drawable: Drawable,
     description: String? = null,
-    tint: Color? = null
+    tint: UiColor? = null
 ): UiImage = DrawableIcon(drawable, description, tint)
 
 fun Painter.toUiImage(
     description: String? = null,
-    tint: Color? = null
+    tint: UiColor? = null
 ): UiImage = PainterIcon(this, description, tint)

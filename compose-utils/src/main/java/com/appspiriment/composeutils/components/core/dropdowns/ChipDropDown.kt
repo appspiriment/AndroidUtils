@@ -14,11 +14,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.image.types.toUiImage
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 
 

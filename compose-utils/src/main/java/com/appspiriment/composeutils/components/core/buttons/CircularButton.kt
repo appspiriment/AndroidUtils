@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.image.AppsImage
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.image.types.uiImageResouce
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.uiImageResouce
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -24,14 +26,14 @@ fun CircularButton(
     icon: UiImage,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier.padding(Appspiriment.sizes.paddingXSmall),
-    buttonColor: Color = Appspiriment.colors.primary,
+    buttonColor: UiColor = Appspiriment.uiColors.primary,
     onClick: () -> Unit
 ) {
 
     Box(
         modifier = modifier
             .size(Appspiriment.sizes.floatingButtonSize)
-            .background(buttonColor, shape = RoundedCornerShape(50)),
+            .background(buttonColor.asColor(LocalContext.current), shape = RoundedCornerShape(50)),
         contentAlignment = Alignment.Center
     ) {
         AppsImage(

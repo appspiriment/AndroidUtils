@@ -52,6 +52,7 @@ val TextStyle.roboto: TextStyle
 
 
 data class BaseTextStyles(
+    val baseTextStyle: TextStyle = TextStyle.Default,
     val textTiny: TextStyle = TextStyle.Default,
     val textXXXSmall: TextStyle = TextStyle.Default,
     val textXXSmall: TextStyle = TextStyle.Default,
@@ -72,86 +73,94 @@ data class BaseTextStyles(
     val textMediumBold: TextStyle = TextStyle.Default,
     val textLargeSemiBold: TextStyle = TextStyle.Default,
     val textLargeBold: TextStyle = TextStyle.Default,
-
 )
 
 @Composable
 fun createBaseTypography(baseSize: Sizes): BaseTextStyles {
-    val textNormalStyle = TextStyle.Default.copy(
+    val baseTextStyle = TextStyle.Default.copy(
         fontFamily = GoogleFonts.notoFamily,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
         )
     )
     return BaseTextStyles(
-
-        textTiny = textNormalStyle.copy(
+        baseTextStyle = baseTextStyle,
+        textTiny = baseTextStyle.copy(
             fontSize = baseSize.fontSizeTiny
         ),
-        textXXXSmall = textNormalStyle.copy(
+        textXXXSmall = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXXXSmall
         ),
-        textXXSmall = textNormalStyle.copy(
+        textXXSmall = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXXSmall
         ),
-        textXSmall = textNormalStyle.copy(
+        textXSmall = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXSmall
         ),
-        textSmall = textNormalStyle.copy(
+        textSmall = baseTextStyle.copy(
             fontSize = baseSize.fontSizeSmall
         ),
-        textMedium = textNormalStyle.copy(
+        textMedium = baseTextStyle.copy(
             fontSize = baseSize.fontSizeMedium
         ),
-        textMediumLarge = textNormalStyle.copy(
+        textMediumLarge = baseTextStyle.copy(
             fontSize = baseSize.fontSizeMediumLarge
         ),
-        textLarge = textNormalStyle.copy(
+        textLarge = baseTextStyle.copy(
             fontSize = baseSize.fontSizeLarge
         ),
-        textXLarge = textNormalStyle.copy(
+        textXLarge = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXLarge
         ),
-        textXXLarge = textNormalStyle.copy(
+        textXXLarge = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXXLarge
         ),
-        textXXXLarge = textNormalStyle.copy(
+        textXXXLarge = baseTextStyle.copy(
             fontSize = baseSize.fontSizeXXXLarge
         ),
-        textBig = textNormalStyle.copy(
+        textBig = baseTextStyle.copy(
             fontSize = baseSize.fontSizeBig
         ),
-        textGiant = textNormalStyle.copy(
+        textGiant = baseTextStyle.copy(
             fontSize = baseSize.fontSizeGiant
         ),
         //Combinations
-        textSmallSemiBold = textNormalStyle.copy(
+        textSmallSemiBold = baseTextStyle.copy(
             fontWeight = FontWeight.SemiBold,
             fontSize = baseSize.fontSizeSmall
         ),
-        textSmallBold = textNormalStyle.copy(
+        textSmallBold = baseTextStyle.copy(
             fontWeight = FontWeight.Bold,
             fontSize = baseSize.fontSizeSmall
         ),
-        textMediumSemiBold = textNormalStyle.copy(
+        textMediumSemiBold = baseTextStyle.copy(
             fontWeight = FontWeight.SemiBold,
             fontSize = baseSize.fontSizeMedium
         ),
-        textMediumBold = textNormalStyle.copy(
+        textMediumBold = baseTextStyle.copy(
             fontWeight = FontWeight.Bold,
             fontSize = baseSize.fontSizeMedium
         ),
-        textLargeSemiBold = textNormalStyle.copy(
+        textLargeSemiBold = baseTextStyle.copy(
             fontWeight = FontWeight.SemiBold,
             fontSize = baseSize.fontSizeLarge
         ),
-        textLargeBold = textNormalStyle.copy(
+        textLargeBold = baseTextStyle.copy(
             fontWeight = FontWeight.Bold,
             fontSize = baseSize.fontSizeLarge
         ),
     )
 }
 
+val TextStyle.thin get() = this.copy(fontWeight = FontWeight.Thin)
+val TextStyle.extraLight get() = this.copy(fontWeight = FontWeight.ExtraLight)
+val TextStyle.light get() = this.copy(fontWeight = FontWeight.Light)
+val TextStyle.normal get() = this.copy(fontWeight = FontWeight.Normal)
+val TextStyle.medium get() = this.copy(fontWeight = FontWeight.Medium)
+val TextStyle.semiBold get() = this.copy(fontWeight = FontWeight.SemiBold)
+val TextStyle.bold get() = this.copy(fontWeight = FontWeight.Bold)
+val TextStyle.extraBold get() = this.copy(fontWeight = FontWeight.ExtraBold)
+val TextStyle.black get() = this.copy(fontWeight = FontWeight.Black)
 
 val LocalTypography  by lazy { staticCompositionLocalOf { BaseTextStyles() } }
 

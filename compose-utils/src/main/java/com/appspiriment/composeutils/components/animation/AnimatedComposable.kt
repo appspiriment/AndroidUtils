@@ -15,8 +15,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
-    enterAnimation: EnterTransition =  SlideInLeftToRight.enter,
-    exitAnimation: ExitTransition = SlideInLeftToRight.exit,
+    enterAnimation: EnterTransition =  SlideInRightToLeft.enter,
+    exitAnimation: ExitTransition = SlideInRightToLeft.exit,
     noinline content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable<T> { backStackEntry ->

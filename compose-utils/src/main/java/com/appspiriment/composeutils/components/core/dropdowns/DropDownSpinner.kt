@@ -17,8 +17,8 @@ import com.appspiriment.composeutils.components.core.dropdowns.models.DropDownIt
 import com.appspiriment.composeutils.components.core.dropdowns.models.SpinnerStyle
 import com.appspiriment.composeutils.components.core.dropdowns.models.SpinnerStyleDefaults
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 
 @Composable
@@ -28,7 +28,7 @@ fun DropDownSpinner(
     dropdownModifier: Modifier = Modifier,
     onSelectedIndexChange: (Int) -> Unit = {},
     itemStyle: SpinnerStyle = SpinnerStyleDefaults.defaultSpinner,
-    spinnerComposable: @Composable (index: Int, text:UiText, onClick: ()->Unit) -> Unit
+    spinnerComposable: @Composable (index: Int, text: UiText, onClick: ()->Unit) -> Unit
 ) {
     DropDownModelSpinner(
         items = items.map {

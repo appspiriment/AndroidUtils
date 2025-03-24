@@ -17,15 +17,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.LocalColors
+import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -33,7 +36,7 @@ fun TitledCardView(
     modifier: Modifier = Modifier,
     title: UiText? = null,
     titleStyle: TitledCardViewTitleStyle = TitleCardViewDefaults.titleAtStart(),
-    background: Color = Appspiriment.colors.primaryCardContainer,
+    background: UiColor = Appspiriment.uiColors.primaryCardContainer,
     shape: Shape = RoundedCornerShape(8.dp),
     cardElevation: Dp = 0.dp,
     borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
@@ -51,18 +54,19 @@ fun TitledCardView(
         shape = shape,
         border = borderStroke,
         elevation = CardDefaults.cardElevation(defaultElevation = cardElevation),
-        colors = CardDefaults.cardColors(containerColor = background)
+        colors = CardDefaults.cardColors(containerColor = background.asColor(LocalContext.current))
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             title?.let {
                 MalayalamText(
                     text = it,
+                    color = titleStyle.color,
                     style = titleStyle.style,
                     textAlign = titleStyle.align,
                     lineHeight = titleStyle.style.fontSize,
                     modifier = titleStyle.titleModifier
                         .fillMaxWidth()
-                        .background(color = titleStyle.background)
+                        .background(color = titleStyle.background.asColor(LocalContext.current))
                 )
             }
             Column(
@@ -89,7 +93,7 @@ fun TitledCardViewPreview() {
         TitledCardView(
             title = "നക്ഷത്രം".toUiText(),
             titleStyle = TitleCardViewDefaults.noticeStyle(),
-            background = Appspiriment.colors.primaryCardContainer,
+            background = Appspiriment.uiColors.primaryCardContainer,
         ) {
             MalayalamText(text = "Appspiriment".toUiText())
         }
@@ -97,7 +101,7 @@ fun TitledCardViewPreview() {
         Spacer(modifier = Modifier.height(24.dp))
 
         TitledCardView(
-            background = Appspiriment.colors.primaryCardContainer,
+            background = Appspiriment.uiColors.primaryCardContainer,
             titleStyle = TitleCardViewDefaults.noticeStyle(),
         ) {
             MalayalamText(text = "Appspiriment 24".toUiText())
@@ -107,7 +111,7 @@ fun TitledCardViewPreview() {
         TitledCardView(
             title = "നക്ഷത്രം".toUiText(),
             titleStyle = TitleCardViewDefaults.titleAtStart(),
-            background = Appspiriment.colors.primaryCardContainer,
+            background = Appspiriment.uiColors.primaryCardContainer,
         ) {
             MalayalamText(text = "Appspiriment".toUiText())
         }
@@ -116,8 +120,9 @@ fun TitledCardViewPreview() {
 }
 
 data class TitledCardViewTitleStyle(
-    val background: Color = Color.Transparent,
+    val background: UiColor = UiColor.DynamicColor.Transparent,
     val style: TextStyle,
+    val color: UiColor,
     val align: TextAlign = TextAlign.Center,
     val titleModifier: Modifier = Modifier.padding(
         start = 16.dp,
@@ -130,8 +135,8 @@ data class TitledCardViewTitleStyle(
 object TitleCardViewDefaults {
     @Composable
     fun noticeStyle(
-        background: Color = Appspiriment.colors.primary,
-        color: Color = Appspiriment.colors.onPrimary,
+        background: UiColor = Appspiriment.uiColors.primary,
+        color: UiColor = Appspiriment.uiColors.onPrimary,
         style: TextStyle = Appspiriment.typography.textMediumSemiBold,
         align: TextAlign = TextAlign.Center,
         titleModifier: Modifier = Modifier.padding(
@@ -142,37 +147,40 @@ object TitleCardViewDefaults {
         )
     ) = TitledCardViewTitleStyle(
         background = background,
-        style = style.copy(color = color),
+        style = style,
+        color = color,
         align = align,
         titleModifier = titleModifier
     )
 
     @Composable
     fun titleAtStart(
-        background: Color = Color.Transparent,
-        color: Color = Appspiriment.colors.onPrimaryCardContainer,
+        background: UiColor = UiColor.DynamicColor.Transparent,
+        color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
         style: TextStyle = Appspiriment.typography.textSmallSemiBold,
         titleModifier: Modifier = Modifier.padding(
             start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
         )
     ) = TitledCardViewTitleStyle(
         background = background,
-        style = style.copy(color = color),
+        style = style,
+        color = color,
         align = TextAlign.Start,
         titleModifier = titleModifier
     )
 
     @Composable
     fun centerTitle(
-        background: Color = Color.Transparent,
-        color: Color = Appspiriment.colors.onPrimaryCardContainer,
+        background: UiColor = UiColor.DynamicColor.Transparent,
+        color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
         style: TextStyle = Appspiriment.typography.textMediumSemiBold,
         titleModifier: Modifier = Modifier.padding(
             start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
         )
     ) = TitledCardViewTitleStyle(
         background = background,
-        style = style.copy(color = color),
+        style = style,
+        color = color,
         align = TextAlign.Center,
         titleModifier = titleModifier
     )

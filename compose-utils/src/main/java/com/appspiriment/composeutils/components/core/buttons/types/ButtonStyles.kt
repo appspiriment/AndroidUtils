@@ -9,47 +9,101 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.UiColor
 
 
 data class ButtonStyle(
-    var textStyle : TextStyle,
-    var buttonColor: Color,
-    var strokeColor: Color = Color.Transparent,
-    var buttonShape: Shape = RoundedCornerShape(4.dp),
+    val textStyle : TextStyle,
+    val buttonColor: UiColor,
+    val textColor: UiColor,
+    val strokeColor: UiColor,
+    val buttonShape: Shape,
 ) {
     companion object {
         @Composable
-        fun primaryPositive(): ButtonStyle {
+        fun primaryPositive(
+            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            buttonColor: UiColor = Appspiriment.uiColors.primary,
+            textColor: UiColor = Appspiriment.uiColors.onPrimary,
+            strokeColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonShape: Shape = RoundedCornerShape(4.dp),
+        ): ButtonStyle {
             return ButtonStyle(
-                buttonColor = Appspiriment.colors.primary,
-                textStyle = Appspiriment.typography.textLarge,
+                buttonColor = buttonColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
             )
         }
 
         @Composable
-        fun primaryNegative(): ButtonStyle {
+        fun primaryNegative(
+            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            textColor: UiColor = Appspiriment.uiColors.primary,
+            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            strokeColor: UiColor = Appspiriment.uiColors.primary,
+            buttonShape: Shape = RoundedCornerShape(4.dp),
+        ): ButtonStyle {
             return ButtonStyle(
-                buttonColor = Color.Transparent,
-                textStyle = Appspiriment.typography.textLarge.copy(color = Appspiriment.colors.primary),
-                strokeColor = Appspiriment.colors.primary
+                buttonColor = buttonColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
             )
         }
 
         @Composable
-        fun transparentPositive(): ButtonStyle {
+        fun transparentPositive(
+            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            textColor: UiColor = Appspiriment.uiColors.primary,
+            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            strokeColor: UiColor = Appspiriment.uiColors.primary,
+            buttonShape: Shape = RoundedCornerShape(4.dp),
+        ): ButtonStyle {
             return ButtonStyle(
-                buttonColor = Color.Transparent,
-                textStyle = Appspiriment.typography.textLarge.copy(color = Appspiriment.colors.primary),
+                buttonColor = buttonColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
             )
         }
 
         @Composable
-        fun transparentNegative(): ButtonStyle {
+        fun transparentNegative(
+            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            textColor: UiColor = Appspiriment.uiColors.onPrimary,
+            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            strokeColor: UiColor = Appspiriment.uiColors.primary,
+            buttonShape: Shape = RoundedCornerShape(4.dp),
+        ): ButtonStyle {
             return ButtonStyle(
-                buttonColor = Color.Transparent,
-                textStyle = Appspiriment.typography.textLarge,
+                buttonColor = buttonColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
+            )
+        }
+
+        @Composable
+        fun plain(
+            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            textColor: UiColor = Appspiriment.uiColors.onPrimary,
+            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            strokeColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonShape: Shape = RoundedCornerShape(4.dp),
+        ): ButtonStyle {
+            return ButtonStyle(
+                buttonColor = buttonColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
             )
         }
     }

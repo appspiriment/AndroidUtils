@@ -6,20 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.UiColor
 
 @Composable
 fun PrefixedText(
     text: UiText,
     modifier: Modifier = Modifier,
     prefix: UiText? = null,
-    color: Color = Appspiriment.colors.onMainSurface,
-    prefixColor: Color = Appspiriment.colors.onMainSurface,
+    color: UiColor = Appspiriment.uiColors.onMainSurface,
+    prefixColor: UiColor = Appspiriment.uiColors.onMainSurface,
     textStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixPadding: Dp = Appspiriment.sizes.paddingSmall,

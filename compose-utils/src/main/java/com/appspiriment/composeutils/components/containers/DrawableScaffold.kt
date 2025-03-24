@@ -1,6 +1,5 @@
 package com.appspiriment.composeutils.components.containers
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,17 +35,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.VerticalSpacer
 import com.appspiriment.composeutils.components.core.image.AppsIcon
-import com.appspiriment.composeutils.components.core.image.types.toUiImage
+import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.containers.types.DrawerItem
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
+import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.toUiColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -72,8 +70,8 @@ fun DrawerScaffold(
                 navIconClick = onNavClick,
                 actions = actions,
                 appBarTitle = appBarTitle,
-                background = colors.topBarBackground,
-                onTopBarColor = colors.onTopBarColor
+                background = colors.topBarBackground.toUiColor(),
+                onTopBarColor = colors.onTopBarColor.toUiColor()
             )
         },
         drawerContent = { drawerState: DrawerState, coroutineScope: CoroutineScope ->

@@ -32,12 +32,12 @@ object SlideInRightToLeft {
     )
     val exit = slideOutHorizontally(
         animationSpec = tween(600),
-        targetOffsetX = {-it}
+        targetOffsetX = {it}
     )
 
     val popEnter = slideInHorizontally(
         animationSpec = tween(600),
-        initialOffsetX = {-it}
+        initialOffsetX = {it}
     )
     val popExit = slideOutHorizontally(
         animationSpec = tween(600),
@@ -52,12 +52,12 @@ object SlideInLeftToRight {
     )
     val exit = slideOutHorizontally(
         animationSpec = tween(600),
-        targetOffsetX = {it}
+        targetOffsetX = {-it}
     )
 
     val popEnter = slideInHorizontally(
         animationSpec = tween(600),
-        initialOffsetX = {it}
+        initialOffsetX = {-it}
     )
     val popExit = slideOutHorizontally(
         animationSpec = tween(600),

@@ -1,10 +1,8 @@
 package com.appspiriment.composeutils.components.containers
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -15,14 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.R
-import com.appspiriment.composeutils.components.containers.types.AppsBottomBarButton
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
-import com.appspiriment.composeutils.components.core.image.types.UiImage
-import com.appspiriment.composeutils.components.core.text.types.UiText
-import kotlinx.serialization.json.JsonNull.content
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.wrappers.toUiColor
 
 @Composable
 fun AppsPageScaffold(
@@ -44,8 +40,8 @@ fun AppsPageScaffold(
                 actions = actions,
                 actionsContent = actionsContent,
                 appBarTitle = appBarTitle,
-                background = colors.topBarBackground,
-                onTopBarColor = colors.onTopBarColor
+                background = colors.topBarBackground.toUiColor(),
+                onTopBarColor = colors.onTopBarColor.toUiColor()
             )
         },
         bottomBar = bottomBar,
@@ -60,7 +56,7 @@ fun PageScaffold(
     modifier: Modifier = Modifier,
     topBar: (@Composable () -> Unit)? = null,
     bottomBar: (@Composable () -> Unit) = {},
-    backgroundColor: Color = Color.LightGray,
+    backgroundColor: Color = Appspiriment.colors.background,
     content: @Composable PaddingValues.() -> Unit,
 ) {
     Scaffold(
@@ -73,12 +69,12 @@ fun PageScaffold(
     ) { content.invoke(it) }
 }
 
-sealed class NavigationMode(val icon: ImageVector) {
-    data object EMPTY : NavigationMode(Icons.Default.Home)
-    data object BACK : NavigationMode(Icons.AutoMirrored.Filled.ArrowBack)
-    data object CLOSE : NavigationMode(Icons.Default.Close)
-    data object DRAWER : NavigationMode(Icons.Default.Menu)
-    data object HOME : NavigationMode(Icons.Default.Home)
+sealed class NavigationMode(val icon: ImageVector, val contentDescription: String? = null) {
+    data object EMPTY : NavigationMode(Icons.Default.Home, null)
+    data object BACK : NavigationMode(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+    data object CLOSE : NavigationMode(Icons.Default.Close, "Close")
+    data object DRAWER : NavigationMode(Icons.Default.Menu, "Menu")
+    data object HOME : NavigationMode(Icons.Default.Home, "Home")
 }
 
 sealed class AppBarTitle(open val modifier: Modifier) {
