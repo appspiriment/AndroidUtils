@@ -13,8 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
+import com.appspiriment.composeutils.components.core.progress.FullscreenLoader
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
@@ -29,6 +32,7 @@ fun AppsPageScaffold(
     actions: List<AppsTopBarButton>? = null,
     actionsContent: @Composable RowScope.(Color) -> Unit = {},
     bottomBar: (@Composable () -> Unit) = {},
+    isLoading: Boolean = false,
     colors: ScaffoldColors = ScaffoldColors.defaults(),
     content: @Composable PaddingValues.() -> Unit,
 ) {
@@ -46,6 +50,7 @@ fun AppsPageScaffold(
         },
         bottomBar = bottomBar,
         modifier = modifier,
+        isLoading = isLoading,
         backgroundColor = colors.backgroundColor
     ) { content() }
 }
@@ -54,6 +59,7 @@ fun AppsPageScaffold(
 @Composable
 fun PageScaffold(
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     topBar: (@Composable () -> Unit)? = null,
     bottomBar: (@Composable () -> Unit) = {},
     backgroundColor: Color = Appspiriment.colors.background,
@@ -66,7 +72,12 @@ fun PageScaffold(
         bottomBar = bottomBar,
         modifier = modifier.fillMaxSize(),
         containerColor = backgroundColor
-    ) { content.invoke(it) }
+    ) {
+        content.invoke(it)
+        if (isLoading) {
+            FullscreenLoader()
+        }
+    }
 }
 
 sealed class NavigationMode(val icon: ImageVector, val contentDescription: String? = null) {
@@ -82,5 +93,14 @@ sealed class AppBarTitle(open val modifier: Modifier) {
         AppBarTitle(modifier)
 
     data class ScreenTitle(val title: UiText, override val modifier: Modifier = Modifier) :
+        AppBarTitle(modifier)
+
+    data class ScreenTitleWithIcon(
+        val icon: UiImage,
+        val iconHeight: Dp = 40.dp,
+        val title: UiText,
+        val subTitle: UiText,
+        override val modifier: Modifier = Modifier
+    ) :
         AppBarTitle(modifier)
 }

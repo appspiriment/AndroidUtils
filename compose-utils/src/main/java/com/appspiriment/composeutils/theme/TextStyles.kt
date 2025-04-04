@@ -76,7 +76,7 @@ data class BaseTextStyles(
 )
 
 @Composable
-fun createBaseTypography(baseSize: Sizes): BaseTextStyles {
+internal fun createBaseTypography(baseSize: Sizes): BaseTextStyles {
     val baseTextStyle = TextStyle.Default.copy(
         fontFamily = GoogleFonts.notoFamily,
         platformStyle = PlatformTextStyle(

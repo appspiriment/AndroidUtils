@@ -42,6 +42,7 @@ fun AppsBottomSheet(
     shape: Shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     contentAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     contentArrangement: Arrangement.Vertical = Arrangement.Top,
+    titleAlignment: Arrangement.Horizontal = Arrangement.Center,
     titlePadding: PaddingValues = PaddingValues(16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     content: @Composable() (ColumnScope.() -> Unit)
@@ -54,6 +55,7 @@ fun AppsBottomSheet(
             contentAlignment = contentAlignment,
             contentArrangement = contentArrangement,
             titlePadding = titlePadding,
+            titleAlignment = titleAlignment,
             contentPadding = contentPadding,
             content = content,
         )
@@ -88,6 +90,7 @@ private fun BottomSheetContent(
     dismissSheet: () -> Unit,
     showCloseButton: Boolean = true,
     contentAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    titleAlignment: Arrangement.Horizontal = Arrangement.Center,
     contentArrangement: Arrangement.Vertical = Arrangement.Top,
     titlePadding: PaddingValues = PaddingValues(horizontal = 16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -100,7 +103,7 @@ private fun BottomSheetContent(
                 .fillMaxWidth()
                 .padding(titlePadding),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = if (showCloseButton) Arrangement.SpaceBetween else Arrangement.Center
+            horizontalArrangement = if (showCloseButton) Arrangement.SpaceBetween else titleAlignment
         ) {
             if (showCloseButton) {
                 HorizontalSpacer(Appspiriment.sizes.paddingXLarge)

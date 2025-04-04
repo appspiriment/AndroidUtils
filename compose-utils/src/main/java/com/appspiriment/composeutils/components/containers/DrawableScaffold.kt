@@ -58,6 +58,7 @@ fun DrawerScaffold(
     drawerOptions: List<DrawerItem>? = null,
     drawerHeader: (@Composable () -> Unit)? = null,
     drawerFooter: (@Composable () -> Unit)? = null,
+    isLoading: Boolean = false,
     content: @Composable (PaddingValues) -> Unit,
 ) {
 
@@ -87,6 +88,7 @@ fun DrawerScaffold(
             VerticalSpacer()
             drawerFooter?.invoke()
         },
+        isLoading = isLoading,
         content = content
     )
 }
@@ -95,6 +97,7 @@ fun DrawerScaffold(
 fun DrawerScaffold(
     colors: ScaffoldColors = ScaffoldColors.defaults(),
     gestureEnabled: Boolean = true,
+    isLoading: Boolean = false,
     topBar: (@Composable (state: DrawerState, scope: CoroutineScope, drawerIconAction: () -> Unit) -> Unit)? = null,
     drawerContent: (@Composable ColumnScope.(state: DrawerState, scope: CoroutineScope) -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
@@ -125,8 +128,9 @@ fun DrawerScaffold(
                         }
                     }
                 }
-            }) {
-
+            },
+            isLoading = isLoading
+        ) {
             content.invoke(this)
         }
 

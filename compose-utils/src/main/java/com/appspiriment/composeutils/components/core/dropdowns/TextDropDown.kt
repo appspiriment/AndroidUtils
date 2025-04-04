@@ -3,26 +3,23 @@ package com.appspiriment.composeutils.components.core.dropdowns
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.appspiriment.composeutils.components.core.image.AppsIcon
-import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.components.core.text.MalayalamText
 import com.appspiriment.composeutils.wrappers.UiText
 
 
 @Composable
-fun IconDropDown(
+fun TextDropDown(
     items: List<UiText>,
-    icon: UiImage,
-    modifier: Modifier = Modifier,
     onItemSelected: (index: Int) -> Unit
 ) {
     DropDownSpinner(
         items = items,
         onSelectedIndexChange = { onItemSelected(it) },
-    ) { _, _, onClick ->
+    ) { index, item, onClick ->
 
-        AppsIcon(
-            icon = icon,
-                modifier = modifier.clickable { onClick() }
-            )
+        MalayalamText(
+            text = item,
+            modifier = Modifier.clickable { onClick() }
+        )
     }
 }

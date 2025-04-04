@@ -136,7 +136,7 @@ data class UiSizes(
 
 // Composable function to create an object of Sizes
 @Composable
-fun createSizes(): Sizes {
+internal fun createSizes(): Sizes {
     return Sizes(
         appBarSize = dimensionResource(id = R.dimen.app_bar_height),
 
@@ -201,7 +201,7 @@ fun createSizes(): Sizes {
 
 // Composable function to create an object of Sizes
 @Composable
-fun createUiSizes(): UiSizes {
+internal fun createUiSizes(): UiSizes {
     return UiSizes(
         appBarSize = uiDimenResource(id = R.dimen.app_bar_height),
 

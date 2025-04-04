@@ -92,7 +92,7 @@ data class ButtonStyle(
 
         @Composable
         fun plain(
-            textStyle : TextStyle = Appspiriment.typography.textLarge,
+            textStyle : TextStyle = Appspiriment.typography.textMediumLarge,
             textColor: UiColor = Appspiriment.uiColors.onPrimary,
             buttonColor: UiColor = UiColor.DynamicColor.Transparent,
             strokeColor: UiColor = UiColor.DynamicColor.Transparent,

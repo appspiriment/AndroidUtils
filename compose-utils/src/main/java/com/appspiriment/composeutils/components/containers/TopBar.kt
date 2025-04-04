@@ -1,5 +1,6 @@
 package com.appspiriment.composeutils.components.containers
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -16,8 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.core.image.AppsImage
@@ -102,6 +105,22 @@ fun AppBarTitleImage(
             }
 
             is AppBarTitle.ScreenTitle -> {
+                MalayalamText(
+                    text = appBarTitle.title,
+                    style = Appspiriment.typography.textMediumLarge.semiBold,
+                    color = tintColor
+                )
+            }
+
+            is AppBarTitle.ScreenTitleWithIcon -> {
+                AppsIcon(
+                    icon = appBarTitle.icon,
+                    modifier = Modifier
+                        .size(appBarTitle.iconHeight)
+                        .padding(end = Appspiriment.sizes.paddingXLarge),
+
+                    iconHeight = null
+                )
                 MalayalamText(
                     text = appBarTitle.title,
                     style = Appspiriment.typography.textMediumLarge.semiBold,

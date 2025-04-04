@@ -100,7 +100,7 @@ data class BaseUiColors(
 
 // Light color scheme object
 @Composable
-fun baseColors() = BaseColors(
+internal fun baseColors() = BaseColors(
     primary = colorResource(id = R.color.primary),
     onPrimary = colorResource(id = R.color.onPrimary),
     secondary = colorResource(id = R.color.secondary),
@@ -147,7 +147,7 @@ fun baseColors() = BaseColors(
 
 // Light color scheme object
 @Composable
-fun baseUiColors() = BaseUiColors(
+internal fun baseUiColors() = BaseUiColors(
     primary = uiColorResource(id = R.color.primary),
     onPrimary = uiColorResource(id = R.color.onPrimary),
     secondary = uiColorResource(id = R.color.secondary),
