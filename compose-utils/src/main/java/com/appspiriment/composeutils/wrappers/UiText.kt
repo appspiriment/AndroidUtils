@@ -19,16 +19,15 @@ import kotlinx.serialization.Serializable
  * regardless of its source or complexity.
  */
 sealed class UiText {
+    companion object{
+        val Empty = DynamicString("")
+    }
     /**
      * Represents a raw string.
      *
      * @property value The raw string value.
      */
-    @Serializable data class DynamicString(val value: String) : UiText(){
-        companion object{
-            val Empty = DynamicString("")
-        }
-    }
+    @Serializable data class DynamicString(val value: String) : UiText()
 
     /**
      * Represents a string resource ID.
@@ -59,11 +58,7 @@ sealed class UiText {
      *
      * @property value The AnnotatedString value.
      */
-    data class DynamicAnnotatedString(val value: AnnotatedString) : UiText(){
-        companion object{
-            val Empty = DynamicAnnotatedString(AnnotatedString(""))
-        }
-    }
+    data class DynamicAnnotatedString(val value: AnnotatedString) : UiText()
 
     /**
      * Resolves the UiText to a String.
@@ -100,6 +95,51 @@ sealed class UiText {
             is DynamicAnnotatedString -> value
         }
     }
+
+    /**
+     * Compares this UiText with another UiText for equality.
+     *
+     * @param other The other UiText to compare with.
+     * @param context The context used to resolve string resources.
+     * @return True if the UiTexts are equal, false otherwise.
+     */
+    fun equals(other: UiText, context: Context): Boolean {
+        return asString(context) == other.asString(context)
+    }
+
+    /**
+     * Compares this UiText with another UiText for equality without a context.
+     * This is only applicable to DynamicString and DynamicAnnotatedString.
+     *
+     * @param other The other UiText to compare with.
+     * @return True if the UiTexts are equal, false otherwise.
+     */
+    override fun equals(other: Any?): Boolean {
+        return when {
+            this === other -> true // Check for reference equality first
+            other is UiText -> when {
+                this is DynamicString && other is DynamicString -> this.value == other.value
+                this is DynamicAnnotatedString && other is DynamicAnnotatedString -> this.value == other.value
+                else -> false
+            }
+            other is String -> when(this){
+                is DynamicString -> this.value == other
+                is DynamicAnnotatedString -> this.value.text == other
+                else -> false
+            }
+            else -> false
+        }
+    }
+
+    override fun hashCode(): Int {
+        return when (this) {
+            is DynamicString -> value.hashCode()
+            is StringResource -> resId.hashCode()
+            is PluralResource -> resId.hashCode() + quantity.hashCode()
+            is DynamicAnnotatedString -> value.hashCode()
+        }
+    }
+
 
     /**
      * Checks if the UiText is blank (empty or contains only whitespace).
@@ -149,50 +189,10 @@ sealed class UiText {
         }
     }
 
-    /**
-     * Compares this UiText with another UiText for equality.
-     *
-     * @param other The other UiText to compare with.
-     * @param context The context used to resolve string resources.
-     * @return True if the UiTexts are equal, false otherwise.
-     */
-    fun equals(other: UiText, context: Context): Boolean {
-        return asString(context) == other.asString(context)
-    }
-
-    /**
-     * Compares this UiText with another UiText for equality without a context.
-     * This is only applicable to DynamicString and DynamicAnnotatedString.
-     *
-     * @param other The other UiText to compare with.
-     * @return True if the UiTexts are equal, false otherwise.
-     */
-    override fun equals(other: Any?): Boolean {
-        return when {
-            this === other -> true // Check for reference equality first
-            other is UiText -> when {
-                this is DynamicString && other is DynamicString -> this.value == other.value
-                this is DynamicAnnotatedString && other is DynamicAnnotatedString -> this.value == other.value
-                else -> false
-            }
-            other is String -> when(this){
-                is DynamicString -> this.value == other
-                is DynamicAnnotatedString -> this.value.text == other
-                else -> false
-            }
-            else -> false
-        }
-    }
-
-    override fun hashCode(): Int {
-        return when (this) {
-            is DynamicString -> value.hashCode()
-            is StringResource -> resId.hashCode()
-            is PluralResource -> resId.hashCode() + quantity.hashCode()
-            is DynamicAnnotatedString -> value.hashCode()
-        }
-    }
-
+    fun takeIfNoEmpty() = takeIf { !isEmpty() }
+    fun takeIfNoBlank() = takeIf { !isBlank() }
+    fun takeIfNoEmpty(context: Context) = takeIf { !isEmpty(context) }
+    fun takeIfNoBlank(context: Context) = takeIf { !isBlank(context) }
 }
 
 fun String.toUiText() = UiText.DynamicString(this)
@@ -200,6 +200,7 @@ fun Int.toUiText() = UiText.DynamicString("$this")
 fun List<String>.toUiText() = map{ UiText.DynamicString(it) }
 fun AnnotatedString.toUiText() = UiText.DynamicAnnotatedString(this)
 fun CharSequence.toUiText() = UiText.DynamicString(this.toString())
+
 
 
 @Composable

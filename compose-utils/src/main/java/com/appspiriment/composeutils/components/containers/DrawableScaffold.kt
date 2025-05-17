@@ -66,7 +66,7 @@ fun DrawerScaffold(
         colors = colors,
         gestureEnabled = gestureEnabled,
         topBar = { _: DrawerState, _: CoroutineScope, onNavClick: () -> Unit ->
-            TopBar(
+            AppsTopBar(
                 navMode = NavigationMode.DRAWER,
                 navIconClick = onNavClick,
                 actions = actions,

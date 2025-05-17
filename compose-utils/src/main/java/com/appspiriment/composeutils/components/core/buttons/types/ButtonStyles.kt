@@ -27,7 +27,7 @@ data class ButtonStyle(
             textStyle : TextStyle = Appspiriment.typography.textLarge,
             buttonColor: UiColor = Appspiriment.uiColors.primary,
             textColor: UiColor = Appspiriment.uiColors.onPrimary,
-            strokeColor: UiColor = UiColor.DynamicColor.Transparent,
+            strokeColor: UiColor = UiColor.Transparent,
             buttonShape: Shape = RoundedCornerShape(4.dp),
         ): ButtonStyle {
             return ButtonStyle(
@@ -43,7 +43,7 @@ data class ButtonStyle(
         fun primaryNegative(
             textStyle : TextStyle = Appspiriment.typography.textLarge,
             textColor: UiColor = Appspiriment.uiColors.primary,
-            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonColor: UiColor = UiColor.Transparent,
             strokeColor: UiColor = Appspiriment.uiColors.primary,
             buttonShape: Shape = RoundedCornerShape(4.dp),
         ): ButtonStyle {
@@ -60,7 +60,7 @@ data class ButtonStyle(
         fun transparentPositive(
             textStyle : TextStyle = Appspiriment.typography.textLarge,
             textColor: UiColor = Appspiriment.uiColors.primary,
-            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonColor: UiColor = UiColor.Transparent,
             strokeColor: UiColor = Appspiriment.uiColors.primary,
             buttonShape: Shape = RoundedCornerShape(4.dp),
         ): ButtonStyle {
@@ -77,7 +77,7 @@ data class ButtonStyle(
         fun transparentNegative(
             textStyle : TextStyle = Appspiriment.typography.textLarge,
             textColor: UiColor = Appspiriment.uiColors.onPrimary,
-            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonColor: UiColor = UiColor.Transparent,
             strokeColor: UiColor = Appspiriment.uiColors.primary,
             buttonShape: Shape = RoundedCornerShape(4.dp),
         ): ButtonStyle {
@@ -94,8 +94,8 @@ data class ButtonStyle(
         fun plain(
             textStyle : TextStyle = Appspiriment.typography.textMediumLarge,
             textColor: UiColor = Appspiriment.uiColors.onPrimary,
-            buttonColor: UiColor = UiColor.DynamicColor.Transparent,
-            strokeColor: UiColor = UiColor.DynamicColor.Transparent,
+            buttonColor: UiColor = UiColor.Transparent,
+            strokeColor: UiColor = UiColor.Transparent,
             buttonShape: Shape = RoundedCornerShape(4.dp),
         ): ButtonStyle {
             return ButtonStyle(

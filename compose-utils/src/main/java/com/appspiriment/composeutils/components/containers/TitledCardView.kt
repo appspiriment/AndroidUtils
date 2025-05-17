@@ -28,6 +28,7 @@ import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.LocalColors
+import com.appspiriment.composeutils.theme.semiBold
 import com.appspiriment.composeutils.wrappers.UiColor
 
 
@@ -120,7 +121,7 @@ fun TitledCardViewPreview() {
 }
 
 data class TitledCardViewTitleStyle(
-    val background: UiColor = UiColor.DynamicColor.Transparent,
+    val background: UiColor = UiColor.Transparent,
     val style: TextStyle,
     val color: UiColor,
     val align: TextAlign = TextAlign.Center,
@@ -137,7 +138,7 @@ object TitleCardViewDefaults {
     fun noticeStyle(
         background: UiColor = Appspiriment.uiColors.primary,
         color: UiColor = Appspiriment.uiColors.onPrimary,
-        style: TextStyle = Appspiriment.typography.textMediumSemiBold,
+        style: TextStyle = Appspiriment.typography.textMedium.semiBold,
         align: TextAlign = TextAlign.Center,
         titleModifier: Modifier = Modifier.padding(
             start = 16.dp,
@@ -155,9 +156,9 @@ object TitleCardViewDefaults {
 
     @Composable
     fun titleAtStart(
-        background: UiColor = UiColor.DynamicColor.Transparent,
+        background: UiColor = UiColor.Transparent,
         color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
-        style: TextStyle = Appspiriment.typography.textSmallSemiBold,
+        style: TextStyle = Appspiriment.typography.textSmall.semiBold,
         titleModifier: Modifier = Modifier.padding(
             start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
         )
@@ -171,9 +172,9 @@ object TitleCardViewDefaults {
 
     @Composable
     fun centerTitle(
-        background: UiColor = UiColor.DynamicColor.Transparent,
+        background: UiColor = UiColor.Transparent,
         color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
-        style: TextStyle = Appspiriment.typography.textMediumSemiBold,
+        style: TextStyle = Appspiriment.typography.textMedium.semiBold,
         titleModifier: Modifier = Modifier.padding(
             start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
         )

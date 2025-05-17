@@ -1,23 +1,48 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.SonatypeHost
 plugins {
-    alias(appspirimentlibs.plugins.appspiriment.library.base)
+    alias(appspirimentlibs.plugins.google.android.library)
+    alias(appspirimentlibs.plugins.kotlin.android)
     alias(libs.plugins.vanniktech.publish)
 }
 
 android {
     namespace = "com.appspiriment.utils"
 
-    defaultConfig{
-        aarMetadata {
-            minCompileSdk = appspirimentlibs.versions.minSdk.get().toInt()
-        }
+    compileSdk = appspirimentlibs.versions.compileSdk.get().toInt()
+
+    defaultConfig {
+        minSdk = appspirimentlibs.versions.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    appspiriment {
-        enableUtils = false
-        enableMinify = false
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
+    compileOptions {
+        appspirimentlibs.versions.javaVersion.get().toInt().let{
+            JavaVersion.toVersion(it)
+        }.let{
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
+    }
+    kotlinOptions {
+        jvmTarget = appspirimentlibs.versions.javaVersion.get()
+    }
+}
+
+
+dependencies {
+    implementation(appspirimentlibs.bundles.android.base)
+    testImplementation(appspirimentlibs.junit.test)
+
 }
 
 mavenPublishing {

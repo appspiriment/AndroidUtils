@@ -44,7 +44,7 @@
     <color name="accentedGoldText">#EB8202</color>
 
     <color name="topAppBar">#1E1E1E</color>
-    <color name="onTopAppBar">@color/onMainSurface</color>
+    <color name="onTopAppBar">#F1F1F2</color>
     <color name="disabledText">#616161</color>
     <color name="subText">#BDBDBD</color>
     <color name="hintText">#8B9096</color>

@@ -17,6 +17,7 @@ import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.components.containers.TitleCardViewDefaults
 import com.appspiriment.composeutils.components.containers.TitledCardView
+import com.appspiriment.composeutils.theme.semiBold
 import com.appspiriment.composeutils.wrappers.UiColor
 
 
@@ -29,7 +30,7 @@ fun KeyValuePairText(
     keyColor: UiColor = Appspiriment.uiColors.onMainSurface,
     prefixColor: UiColor = Appspiriment.uiColors.onMainSurface,
     valueColor: UiColor = Appspiriment.uiColors.onMainSurface,
-    keyStyle: TextStyle = Appspiriment.typography.textMediumSemiBold,
+    keyStyle: TextStyle = Appspiriment.typography.textMedium.semiBold,
     valueStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
     alignBothSides: Boolean = true,

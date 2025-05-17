@@ -22,13 +22,14 @@ import com.appspiriment.composeutils.components.core.buttons.TextButton
 import com.appspiriment.composeutils.components.core.text.MalayalamText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.semiBold
 
 @Composable
 fun MessageDialog(
     modifier: Modifier = Modifier,
     title: UiText? = null,
     message: UiText? = null,
-    titleStyle: TextStyle = Appspiriment.typography.textLargeSemiBold,
+    titleStyle: TextStyle = Appspiriment.typography.textLarge.semiBold,
     messageStyle: TextStyle = Appspiriment.typography.textMedium,
     titleAlign: TextAlign = TextAlign.Center,
     messageAlign: TextAlign = TextAlign.Center,

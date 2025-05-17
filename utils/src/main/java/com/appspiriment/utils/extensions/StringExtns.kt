@@ -32,6 +32,21 @@ fun String.toPaddedString(padStart: Int = 2, padChar: Char = '0'): String {
 }
 
 /**
+ * Returns this [String] if it is not null or blank (i.e., not empty and contains at least one non-whitespace character),
+ * otherwise returns `null`.
+ *
+ * @return This string if it is not null or blank, otherwise `null`.
+ */
+fun String?.takeIfNotNullOrBlank() = takeIf { !it.isNullOrBlank() }
+
+/**
+ * Returns this [String] if it is not null or  empty, otherwise returns `null`.
+ *
+ * @return This string if it is not null or empty, otherwise `null`.
+ */
+fun String?.takeIfNotNullOrEmpty() = takeIf { !it.isNullOrEmpty() }
+
+/**
  * Returns this [String] if it is not blank (i.e., not empty and contains at least one non-whitespace character),
  * otherwise returns `null`.
  *

@@ -68,6 +68,7 @@ data class Sizes(
     val fontSizeXXLarge: TextUnit = TextUnit.Unspecified,
     val fontSizeXXXLarge: TextUnit = TextUnit.Unspecified,
     val fontSizeBig: TextUnit = TextUnit.Unspecified,
+    val fontSizeXBig: TextUnit = TextUnit.Unspecified,
     val fontSizeHuge: TextUnit = TextUnit.Unspecified,
     val fontSizeGiant: TextUnit = TextUnit.Unspecified,
 )
@@ -194,6 +195,7 @@ internal fun createSizes(): Sizes {
         fontSizeXXLarge = textSizeResource(id = R.dimen.font_size_xxlarge),
         fontSizeXXXLarge = textSizeResource(id = R.dimen.font_size_xxxlarge),
         fontSizeBig = textSizeResource(id = R.dimen.font_size_big),
+        fontSizeXBig = textSizeResource(id = R.dimen.font_size_xbig),
         fontSizeHuge = textSizeResource(id = R.dimen.font_size_huge),
         fontSizeGiant = textSizeResource(id = R.dimen.font_size_giant)
     )

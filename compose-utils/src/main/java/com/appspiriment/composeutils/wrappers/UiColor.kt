@@ -14,20 +14,19 @@ import androidx.compose.ui.res.colorResource
  * regardless of its source.
  */
 sealed class UiColor {
+    companion object {
+        val Black = DynamicColor(Color.Black)
+        val White = DynamicColor(Color.White)
+        val Transparent = DynamicColor(Color.Transparent)
+        val Unspecified = DynamicColor(Color.Unspecified)
+    }
+
     /**
      * Represents a raw Color.
      *
      * @property value The raw Color value.
      */
-    data class DynamicColor(val value: Color) : UiColor() {
-        companion object {
-            val Black = DynamicColor(Color.Black)
-            val White = DynamicColor(Color.White)
-            val Transparent = DynamicColor(Color.Transparent)
-            val Unspecified = DynamicColor(Color.Unspecified)
-        }
-    }
-
+    data class DynamicColor(val value: Color) : UiColor()
     /**
      * Represents a color resource ID.
      *

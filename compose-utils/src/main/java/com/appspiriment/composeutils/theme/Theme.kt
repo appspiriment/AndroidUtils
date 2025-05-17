@@ -4,10 +4,13 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.text.font.FontFamily
+import kotlinx.serialization.json.JsonNull.content
 
 
 @Composable
 fun CompositionBaseProvider(
+    fontFamily: FontFamily = GoogleFonts.notoFamily,
     content: @Composable () -> Unit
 ) {
     val colors = baseColors()
@@ -15,7 +18,7 @@ fun CompositionBaseProvider(
 
     val sizes = createSizes()
     val uiSizes = createUiSizes()
-    val typography = createBaseTypography(sizes)
+    val typography = createBaseTypography(baseSize = sizes, fontFamily = fontFamily)
 
     // Provide custom colors and MaterialTheme
     CompositionLocalProvider(

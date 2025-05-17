@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
+
 import com.appspiriment.composeutils.R
 
 private val provider = GoogleFont.Provider(
@@ -24,10 +26,14 @@ object GoogleFonts {
         )
     )
     val notoFamily: FontFamily = FontFamily(
-        Font(
-            googleFont = GoogleFont("Noto Sans Malayalam"),
-            fontProvider = provider,
-        )
+        Font(R.font.noto_thin, FontWeight.Thin),
+        Font(R.font.noto_extra_light, FontWeight.ExtraLight),
+        Font(R.font.noto_light, FontWeight.Light),
+        Font(R.font.noto_medium, FontWeight.Medium),
+        Font(R.font.noto_semi_bold, FontWeight.SemiBold),
+        Font(R.font.noto_bold, FontWeight.Bold),
+        Font(R.font.noto_extra_bold, FontWeight.ExtraBold),
+        Font(R.font.noto_black, FontWeight.Black),
     )
 }
 
@@ -65,20 +71,16 @@ data class BaseTextStyles(
     val textXXLarge: TextStyle = TextStyle.Default,
     val textXXXLarge: TextStyle = TextStyle.Default,
     val textBig: TextStyle = TextStyle.Default,
+    val textXBig: TextStyle = TextStyle.Default,
+    val textHuge: TextStyle = TextStyle.Default,
     val textGiant: TextStyle = TextStyle.Default,
 
-    val textSmallSemiBold: TextStyle = TextStyle.Default,
-    val textSmallBold: TextStyle = TextStyle.Default,
-    val textMediumSemiBold: TextStyle = TextStyle.Default,
-    val textMediumBold: TextStyle = TextStyle.Default,
-    val textLargeSemiBold: TextStyle = TextStyle.Default,
-    val textLargeBold: TextStyle = TextStyle.Default,
 )
 
 @Composable
-internal fun createBaseTypography(baseSize: Sizes): BaseTextStyles {
+internal fun createBaseTypography(baseSize: Sizes, fontFamily: FontFamily): BaseTextStyles {
     val baseTextStyle = TextStyle.Default.copy(
-        fontFamily = GoogleFonts.notoFamily,
+        fontFamily = fontFamily,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
         )
@@ -121,34 +123,16 @@ internal fun createBaseTypography(baseSize: Sizes): BaseTextStyles {
         textBig = baseTextStyle.copy(
             fontSize = baseSize.fontSizeBig
         ),
+        textXBig = baseTextStyle.copy(
+            fontSize = baseSize.fontSizeXBig
+        ),
+        textHuge = baseTextStyle.copy(
+            fontSize = baseSize.fontSizeHuge
+        ),
         textGiant = baseTextStyle.copy(
             fontSize = baseSize.fontSizeGiant
         ),
-        //Combinations
-        textSmallSemiBold = baseTextStyle.copy(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = baseSize.fontSizeSmall
-        ),
-        textSmallBold = baseTextStyle.copy(
-            fontWeight = FontWeight.Bold,
-            fontSize = baseSize.fontSizeSmall
-        ),
-        textMediumSemiBold = baseTextStyle.copy(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = baseSize.fontSizeMedium
-        ),
-        textMediumBold = baseTextStyle.copy(
-            fontWeight = FontWeight.Bold,
-            fontSize = baseSize.fontSizeMedium
-        ),
-        textLargeSemiBold = baseTextStyle.copy(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = baseSize.fontSizeLarge
-        ),
-        textLargeBold = baseTextStyle.copy(
-            fontWeight = FontWeight.Bold,
-            fontSize = baseSize.fontSizeLarge
-        ),
+
     )
 }
 

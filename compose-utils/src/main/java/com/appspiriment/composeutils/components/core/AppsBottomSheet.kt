@@ -27,6 +27,7 @@ import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.components.core.text.MalayalamText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.semiBold
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +46,7 @@ fun AppsBottomSheet(
     titleAlignment: Arrangement.Horizontal = Arrangement.Center,
     titlePadding: PaddingValues = PaddingValues(16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+    modifier: Modifier = Modifier,
     content: @Composable() (ColumnScope.() -> Unit)
 ) {
     val bottomSheetContent: @Composable() (ColumnScope.() -> Unit) = {
@@ -63,6 +65,7 @@ fun AppsBottomSheet(
     if (showSheet) {
         if (showDragHandle) {
             ModalBottomSheet(
+                modifier = modifier,
                 onDismissRequest = dismissSheet,
                 sheetState = state,
                 shape = shape,
@@ -72,6 +75,7 @@ fun AppsBottomSheet(
             }
         } else {
             ModalBottomSheet(
+                modifier = modifier,
                 onDismissRequest = dismissSheet,
                 sheetState = state,
                 shape = shape,
@@ -111,7 +115,7 @@ private fun BottomSheetContent(
             title?.let {
                 MalayalamText(
                     text = it,
-                    style = Appspiriment.typography.textLargeSemiBold
+                    style = Appspiriment.typography.textLarge.semiBold
                 )
             }
             if (showCloseButton) {

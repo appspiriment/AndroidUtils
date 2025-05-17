@@ -9,7 +9,7 @@ targetSdk = "35"
 compileSdk = "35"
 javaVersion = "21"
 
-appspiriment = "0.0.5"
+appspiriment = "0.0.6.dev-43"
 appspirimentLogUtils = "0.0.1"
 appspirimentUtils = "0.0.1"
 appspirimentComposeUtils = "0.0.2"
@@ -18,7 +18,7 @@ appspirimentUpdateUtils = "0.0.1"
 #Classpath Version
 agp = "8.4.2"
 kotlin = "2.0.0"
-ksp = "2.0.0-1.0.21"
+ksp = "2.0.0-1.0.23"
 hilt = "2.49"
 kotlinserializeplugin = "2.0.0"
 #Classpath Version End
@@ -64,7 +64,6 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 #androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-material = { group = "androidx.compose.material", name = "material" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended"}
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
@@ -125,7 +124,6 @@ android-compose = [
     "androidx-compose-foundation",
     "androidx-ui",
     "androidx-ui-tooling-preview",
-    "androidx-material",
     "androidx-material3",
     "androidx-compose-material-iconsExtended",
     "androidx-ui-text-google-fonts",
@@ -167,6 +165,4 @@ appspiriment-library = { id = "io.github.appspiriment.library", version.ref = "a
 appspiriment-library-compose = { id = "io.github.appspiriment.library-compose", version.ref = "appspiriment" }
 appspiriment-library-hilt = { id = "io.github.appspiriment.library-hilt", version.ref = "appspiriment" }
 appspiriment-library-base = { id = "io.github.appspiriment.library-base", version.ref = "appspiriment" }
-appspiriment-hilt = { id = "io.github.appspiriment.hilt", version.ref = "appspiriment" }
 appspiriment-room = { id = "io.github.appspiriment.room", version.ref = "appspiriment" }
-appspiriment-publish = { id = "io.github.appspiriment.mavenpublish", version.ref = "appspiriment" }

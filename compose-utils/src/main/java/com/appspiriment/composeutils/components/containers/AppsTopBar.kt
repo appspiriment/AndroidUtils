@@ -1,10 +1,13 @@
 package com.appspiriment.composeutils.components.containers
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -17,22 +20,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.components.core.text.MalayalamText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.noPadding
 import com.appspiriment.composeutils.theme.semiBold
 import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(
+fun AppsTopBar(
     navMode: NavigationMode = NavigationMode.EMPTY,
     navIconClick: (() -> Unit)? = null,
     appBarTitle: AppBarTitle?,
@@ -58,7 +59,7 @@ fun TopBar(
             appBarTitle?.let {
                 AppBarTitleImage(
                     appBarTitle = it,
-                    tintColor = onTopBarColor
+                    tintColor = onTopBarColor,
                 )
             }
         },
@@ -94,7 +95,7 @@ fun AppBarTitleImage(
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = appBarTitle.modifier
+        modifier = appBarTitle.modifier.fillMaxHeight()
     ) {
         when (appBarTitle) {
             is AppBarTitle.BrandLogo -> {
@@ -117,16 +118,31 @@ fun AppBarTitleImage(
                     icon = appBarTitle.icon,
                     modifier = Modifier
                         .size(appBarTitle.iconHeight)
-                        .padding(end = Appspiriment.sizes.paddingXLarge),
+                        .padding(end = Appspiriment.sizes.paddingSmall),
 
                     iconHeight = null
                 )
-                MalayalamText(
-                    text = appBarTitle.title,
-                    style = Appspiriment.typography.textMediumLarge.semiBold,
-                    color = tintColor
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(Appspiriment.sizes.paddingXXSmall)) {
+                    MalayalamText(
+                        text = appBarTitle.title,
+                        style = appBarTitle.titleStyle?:Appspiriment.typography.textMediumLarge.semiBold.noPadding,
+                        color = tintColor,
+                        modifier = Modifier.offset(y=1.dp)
+                    )
+                    appBarTitle.subTitle?.let {
+                        MalayalamText(
+                            text = it,
+                            style = appBarTitle.subTitleStyle
+                                ?: Appspiriment.typography.textSmall.noPadding,
+                            color = tintColor,
+                            modifier = Modifier.offset(y = 1.dp)
+                        )
+                    }
+                }
+
             }
+
+            AppBarTitle.None -> {}
         }
     }
 }
