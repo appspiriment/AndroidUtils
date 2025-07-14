@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.wrappers.toUiImage
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.semiBold
@@ -113,7 +113,7 @@ private fun BottomSheetContent(
                 HorizontalSpacer(Appspiriment.sizes.paddingXLarge)
             }
             title?.let {
-                MalayalamText(
+                AppspirimentText(
                     text = it,
                     style = Appspiriment.typography.textLarge.semiBold
                 )

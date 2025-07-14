@@ -13,18 +13,8 @@ data class DialogButtonStyle(
     companion object {
         @Composable
         fun primary(
-            positiveStyle: ButtonStyle = ButtonStyle.primaryPositive(),
-            negativeStyle: ButtonStyle = ButtonStyle.primaryNegative(),
-            arrangement: Arrangement.Horizontal = Arrangement.SpaceAround
-        ) = DialogButtonStyle(
-            positiveStyle = positiveStyle,
-            negativeStyle = negativeStyle,
-            arrangement = arrangement
-        )
-        @Composable
-        fun transparent(
-            positiveStyle: ButtonStyle = ButtonStyle.transparentPositive(),
-            negativeStyle: ButtonStyle = ButtonStyle.transparentNegative(),
+            positiveStyle: ButtonStyle = ButtonStyle.primary(),
+            negativeStyle: ButtonStyle = ButtonStyle.outlined(),
             arrangement: Arrangement.Horizontal = Arrangement.SpaceAround
         ) = DialogButtonStyle(
             positiveStyle = positiveStyle,

@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import com.appspiriment.composeutils.components.core.dropdowns.models.DropDownItem
 import com.appspiriment.composeutils.components.core.dropdowns.models.SpinnerStyle
 import com.appspiriment.composeutils.components.core.dropdowns.models.SpinnerStyleDefaults
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
@@ -72,7 +72,7 @@ fun DropDownModelSpinner(
                 DropdownMenuItem(
                     text = {
                         itemStyle.run {
-                            MalayalamText(
+                            AppspirimentText(
                                 text = item.label,
                                 modifier = modifier,
                                 style = textStyle.copy(color = textColor),

@@ -1,6 +1,7 @@
 package com.appspiriment.utils.time
 
 import android.text.format.DateFormat
+import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatterBuilder
@@ -9,6 +10,8 @@ import kotlin.math.roundToLong
 
 fun ZonedDateTime.format(pattern: String): String =
     DateTimeFormatterBuilder().appendPattern(pattern).toFormatter(Locale.ENGLISH).format(this)
+
+fun millisToZonedDateTime(millis: Long): ZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
 
 fun zonedTimeFromMillis(millis: Long): ZonedDateTime = ZonedDateTime.ofInstant(java.time.Instant.ofEpochMilli(millis), ZoneId.systemDefault())
 fun millisToNazhikaVinazhika(millis: Long) : Pair<Int, Int>  = ((millis.toDouble()/1000)/24).let{
@@ -23,12 +26,15 @@ val ZonedDateTime.date_mmm_dd: String get() = format("MMM dd")
 val ZonedDateTime.dateTime_mmm_dd_hh_mm_a: String get() = format("MMM dd hh:mm a")
 val ZonedDateTime.dateTime_mmm_dd_HH_mm: String get() = format("MMM dd HH:mm")
 val ZonedDateTime.dateTime_mmm_dd_split_hh_mm_a: String get() = format("MMM dd\nhh:mm a")
-val ZonedDateTime.dateTime_mmm_dd_splut_HH_mm: String get() = format("MMM dd\nHH:mm")
+val ZonedDateTime.dateTime_mmm_dd_split_HH_mm: String get() = format("MMM dd\nHH:mm")
 
 val ZonedDateTime.nextDay: ZonedDateTime get() = plusDays(1)
 val ZonedDateTime.previousDay: ZonedDateTime get() = plusDays(-1)
 val ZonedDateTime.previousMonth: ZonedDateTime get() = plusMonths(-1)
 val ZonedDateTime.nextMonth: ZonedDateTime get() = plusMonths(1)
+val ZonedDateTime.end_of_day: ZonedDateTime get() = withHour(23).withMinute(59).withSecond(59).withNano(59)
+
+val ZonedDateTime.nextWholeHour: ZonedDateTime get() = plusHours(1).withMinute(0).withSecond(0).withNano(0)
 
 val ZonedDateTime.decimalHours: Double get() = hour.toDouble() + minute.toDouble() / 60 + second.toDouble() / 3600
 val ZonedDateTime.decimalYears: Double get() = year.toDouble() + (month.value.toDouble() / 12) + (dayOfMonth.toDouble() / 365.25) - 1.086

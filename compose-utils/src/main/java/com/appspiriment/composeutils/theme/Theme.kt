@@ -1,16 +1,22 @@
 package com.appspiriment.composeutils.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.text.font.FontFamily
-import kotlinx.serialization.json.JsonNull.content
 
 
 @Composable
 fun CompositionBaseProvider(
-    fontFamily: FontFamily = GoogleFonts.notoFamily,
+    content: @Composable () -> Unit
+) {
+    MalayalamCompositionBaseProvider(fontFamily = null, content = content)
+}
+
+
+@Composable
+fun MalayalamCompositionBaseProvider(
+    fontFamily: FontFamily? = GoogleFonts.notoFamily,
     content: @Composable () -> Unit
 ) {
     val colors = baseColors()
@@ -19,6 +25,9 @@ fun CompositionBaseProvider(
     val sizes = createSizes()
     val uiSizes = createUiSizes()
     val typography = createBaseTypography(baseSize = sizes, fontFamily = fontFamily)
+    val flags = BaseFlags(
+        isNotoFont = fontFamily == GoogleFonts.notoFamily
+    )
 
     // Provide custom colors and MaterialTheme
     CompositionLocalProvider(
@@ -27,8 +36,9 @@ fun CompositionBaseProvider(
         LocalSizes provides sizes,
         LocalUiSizes provides uiSizes,
         LocalTypography provides typography,
+        LocalFlags provides flags,
         content = content
-     )
+    )
 }
 
 object Appspiriment{
@@ -42,4 +52,6 @@ object Appspiriment{
         @Composable  @ReadOnlyComposable get() = LocalUiSizes.current
     val typography: BaseTextStyles
         @Composable @ReadOnlyComposable get() = LocalTypography.current
+    val flags: BaseFlags
+        @Composable @ReadOnlyComposable get() = LocalFlags.current
 }

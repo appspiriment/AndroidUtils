@@ -3,6 +3,7 @@ package com.appspiriment.composeutils.components.core.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
-fun MalayalamText(
+fun AppspirimentText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = Appspiriment.typography.textMedium,
@@ -45,15 +46,22 @@ fun MalayalamText(
 ) {
     Text(
         text = text,
-        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color.asColor(LocalContext.current),
-        textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
-        overflow = overflow, softWrap = softWrap, maxLines = maxLines,
+        modifier = modifier.offset(y = 1.dp),
+        style = style,
+        letterSpacing = letterSpacing,
+        color = color.asColor(LocalContext.current),
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        lineHeight = lineHeight,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
         onTextLayout = onTextLayout
     )
 }
 
 @Composable
-fun MalayalamText(
+fun AppspirimentText(
     text: UiText,
     modifier: Modifier = Modifier,
     style: TextStyle = Appspiriment.typography.textMedium,
@@ -70,9 +78,16 @@ fun MalayalamText(
 ) {
     Text(
         text = text.asAnnotatedString(LocalContext.current, isHtml),
-        modifier = modifier, style = style, letterSpacing = letterSpacing, color = color.asColor(LocalContext.current),
-        textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
-        overflow = overflow, softWrap = softWrap, maxLines = maxLines,
+        modifier = modifier.offset(y = 1.dp),
+        style = style,
+        letterSpacing = letterSpacing,
+        color = color.asColor(LocalContext.current),
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        lineHeight = lineHeight,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
         onTextLayout = onTextLayout
     )
 }
@@ -85,9 +100,9 @@ fun PreviewMalayalamText() {
         modifier = Modifier.background(Appspiriment.colors.background),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        MalayalamText(text = uiTextResource(id = R.string.sankara_smrithi))
+        AppspirimentText(text = uiTextResource(id = R.string.sankara_smrithi))
 
-        MalayalamText(text = "Appspiriment Labs ആപ്സ്പിരിമെന്റ് ലാബ്സ്".toUiText())
+        AppspirimentText(text = "Appspiriment Labs ആപ്സ്പിരിമെന്റ് ലാബ്സ്".toUiText())
 
         val annotatedString = buildAnnotatedString {
             append("Appspiriment ആപ്സ്പിരിമെന്റ് ")
@@ -101,6 +116,6 @@ fun PreviewMalayalamText() {
                 append("Smrithi സ്മൃതി")
             }
         }
-        MalayalamText(text = annotatedString.toUiText())
+        AppspirimentText(text = annotatedString.toUiText())
     }
 }

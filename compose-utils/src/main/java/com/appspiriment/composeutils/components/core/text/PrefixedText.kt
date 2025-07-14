@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import com.appspiriment.composeutils.wrappers.UiText
@@ -29,7 +28,7 @@ fun PrefixedText(
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         prefix?.let {
             (prefixStyle).run {
-                MalayalamText(
+                AppspirimentText(
                     text = it,
                     color = prefixColor,
                     style = prefixStyle,
@@ -38,7 +37,7 @@ fun PrefixedText(
             }
         }
         textStyle.run {
-            MalayalamText(
+            AppspirimentText(
                 text = text,
                 color = color,
                 style = textStyle,

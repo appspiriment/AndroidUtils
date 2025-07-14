@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.containers.PageScaffold
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.UiText
 
@@ -47,7 +47,7 @@ fun FullscreenLoader(
                 CircularProgressIndicator(
                     color = color
                 )
-                MalayalamText(UiText.DynamicString("Please wait..."))
+                AppspirimentText(UiText.DynamicString("Please wait..."))
             }
         }
     }

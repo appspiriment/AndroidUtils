@@ -7,16 +7,18 @@ import com.appspiriment.composeutils.wrappers.UiText
 
 
 @Composable
-fun TextButton(
+fun AppsButton(
     text: UiText,
     modifier: Modifier = Modifier,
-    buttonStyle: ButtonStyle = ButtonStyle.primaryPositive(),
+    textModifier: Modifier = Modifier,
+    buttonStyle: ButtonStyle = ButtonStyle.primary(),
     onClick: () -> Unit
 ) {
-    IconButton(
-        startIcon = null,
+    AppsImageButton(
+        icon = null,
         text = text,
         modifier = modifier,
+        textModifier = textModifier,
         buttonStyle = buttonStyle,
         onClick = onClick
     )

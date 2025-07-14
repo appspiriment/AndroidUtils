@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.appspiriment.composeutils.components.core.buttons.TextButton
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.buttons.AppsButton
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.semiBold
@@ -62,7 +62,7 @@ fun MessageDialog(
         ) {
 
             title?.let {
-                MalayalamText(
+                AppspirimentText(
                     text = it,
                     style = titleStyle,
                     textAlign = titleAlign,
@@ -71,7 +71,7 @@ fun MessageDialog(
             }
 
             message?.let {
-                messageContent?.invoke(it) ?: MalayalamText(
+                messageContent?.invoke(it) ?: AppspirimentText(
                     text = it,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,7 +90,7 @@ fun MessageDialog(
                     .fillMaxWidth()
             ) {
                 negativeText?.let {
-                    TextButton(
+                    AppsButton(
                         text = it,
                         buttonStyle = buttonStyle.negativeStyle,
                         modifier = Modifier
@@ -102,7 +102,7 @@ fun MessageDialog(
                     }
                 }
                 positiveText?.let {
-                    TextButton(
+                    AppsButton(
                         text = it,
                         buttonStyle = buttonStyle.positiveStyle,
                         modifier = Modifier.defaultMinSize(minWidth = 96.dp)

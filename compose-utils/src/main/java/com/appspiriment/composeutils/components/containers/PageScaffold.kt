@@ -1,11 +1,8 @@
 package com.appspiriment.composeutils.components.containers
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -24,14 +21,13 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
 import com.appspiriment.composeutils.components.core.progress.FullscreenLoader
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.toUiColor
 import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.wrappers.toUiText
-import kotlinx.serialization.json.JsonNull.content
 
 @Composable
 fun AppsPageScaffold(
@@ -139,6 +135,6 @@ fun PreviewPageScaffold() {
             ),
         )
     ) {
-        MalayalamText("Appspirimnet Labs")
+        AppspirimentText("Appspirimnet Labs")
     }
 }

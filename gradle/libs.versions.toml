@@ -4,9 +4,9 @@
 
 [versions]
 #App Versions
-appspirimentUtils = "0.0.3"
+appspirimentUtils = "0.0.5"
 logUtils = "0.0.1"
-composeUtils = "0.0.3"
+composeUtils = "0.0.5"
 updateUtils = "0.0.1"
 vanniktechPublish = "0.30.0"
 agp = "8.4.2"

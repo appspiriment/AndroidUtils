@@ -11,14 +11,16 @@ fun DisableSoftKeyboard(
     disable: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    InterceptPlatformTextInput(
-        interceptor = { request, nextHandler ->
-            if (!disable) {
-                nextHandler.startInputMethod(request)
-            } else {
+    if (disable) {
+        InterceptPlatformTextInput(
+            interceptor = { _, _ ->
+                // Swallow keyboard activation requests
                 awaitCancellation()
-            }
-        },
-        content = content,
-    )
+            },
+            content = content,
+        )
+    } else {
+        // Do not intercept anything, allow keyboard to show normally
+        content()
+    }
 }

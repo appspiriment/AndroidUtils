@@ -23,11 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.theme.LocalColors
 import com.appspiriment.composeutils.theme.semiBold
 import com.appspiriment.composeutils.wrappers.UiColor
 
@@ -59,7 +58,7 @@ fun TitledCardView(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             title?.let {
-                MalayalamText(
+                AppspirimentText(
                     text = it,
                     color = titleStyle.color,
                     style = titleStyle.style,
@@ -96,7 +95,7 @@ fun TitledCardViewPreview() {
             titleStyle = TitleCardViewDefaults.noticeStyle(),
             background = Appspiriment.uiColors.primaryCardContainer,
         ) {
-            MalayalamText(text = "Appspiriment".toUiText())
+            AppspirimentText(text = "Appspiriment".toUiText())
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -105,7 +104,7 @@ fun TitledCardViewPreview() {
             background = Appspiriment.uiColors.primaryCardContainer,
             titleStyle = TitleCardViewDefaults.noticeStyle(),
         ) {
-            MalayalamText(text = "Appspiriment 24".toUiText())
+            AppspirimentText(text = "Appspiriment 24".toUiText())
         }
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -114,7 +113,7 @@ fun TitledCardViewPreview() {
             titleStyle = TitleCardViewDefaults.titleAtStart(),
             background = Appspiriment.uiColors.primaryCardContainer,
         ) {
-            MalayalamText(text = "Appspiriment".toUiText())
+            AppspirimentText(text = "Appspiriment".toUiText())
         }
 
     }

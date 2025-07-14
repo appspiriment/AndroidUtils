@@ -41,7 +41,7 @@ import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.containers.types.DrawerItem
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.toUiColor
@@ -174,7 +174,7 @@ fun DrawerState.DrawerLayoutMenuItem(
                         .size(24.dp)
                 )
             }
-            MalayalamText(
+            AppspirimentText(
                 text = item.menuTitle,
                 style = item.textStyle,
                 modifier = Modifier.padding()

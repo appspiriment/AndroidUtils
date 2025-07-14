@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.toUiImage
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
@@ -41,7 +41,7 @@ fun ChipDropDown(
         AssistChip(
             onClick = onClick,
             label = {
-                MalayalamText(
+                AppspirimentText(
                     text = label,
                     style = chipTextStyle,
                     modifier = Modifier.offset(y = 1.dp)

@@ -3,6 +3,7 @@ package com.appspiriment.composeutils.components.core.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -56,52 +57,68 @@ fun ImageText(
     trailingImage: UiImage? = null,
     startingImageHeight: Dp? = null,
     trailingImageHeight: Dp? = null,
+    rowModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     iconPadding: Dp? = 8.dp,
-    usePainter:Boolean = false,
+    usePainter: Boolean = false,
     isHtml: Boolean = false,
     onClick: (() -> Unit)? = null
 ) {
-    Row(
+    Box(
         modifier = modifier.apply {
             onClick?.let { clickable { it.invoke() } }
         },
-        verticalAlignment = Alignment.CenterVertically
+        contentAlignment = Alignment.Center
     ) {
-        startingImage?.let {
-            AppsImage(
-                image = startingImage,
-                modifier = startingImageHeight?.let { h ->
-                    Modifier.height(h)
-                } ?: Modifier,
-                usePainter = usePainter
+        Row(
+            modifier = rowModifier,
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            startingImage?.let {
+                AppsImage(
+                    image = startingImage,
+                    modifier = startingImageHeight?.let { h ->
+                        Modifier.height(h)
+                    } ?: Modifier,
+                    usePainter = usePainter
+                )
+
+                iconPadding?.let { iconPadding ->
+                    HorizontalSpacer(iconPadding)
+                }
+            }
+            AppspirimentText(
+                text = text,
+                color = color,
+                style = style,
+                letterSpacing = letterSpacing,
+                textDecoration = textDecoration,
+                textAlign = textAlign,
+                lineHeight = lineHeight,
+                overflow = overflow,
+                softWrap = softWrap,
+                maxLines = maxLines,
+                onTextLayout = onTextLayout,
+                modifier = textModifier.offset(y = (-1).dp),
+                isHtml = isHtml
             )
 
-            iconPadding?.let { iconPadding ->
-                HorizontalSpacer(iconPadding)
-            }
-        }
-        MalayalamText(
-            text = text,
-            color = color,
-            style = style, letterSpacing = letterSpacing,
-            textDecoration = textDecoration, textAlign = textAlign, lineHeight = lineHeight,
-            overflow = overflow, softWrap = softWrap, maxLines = maxLines,
-            onTextLayout = onTextLayout, modifier = textModifier.offset(y=1.dp), isHtml = isHtml
-        )
+            trailingImage?.let {
 
-        trailingImage?.let {
-
-            iconPadding?.let {padding ->
-                FillerSpacer(minWidth = padding)
+                iconPadding?.let { padding ->
+                    FillerSpacer(minWidth = padding)
+                }
+                AppsImage(
+                    image = it,
+                    modifier = trailingImageHeight?.let { h ->
+                        Modifier
+                            .height(h)
+                            .offset(y = (-1).dp)
+                    } ?: Modifier,
+                    usePainter = usePainter
+                )
             }
-            AppsImage(
-                image = it,
-                modifier = trailingImageHeight?.let { h ->
-                    Modifier.height(h).offset( y=(-1).dp)
-                } ?: Modifier,
-                usePainter = usePainter
-            )
         }
     }
 }
@@ -109,7 +126,10 @@ fun ImageText(
 @Preview
 @Composable
 fun PreviewImageText() {
-    Column(modifier = Modifier.background(Appspiriment.colors.background), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.background(Appspiriment.colors.background),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         ImageText(
             startingImage = uiImageResouce(R.drawable.ic_action_config),
             text = uiTextResource(id = R.string.sankara_smrithi)
@@ -120,7 +140,7 @@ fun PreviewImageText() {
             text = "Appspiriment Labs".toUiText()
         )
 
-       val annotatedString = buildAnnotatedString {
+        val annotatedString = buildAnnotatedString {
             append("Appspiriment ")
             withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
                 append("Labs ")

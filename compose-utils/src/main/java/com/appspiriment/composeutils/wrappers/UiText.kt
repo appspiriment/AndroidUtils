@@ -201,6 +201,18 @@ fun List<String>.toUiText() = map{ UiText.DynamicString(it) }
 fun AnnotatedString.toUiText() = UiText.DynamicAnnotatedString(this)
 fun CharSequence.toUiText() = UiText.DynamicString(this.toString())
 
+fun String?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+fun Int?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+fun List<String>?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+fun AnnotatedString?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+fun CharSequence?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+
+fun String?.toUiTextOrElse(provider: ()-> String) = (this?:provider()).toUiText()
+fun Int?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
+fun List<String>?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
+fun AnnotatedString?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
+fun CharSequence?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
+
 
 
 @Composable

@@ -3,7 +3,7 @@ package com.appspiriment.composeutils.components.core.dropdowns
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 
 
@@ -17,7 +17,7 @@ fun TextDropDown(
         onSelectedIndexChange = { onItemSelected(it) },
     ) { index, item, onClick ->
 
-        MalayalamText(
+        AppspirimentText(
             text = item,
             modifier = Modifier.clickable { onClick() }
         )

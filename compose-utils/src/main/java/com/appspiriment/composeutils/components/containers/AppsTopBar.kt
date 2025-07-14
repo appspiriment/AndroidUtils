@@ -3,7 +3,6 @@ package com.appspiriment.composeutils.components.containers
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
 import com.appspiriment.composeutils.components.core.image.AppsImage
-import com.appspiriment.composeutils.components.core.text.MalayalamText
+import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.noPadding
 import com.appspiriment.composeutils.theme.semiBold
@@ -106,7 +105,7 @@ fun AppBarTitleImage(
             }
 
             is AppBarTitle.ScreenTitle -> {
-                MalayalamText(
+                AppspirimentText(
                     text = appBarTitle.title,
                     style = Appspiriment.typography.textMediumLarge.semiBold,
                     color = tintColor
@@ -123,14 +122,14 @@ fun AppBarTitleImage(
                     iconHeight = null
                 )
                 Column(verticalArrangement = Arrangement.spacedBy(Appspiriment.sizes.paddingXXSmall)) {
-                    MalayalamText(
+                    AppspirimentText(
                         text = appBarTitle.title,
                         style = appBarTitle.titleStyle?:Appspiriment.typography.textMediumLarge.semiBold.noPadding,
                         color = tintColor,
                         modifier = Modifier.offset(y=1.dp)
                     )
                     appBarTitle.subTitle?.let {
-                        MalayalamText(
+                        AppspirimentText(
                             text = it,
                             style = appBarTitle.subTitleStyle
                                 ?: Appspiriment.typography.textSmall.noPadding,

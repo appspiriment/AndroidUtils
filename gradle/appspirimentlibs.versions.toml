@@ -9,46 +9,46 @@ targetSdk = "35"
 compileSdk = "35"
 javaVersion = "21"
 
-appspiriment = "0.0.6.dev-43"
+appspiriment = "0.0.10"
 appspirimentLogUtils = "0.0.1"
-appspirimentUtils = "0.0.1"
-appspirimentComposeUtils = "0.0.2"
+appspirimentUtils = "0.0.3"
+appspirimentComposeUtils = "0.0.3"
 appspirimentUpdateUtils = "0.0.1"
 
 #Classpath Version
-agp = "8.4.2"
-kotlin = "2.0.0"
-ksp = "2.0.0-1.0.23"
-hilt = "2.49"
-kotlinserializeplugin = "2.0.0"
+agp = "8.7.3"
+kotlin = "2.1.20"
+ksp = "2.1.20-2.0.1"
+hilt = "2.56.2"
+kotlinserializeplugin = "2.1.20"
 #Classpath Version End
 
-coreKtx = "1.15.0"
-room = "2.6.1"
+coreKtx = "1.16.0"
+room = "2.7.2"
 multidex = "2.0.1"
-kotlinserialize = "1.6.3"
-kotlinxCoroutines = "1.7.3"
+kotlinserialize = "1.7.3"
+kotlinxCoroutines = "1.10.1"
 
-googleServices = "4.4.2"
+googleServices = "4.4.3"
 
 #Android Compose  Dep Version
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2025.01.01"
-composeNavigation = "2.8.5"
+lifecycleRuntimeKtx = "2.9.1"
+activityCompose = "1.10.1"
+composeBom = "2025.06.01"
+composeNavigation = "2.9.1"
 composeHiltNavigation = "1.2.0"
-lifecycle = "2.8.7"
+lifecycle = "2.9.1"
 
 #Tools
 lottie = "6.0.0"
-firebaseBom = "33.9.0"
+firebaseBom = "33.16.0"
 
 #Test Versions
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
-firebasecrashlyticsplugin = "3.0.2"
+firebasecrashlyticsplugin = "3.0.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +64,7 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 #androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material = { group = "androidx.compose.material", name = "material" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended"}
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
@@ -93,6 +94,7 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 
 #Lottie
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
@@ -124,6 +126,7 @@ android-compose = [
     "androidx-compose-foundation",
     "androidx-ui",
     "androidx-ui-tooling-preview",
+    "androidx-material",
     "androidx-material3",
     "androidx-compose-material-iconsExtended",
     "androidx-ui-text-google-fonts",

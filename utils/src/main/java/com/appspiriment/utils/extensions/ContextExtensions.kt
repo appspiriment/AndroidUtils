@@ -1,8 +1,11 @@
 package com.appspiriment.utils.extensions
 
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
+import android.os.IBinder
 import android.widget.Toast
 
 /**
@@ -28,5 +31,28 @@ fun Context.launchPlayStorePage(){
         try {
             startActivity(it)
         } catch (_: Exception) { }
+    }
+}
+
+fun Context.initiateNumberDial(phoneNumber: String, onFail: (Exception)->Unit = {}) {
+    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber")).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    try {
+        startActivity(intent)
+    } catch (e: Exception) {
+        onFail(e)
+    }
+}
+
+fun Context.initiateSms(phoneNumber: String, message: String = "", onFail: (Exception)->Unit = {}) {
+    val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$phoneNumber")).apply {
+        putExtra("sms_body", message)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    try {
+        startActivity(intent)
+    } catch (e: Exception) {
+        onFail(e)
     }
 }
