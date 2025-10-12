@@ -21,12 +21,12 @@ import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.buttons.types.ButtonStyle
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.uiImageResouce
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.Appspiriment.sizes
+import com.appspiriment.composeutils.wrappers.uiImageResource
 
 
 @Composable
@@ -87,16 +87,16 @@ sealed interface IconPosition{
 @Composable
 fun PreviewIconButton(){
     Column {
-        AppsImageButton(icon = uiImageResouce(R.drawable.ic_action_config), text = uiTextResource(R.string.sankara_smrithi)) {}
+        AppsImageButton(icon = uiImageResource(R.drawable.ic_action_config), text = uiTextResource(R.string.sankara_smrithi)) {}
         AppsImageButton(
-            icon  = uiImageResouce(R.drawable.ic_action_config),
+            icon  = uiImageResource(R.drawable.ic_action_config),
             iconPosition = IconPosition.End,
             text = uiTextResource(R.string.sankara_smrithi),
             iconPadding = 24.dp
         ) {}
 
         AppsImageButton(
-            icon  = uiImageResouce(R.drawable.ic_action_config),
+            icon  = uiImageResource(R.drawable.ic_action_config),
             iconPosition = IconPosition.End,
             text = uiTextResource(R.string.sankara_smrithi),
             iconPadding = 24.dp,

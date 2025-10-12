@@ -21,5 +21,40 @@ data class DialogButtonStyle(
             negativeStyle = negativeStyle,
             arrangement = arrangement
         )
+
+        @Composable
+        fun outlined(
+            positiveStyle: ButtonStyle = ButtonStyle.outlined(),
+            negativeStyle: ButtonStyle = ButtonStyle.outlined(),
+            arrangement: Arrangement.Horizontal = Arrangement.SpaceAround
+        ) = DialogButtonStyle(
+            positiveStyle = positiveStyle,
+            negativeStyle = negativeStyle,
+            arrangement = arrangement
+        )
+
+        @Composable
+        fun transparent(
+            positiveStyle: ButtonStyle = ButtonStyle.transparent(),
+            negativeStyle: ButtonStyle = ButtonStyle.transparent(),
+            arrangement: Arrangement.Horizontal = Arrangement.SpaceAround
+        ) = DialogButtonStyle(
+            positiveStyle = positiveStyle,
+            negativeStyle = negativeStyle,
+            arrangement = arrangement
+        )
+
+        @Composable
+        fun default(
+            positiveStyle: ButtonStyle = ButtonStyle.primary(),
+            negativeStyle: ButtonStyle = ButtonStyle.primary(),
+            arrangement: Arrangement.Horizontal = Arrangement.End
+        ) = DialogButtonStyle(
+            positiveStyle = positiveStyle,
+            negativeStyle = negativeStyle,
+            arrangement = arrangement
+        )
+
+
     }
 }

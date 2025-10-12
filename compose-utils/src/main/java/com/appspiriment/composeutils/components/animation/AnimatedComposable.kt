@@ -19,7 +19,10 @@ inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
     exitAnimation: ExitTransition = SlideInRightToLeft.exit,
     noinline content: @Composable (NavBackStackEntry) -> Unit,
 ) {
-    composable<T> { backStackEntry ->
+    composable<T>(
+
+
+    ) { backStackEntry ->
         var visible by remember { mutableStateOf(false) }
 
         LaunchedEffect(key1 = backStackEntry) {

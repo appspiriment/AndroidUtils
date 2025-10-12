@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -18,16 +19,17 @@ import kotlinx.serialization.Serializable
  * a quantity string resource ID, or an AnnotatedString. It provides a unified way to manage text in your UI,
  * regardless of its source or complexity.
  */
+
 sealed class UiText {
     companion object{
-        val Empty = DynamicString("")
+        val Empty: UiText = DynamicString("")
     }
     /**
      * Represents a raw string.
      *
      * @property value The raw string value.
      */
-    @Serializable data class DynamicString(val value: String) : UiText()
+    data class DynamicString(val value: String) : UiText()
 
     /**
      * Represents a string resource ID.
@@ -193,6 +195,11 @@ sealed class UiText {
     fun takeIfNoBlank() = takeIf { !isBlank() }
     fun takeIfNoEmpty(context: Context) = takeIf { !isEmpty(context) }
     fun takeIfNoBlank(context: Context) = takeIf { !isBlank(context) }
+
+
+    @Composable
+    fun asString() = asString(LocalContext.current)
+
 }
 
 fun String.toUiText() = UiText.DynamicString(this)
@@ -201,17 +208,17 @@ fun List<String>.toUiText() = map{ UiText.DynamicString(it) }
 fun AnnotatedString.toUiText() = UiText.DynamicAnnotatedString(this)
 fun CharSequence.toUiText() = UiText.DynamicString(this.toString())
 
-fun String?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
-fun Int?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
-fun List<String>?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
-fun AnnotatedString?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
-fun CharSequence?.toUiTextOrEmpty() = this?.toUiText() ?: UiText.Empty
+fun String?.toUiTextOrEmpty(): UiText = this?.toUiText() ?: UiText.Empty
+fun Int?.toUiTextOrEmpty(): UiText = this?.toUiText() ?: UiText.Empty
+fun List<String?>?.toUiTextOrEmpty(): List<UiText> = this?.map{it?.toUiText() ?: UiText.Empty } ?: emptyList()
+fun AnnotatedString?.toUiTextOrEmpty(): UiText = this?.toUiText() ?: UiText.Empty
+fun CharSequence?.toUiTextOrEmpty() : UiText= this?.toUiText() ?: UiText.Empty
 
-fun String?.toUiTextOrElse(provider: ()-> String) = (this?:provider()).toUiText()
-fun Int?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
-fun List<String>?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
-fun AnnotatedString?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
-fun CharSequence?.toUiTextOrElse(provider: ()-> String) = this?.toUiText() ?: provider().toUiText()
+fun String?.toUiTextOrElse(provider: ()-> String): UiText = (this?:provider()).toUiText()
+fun Int?.toUiTextOrElse(provider: ()-> String): UiText = this?.toUiText() ?: provider().toUiText()
+fun List<String>?.toUiTextOrElse(provider: ()-> List<String>): List<UiText> = this?.map{it.toUiText()} ?: provider().map { it.toUiText() }
+fun AnnotatedString?.toUiTextOrElse(provider: ()-> String): UiText = this?.toUiText() ?: provider().toUiText()
+fun CharSequence?.toUiTextOrElse(provider: ()-> String): UiText = this?.toUiText() ?: provider().toUiText()
 
 
 

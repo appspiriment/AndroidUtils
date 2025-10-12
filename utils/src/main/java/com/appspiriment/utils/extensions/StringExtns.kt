@@ -114,3 +114,37 @@ fun String.ifNotBlankAnd(predicate: (String) -> Boolean, block: (String) -> Stri
  * @return The result of the block if the string is not empty and satisfies the predicate, otherwise `null`.
  */
 fun String.ifNotEmptyAnd(predicate: (String) -> Boolean, block: (String) -> String) = takeIfNotEmptyAnd(predicate)?.let(block)
+
+
+fun String.removeWhiteSpace(): String = this.replace(" ","")
+
+/**
+ * Converts a string to Title Case where each word's first letter is capitalized
+ * and the rest of the letters in that word are lowercase.
+ * Words are identified by splitting the string by common delimiters (space, underscore, hyphen).
+ *
+ * Examples:
+ * "hello world" -> "Hello World"
+ * "hello_world" -> "Hello World"
+ * "hello-world" -> "Hello World"
+ * "HELLO WORLD" -> "Hello World"
+ * "hELLo wORLd" -> "Hello World"
+ * "  hello   world  " -> "Hello World" (trims and handles multiple spaces)
+ */
+fun String.titleCase(): String {
+    if (this.isBlank()) return ""
+
+    // Regex to split by one or more spaces, underscores, or hyphens
+    val delimiters = Regex("[\\s_-]+")
+
+    return this.trim() // Remove leading/trailing whitespace
+        .split(delimiters)
+        .filter { it.isNotEmpty() } // Filter out empty strings that might result from multiple delimiters
+        .joinToString(" ") { word ->
+            if (word.isNotEmpty()) {
+                word.substring(0, 1).uppercase() + word.substring(1).lowercase()
+            } else {
+                "" // Should not happen due to filter, but as a safeguard
+            }
+        }
+}

@@ -1,8 +1,11 @@
 package com.appspiriment.composeutils.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 data class BaseFlags(
-    val isNotoFont: Boolean = false
+    val isNotoFont: Boolean = false,
+    val notoFontPadding: Dp = 0.dp
 )
 val LocalFlags  by lazy { staticCompositionLocalOf { BaseFlags() } }

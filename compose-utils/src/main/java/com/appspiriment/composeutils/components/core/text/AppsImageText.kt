@@ -32,15 +32,15 @@ import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.uiImageResouce
-import com.appspiriment.composeutils.wrappers.uiVectorResouce
+import com.appspiriment.composeutils.wrappers.uiImageResource
+import com.appspiriment.composeutils.wrappers.uiVectorResource
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
-fun ImageText(
+fun AppsImageText(
     text: UiText,
     modifier: Modifier = Modifier,
     color: UiColor = Appspiriment.uiColors.onMainSurface,
@@ -100,14 +100,14 @@ fun ImageText(
                 softWrap = softWrap,
                 maxLines = maxLines,
                 onTextLayout = onTextLayout,
-                modifier = textModifier.offset(y = (-1).dp),
+                modifier = textModifier,
                 isHtml = isHtml
             )
 
             trailingImage?.let {
 
                 iconPadding?.let { padding ->
-                    FillerSpacer(minWidth = padding)
+                    HorizontalSpacer(padding)
                 }
                 AppsImage(
                     image = it,
@@ -130,13 +130,13 @@ fun PreviewImageText() {
         modifier = Modifier.background(Appspiriment.colors.background),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        ImageText(
-            startingImage = uiImageResouce(R.drawable.ic_action_config),
+        AppsImageText(
+            startingImage = uiImageResource(R.drawable.ic_action_config),
             text = uiTextResource(id = R.string.sankara_smrithi)
         )
 
-        ImageText(
-            startingImage = uiVectorResouce(R.drawable.ic_action_config),
+        AppsImageText(
+            startingImage = uiVectorResource(R.drawable.ic_action_config),
             text = "Appspiriment Labs".toUiText()
         )
 
@@ -152,8 +152,8 @@ fun PreviewImageText() {
                 append("Smrithi")
             }
         }
-        ImageText(
-            startingImage = uiVectorResouce(R.drawable.ic_action_config),
+        AppsImageText(
+            startingImage = uiVectorResource(R.drawable.ic_action_config),
             text = annotatedString.toUiText()
         )
     }

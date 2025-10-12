@@ -1,4 +1,4 @@
-package com.appspiriment.composeutils.components.uitls.base
+package com.appspiriment.composeutils.components.utils.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

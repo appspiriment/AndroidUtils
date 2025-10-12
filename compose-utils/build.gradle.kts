@@ -32,6 +32,11 @@ android {
             targetCompatibility = it
         }
     }
+    lint {
+        disable.add("NullSafeMutableLiveData")
+        // Or using the older syntax if the above doesn't work in your AGP version:
+        // disable += "NullSafeMutableLiveData"
+    }
     kotlinOptions {
         jvmTarget = appspirimentlibs.versions.javaVersion.get()
     }

@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.uiImageResouce
+import com.appspiriment.composeutils.wrappers.uiImageResource
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.UiColor
 
@@ -50,6 +50,6 @@ fun CircularButton(
 @Composable
 fun PreviewCircularButton() {
     Column {
-        CircularButton(icon = uiImageResouce(R.drawable.ic_action_config)) {}
+        CircularButton(icon = uiImageResource(R.drawable.ic_action_config)) {}
     }
 }

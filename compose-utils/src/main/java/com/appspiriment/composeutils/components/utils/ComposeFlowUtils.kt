@@ -1,4 +1,4 @@
-package com.appspiriment.composeutils.components.uitls
+package com.appspiriment.composeutils.components.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

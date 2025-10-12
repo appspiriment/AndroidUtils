@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -25,8 +26,10 @@ fun MalayalamCompositionBaseProvider(
     val sizes = createSizes()
     val uiSizes = createUiSizes()
     val typography = createBaseTypography(baseSize = sizes, fontFamily = fontFamily)
+    val isNotoFont = fontFamily == GoogleFonts.notoFamily
     val flags = BaseFlags(
-        isNotoFont = fontFamily == GoogleFonts.notoFamily
+        isNotoFont = isNotoFont,
+        notoFontPadding = if(isNotoFont) (-2).dp else 0.dp
     )
 
     // Provide custom colors and MaterialTheme

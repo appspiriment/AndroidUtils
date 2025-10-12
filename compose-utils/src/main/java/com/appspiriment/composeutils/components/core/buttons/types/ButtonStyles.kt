@@ -61,6 +61,25 @@ data class ButtonStyle(
                 buttonShape = buttonShape
             )
         }
+
+        @Composable
+        fun transparent(
+            textStyle : TextStyle = Appspiriment.typography.textMedium,
+            buttonColor: UiColor = Color.Transparent.toUiColor(),
+            buttonPressedColor: UiColor = Appspiriment.uiColors.primary,
+            textColor: UiColor = Appspiriment.uiColors.primary,
+            strokeColor: UiColor = Color.Transparent.toUiColor(),
+            buttonShape: Shape = CircleShape,
+        ): ButtonStyle {
+            return ButtonStyle(
+                buttonColor = buttonColor,
+                buttonPressedColor = buttonPressedColor,
+                textColor = textColor,
+                textStyle = textStyle,
+                strokeColor = strokeColor,
+                buttonShape = buttonShape
+            )
+        }
     }
 }
 

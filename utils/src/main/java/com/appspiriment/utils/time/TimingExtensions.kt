@@ -1,10 +1,12 @@
 package com.appspiriment.utils.time
 
 import android.text.format.DateFormat
+import java.time.DayOfWeek
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.TemporalAdjusters
 import java.util.Locale
 import kotlin.math.roundToLong
 
@@ -13,21 +15,22 @@ fun ZonedDateTime.format(pattern: String): String =
 
 fun millisToZonedDateTime(millis: Long): ZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
 
-fun zonedTimeFromMillis(millis: Long): ZonedDateTime = ZonedDateTime.ofInstant(java.time.Instant.ofEpochMilli(millis), ZoneId.systemDefault())
-fun millisToNazhikaVinazhika(millis: Long) : Pair<Int, Int>  = ((millis.toDouble()/1000)/24).let{
-    val nazhika = (it/60).toInt()
-    Pair(nazhika, (it-(nazhika*60)).toInt())
-}
+fun ZonedDateTime.next(week: DayOfWeek): ZonedDateTime = with(TemporalAdjusters.next(week))
+
 
 val ZonedDateTime.time_hhmm_a: String get() = format("hh:mm a")
 val ZonedDateTime.time_hhmmss_a: String get() = format("hh:mm:ss a")
 val ZonedDateTime.time_HHmm: String get() = format("HH:mm")
+val ZonedDateTime.date_yyyymmdd: String get() = format("yyyyMMdd")
 val ZonedDateTime.date_mmm_dd: String get() = format("MMM dd")
+val ZonedDateTime.date_dd_MMM_yyyy: String get() = format("dd MMM yyyy")
 val ZonedDateTime.dateTime_mmm_dd_hh_mm_a: String get() = format("MMM dd hh:mm a")
 val ZonedDateTime.dateTime_mmm_dd_HH_mm: String get() = format("MMM dd HH:mm")
 val ZonedDateTime.dateTime_mmm_dd_split_hh_mm_a: String get() = format("MMM dd\nhh:mm a")
 val ZonedDateTime.dateTime_mmm_dd_split_HH_mm: String get() = format("MMM dd\nHH:mm")
 
+
+val ZonedDateTime.weekName: String get() = format("EEEE")
 val ZonedDateTime.nextDay: ZonedDateTime get() = plusDays(1)
 val ZonedDateTime.previousDay: ZonedDateTime get() = plusDays(-1)
 val ZonedDateTime.previousMonth: ZonedDateTime get() = plusMonths(-1)

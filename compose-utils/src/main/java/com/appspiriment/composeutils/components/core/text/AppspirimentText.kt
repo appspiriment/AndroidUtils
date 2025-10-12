@@ -46,7 +46,7 @@ fun AppspirimentText(
 ) {
     Text(
         text = text,
-        modifier = modifier.offset(y = 1.dp),
+        modifier = modifier.offset(y = Appspiriment.flags.notoFontPadding),
         style = style,
         letterSpacing = letterSpacing,
         color = color.asColor(LocalContext.current),
@@ -78,7 +78,7 @@ fun AppspirimentText(
 ) {
     Text(
         text = text.asAnnotatedString(LocalContext.current, isHtml),
-        modifier = modifier.offset(y = 1.dp),
+        modifier = modifier.offset(y = Appspiriment.flags.notoFontPadding),
         style = style,
         letterSpacing = letterSpacing,
         color = color.asColor(LocalContext.current),

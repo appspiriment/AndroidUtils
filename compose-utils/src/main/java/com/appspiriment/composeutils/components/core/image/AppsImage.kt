@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.uiImageResouce
-import com.appspiriment.composeutils.wrappers.uiVectorResouce
+import com.appspiriment.composeutils.wrappers.uiImageResource
+import com.appspiriment.composeutils.wrappers.uiVectorResource
 import com.appspiriment.composeutils.theme.Appspiriment
 
 
@@ -56,11 +56,11 @@ fun PreviewSsImage() {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         AppsImage(
-            image = uiVectorResouce(R.drawable.ic_arrow_up),
+            image = uiVectorResource(R.drawable.ic_arrow_up),
             modifier = Modifier.height(88.dp)
         )
         AppsImage(
-            image = uiImageResouce(R.drawable.ic_action_config, tint = Appspiriment.uiColors.error),
+            image = uiImageResource(R.drawable.ic_action_config, tint = Appspiriment.uiColors.error),
         )
     }
 }

@@ -3,12 +3,14 @@ package com.appspiriment.composeutils.wrappers
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.core.graphics.drawable.toBitmap
@@ -118,13 +120,13 @@ fun ImageVector.toUiImage(
     tint: UiColor? = null
 ): UiImage = ImageVectorIcon(this, description, tint)
 
-fun uiImageResouce(
+fun uiImageResource(
     @DrawableRes resId: Int,
     description: String? = null,
     tint: UiColor? = null
 ): UiImage = DrawableResourceIcon(resId, description, tint)
 
-fun uiVectorResouce(
+fun uiVectorResource(
     @DrawableRes resId: Int,
     description: String? = null,
     tint: UiColor? = null
@@ -141,3 +143,27 @@ fun Painter.toUiImage(
     description: String? = null,
     tint: UiColor? = null
 ): UiImage = PainterIcon(this, description, tint)
+
+
+@Composable
+fun uiImageFromDrawableName(
+    drawableName: String,
+): UiImage? {
+    val context = LocalContext.current
+    val resources = context.resources
+    val packageName = context.packageName
+
+    // Remember the resource ID to avoid re-calculating it on every recomposition
+    // if drawableName, resources, or packageName don't change.
+    val resourceId = remember(drawableName, resources, packageName) {
+        try {
+            resources.getIdentifier(drawableName, "drawable", packageName)
+        } catch (e: Exception) {
+            println("Error getting resource ID for $drawableName: ${e.message}")
+            null
+        }
+    }
+    return resourceId?.let{
+        uiImageResource(it)
+    }
+}

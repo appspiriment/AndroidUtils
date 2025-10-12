@@ -7,6 +7,10 @@ plugins {
 }
 android {
     namespace = "com.appspiriment.updateutils"
+
+    buildFeatures {
+        compose = true
+    }
 }
 appspiriment {
     enableMinify = false
