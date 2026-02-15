@@ -12,26 +12,24 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.buttons.AppsButton
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.wrappers.UiColor
-import com.appspiriment.composeutils.wrappers.toUiColor
 
 
 data class ButtonStyle(
     val textStyle : TextStyle,
-    val buttonColor: UiColor,
-    val buttonPressedColor: UiColor = buttonColor,
-    val textColor: UiColor,
-    val strokeColor: UiColor,
+    val buttonColor: Color,
+    val buttonPressedColor: Color = buttonColor,
+    val textColor: Color,
+    val strokeColor: Color,
     val buttonShape: Shape,
 ) {
     companion object {
         @Composable
         fun primary(
             textStyle : TextStyle = Appspiriment.typography.textMedium,
-            buttonColor: UiColor = Appspiriment.uiColors.primary,
-            buttonPressedColor: UiColor = Appspiriment.uiColors.primary,
-            textColor: UiColor = Appspiriment.uiColors.onPrimary,
-            strokeColor: UiColor = UiColor.Transparent,
+            buttonColor: Color = Appspiriment.colors.primary,
+            buttonPressedColor: Color = Appspiriment.colors.primary,
+            textColor: Color = Appspiriment.colors.onPrimary,
+            strokeColor: Color = Color.Transparent,
             buttonShape: Shape = CircleShape,
         ): ButtonStyle {
             return ButtonStyle(
@@ -46,10 +44,10 @@ data class ButtonStyle(
         @Composable
         fun outlined(
             textStyle : TextStyle = Appspiriment.typography.textMedium,
-            buttonColor: UiColor = Color.Transparent.toUiColor(),
-            buttonPressedColor: UiColor = Appspiriment.uiColors.primary,
-            textColor: UiColor = Appspiriment.uiColors.primary,
-            strokeColor: UiColor = Appspiriment.uiColors.primary,
+            buttonColor: Color = Color.Transparent,
+            buttonPressedColor: Color = Appspiriment.colors.primary,
+            textColor: Color = Appspiriment.colors.primary,
+            strokeColor: Color = Appspiriment.colors.primary,
             buttonShape: Shape = CircleShape,
         ): ButtonStyle {
             return ButtonStyle(
@@ -65,10 +63,10 @@ data class ButtonStyle(
         @Composable
         fun transparent(
             textStyle : TextStyle = Appspiriment.typography.textMedium,
-            buttonColor: UiColor = Color.Transparent.toUiColor(),
-            buttonPressedColor: UiColor = Appspiriment.uiColors.primary,
-            textColor: UiColor = Appspiriment.uiColors.primary,
-            strokeColor: UiColor = Color.Transparent.toUiColor(),
+            buttonColor: Color = Color.Transparent,
+            buttonPressedColor: Color = Appspiriment.colors.primary,
+            textColor: Color = Appspiriment.colors.primary,
+            strokeColor: Color = Color.Transparent,
             buttonShape: Shape = CircleShape,
         ): ButtonStyle {
             return ButtonStyle(

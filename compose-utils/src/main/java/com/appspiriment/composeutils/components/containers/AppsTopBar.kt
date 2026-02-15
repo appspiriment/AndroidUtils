@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -22,12 +23,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
+import com.appspiriment.composeutils.components.core.HorizontalSpacer
+import com.appspiriment.composeutils.components.core.buttons.AppsIconButton
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.Appspiriment.sizes
 import com.appspiriment.composeutils.theme.noPadding
 import com.appspiriment.composeutils.theme.semiBold
-import com.appspiriment.composeutils.wrappers.UiColor
+import com.appspiriment.composeutils.wrappers.toUiColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,23 +40,24 @@ fun AppsTopBar(
     navMode: NavigationMode = NavigationMode.EMPTY,
     navIconClick: (() -> Unit)? = null,
     appBarTitle: AppBarTitle?,
-    background: UiColor = Appspiriment.uiColors.topAppBar,
-    onTopBarColor: UiColor = Appspiriment.uiColors.onTopAppBar,
+    background: Color = Appspiriment.colors.topAppBar,
+    onTopBarColor: Color = Appspiriment.colors.onTopAppBar,
     actions: List<AppsTopBarButton>? = null,
     actionsContent: @Composable RowScope.(Color) -> Unit = {},
 ) {
-    val backgroundColor = background.asColor(LocalContext.current)
-    val contentColor = onTopBarColor.asColor(LocalContext.current)
+    val backgroundColor = background
+    val contentColor = onTopBarColor
     TopAppBar(
         navigationIcon = {
             if (navMode != NavigationMode.EMPTY) {
-                Icon(imageVector = navMode.icon,
-                    contentDescription = "Back",
-                    tint = contentColor,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clickable { navIconClick?.invoke() })
-            }
+                AppsIconButton(
+                    icon = navMode.icon,
+                    iconModifier = Modifier.size(sizes.iconStandard),
+                    onClick = {
+                        navIconClick?.invoke()
+                    }
+                )
+            } else HorizontalSpacer()
         },
         title = {
             appBarTitle?.let {
@@ -72,10 +77,10 @@ fun AppsTopBar(
         actions = {
             actions?.forEach { btn ->
                 AppsIcon(
-                    icon = btn.icon.setTint(tint = onTopBarColor),
+                    icon = btn.icon.setTint(tint = onTopBarColor.toUiColor()),
                     modifier = btn.modifier
                         .padding(end = 4.dp)
-                        .size(Appspiriment.sizes.actionButtonSize)
+                        .size(sizes.actionButtonSize)
                         .clickable { btn.onClick.invoke() }
                         .padding(12.dp),
                 )
@@ -89,12 +94,12 @@ fun AppsTopBar(
 @Composable
 fun AppBarTitleImage(
     appBarTitle: AppBarTitle,
-    tintColor: UiColor = Appspiriment.uiColors.onTopAppBar,
+    tintColor: Color = Appspiriment.colors.onTopAppBar,
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = appBarTitle.modifier.fillMaxHeight()
+        modifier = appBarTitle.modifier
     ) {
         when (appBarTitle) {
             is AppBarTitle.BrandLogo -> {
@@ -117,11 +122,11 @@ fun AppBarTitleImage(
                     icon = appBarTitle.icon,
                     modifier = Modifier
                         .size(appBarTitle.iconHeight)
-                        .padding(end = Appspiriment.sizes.paddingSmall),
+                        .padding(end = appBarTitle.iconPadding),
 
                     iconHeight = null
                 )
-                Column(verticalArrangement = Arrangement.spacedBy(Appspiriment.sizes.paddingXXSmall)) {
+                Column(verticalArrangement = Arrangement.spacedBy(sizes.paddingXXSmall)) {
                     AppspirimentText(
                         text = appBarTitle.title,
                         style = appBarTitle.titleStyle?:Appspiriment.typography.textMediumLarge.semiBold.noPadding,

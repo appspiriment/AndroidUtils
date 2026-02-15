@@ -3,8 +3,11 @@ package com.appspiriment.composeutils.components.containers
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,60 +26,95 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.appspiriment.composeutils.components.core.text.AppsImageText
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.Appspiriment.sizes
 import com.appspiriment.composeutils.theme.semiBold
-import com.appspiriment.composeutils.wrappers.UiColor
+import com.appspiriment.composeutils.wrappers.UiImage
 
 
 @Composable
-fun TitledCardView(
+fun TextTitledCardView(
     modifier: Modifier = Modifier,
-    title: UiText? = null,
+    background: Color = Appspiriment.colors.primaryCardContainer,
+    shape: Shape = RoundedCornerShape(sizes.cornerRadiusNormal),
+    title: UiText,
     titleStyle: TitledCardViewTitleStyle = TitleCardViewDefaults.titleAtStart(),
-    background: UiColor = Appspiriment.uiColors.primaryCardContainer,
-    shape: Shape = RoundedCornerShape(8.dp),
-    cardElevation: Dp = 0.dp,
-    borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
+    cardElevation: Dp = sizes.noPadding,
+    borderStroke: BorderStroke = BorderStroke(sizes.noPadding, Color.Transparent),
     contentModifier: Modifier = Modifier.padding(
-        start = 16.dp, end = 16.dp,
-        bottom = 16.dp, top = 8.dp
+        start = sizes.paddingMedium, end = sizes.paddingMedium,
+        bottom = sizes.paddingMedium, top = sizes.paddingSmall
     ),
+    titleAlignment: Alignment = Alignment.CenterStart,
     contentHorizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     contentVerticalArrangement: Arrangement.Vertical = Arrangement.Center,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    TitledCardView(
+        modifier = modifier,
+        background = background,
+        shape = shape,
+        cardElevation = cardElevation,
+        borderStroke = borderStroke,
+        contentModifier = contentModifier,
+        titleAlignment = titleAlignment,
+        contentHorizontalAlignment = contentHorizontalAlignment,
+        contentVerticalArrangement = contentVerticalArrangement,
+        title = {
+            AppspirimentText(
+                text = title,
+                style = titleStyle.style,
+                textAlign = titleStyle.align,
+                color = titleStyle.color,
+                modifier = titleStyle.titleModifier
+                    .background(titleStyle.background)
+                    .padding(titleStyle.titlePadding),
+            )
+        },
+        content = content
+    )
+}
+
+@Composable
+fun TitledCardView(
+    modifier: Modifier = Modifier,
+    background: Color = Appspiriment.colors.primaryCardContainer,
+    shape: Shape = RoundedCornerShape(sizes.cornerRadiusNormal),
+    cardElevation: Dp = sizes.noPadding,
+    borderStroke: BorderStroke = BorderStroke(sizes.noPadding, Color.Transparent),
+    contentModifier: Modifier = Modifier.padding(
+        start = sizes.paddingMedium, end = sizes.paddingMedium,
+        bottom = sizes.paddingMedium, top = sizes.paddingSmall
+    ),
+    titleAlignment: Alignment = Alignment.CenterStart,
+    contentHorizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    contentVerticalArrangement: Arrangement.Vertical = Arrangement.Center,
+    title: (@Composable BoxScope.() -> Unit)? = null,
+    content: @Composable ColumnScope.() -> Unit
+) {
     Card(
-        modifier = modifier
-            .background(color = Color.Blue, shape = shape),
+        modifier = modifier,
         shape = shape,
         border = borderStroke,
         elevation = CardDefaults.cardElevation(defaultElevation = cardElevation),
-        colors = CardDefaults.cardColors(containerColor = background.asColor(LocalContext.current))
+        colors = CardDefaults.cardColors(containerColor = background)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            title?.let {
-                AppspirimentText(
-                    text = it,
-                    color = titleStyle.color,
-                    style = titleStyle.style,
-                    textAlign = titleStyle.align,
-                    lineHeight = titleStyle.style.fontSize,
-                    modifier = titleStyle.titleModifier
-                        .fillMaxWidth()
-                        .background(color = titleStyle.background.asColor(LocalContext.current))
-                )
-            }
-            Column(
-                horizontalAlignment = contentHorizontalAlignment,
-                verticalArrangement = contentVerticalArrangement,
-                modifier = contentModifier
-                    .fillMaxWidth()
-            ) {
-                content()
-            }
+        Box(
+            contentAlignment = titleAlignment
+        ) {
+            title?.invoke(this)
+        }
+        Column(
+            horizontalAlignment = contentHorizontalAlignment,
+            verticalArrangement = contentVerticalArrangement,
+            modifier = contentModifier
+                .fillMaxWidth()
+        ) {
+            content()
         }
     }
 }
@@ -87,13 +125,12 @@ fun TitledCardView(
 fun TitledCardViewPreview() {
     Column(
         modifier = Modifier
-            .background(Color.Red)
-            .padding(16.dp)
+            .padding(sizes.paddingMedium)
     ) {
-        TitledCardView(
+        TextTitledCardView(
             title = "നക്ഷത്രം".toUiText(),
             titleStyle = TitleCardViewDefaults.noticeStyle(),
-            background = Appspiriment.uiColors.primaryCardContainer,
+            background = Appspiriment.colors.primaryCardContainer,
         ) {
             AppspirimentText(text = "Appspiriment".toUiText())
         }
@@ -101,17 +138,16 @@ fun TitledCardViewPreview() {
         Spacer(modifier = Modifier.height(24.dp))
 
         TitledCardView(
-            background = Appspiriment.uiColors.primaryCardContainer,
-            titleStyle = TitleCardViewDefaults.noticeStyle(),
+            background = Appspiriment.colors.primaryCardContainer,
         ) {
             AppspirimentText(text = "Appspiriment 24".toUiText())
         }
         Spacer(modifier = Modifier.height(24.dp))
 
-        TitledCardView(
+        TextTitledCardView(
             title = "നക്ഷത്രം".toUiText(),
             titleStyle = TitleCardViewDefaults.titleAtStart(),
-            background = Appspiriment.uiColors.primaryCardContainer,
+            background = Appspiriment.colors.primaryCardContainer,
         ) {
             AppspirimentText(text = "Appspiriment".toUiText())
         }
@@ -120,69 +156,75 @@ fun TitledCardViewPreview() {
 }
 
 data class TitledCardViewTitleStyle(
-    val background: UiColor = UiColor.Transparent,
+    val background: Color = Color.Transparent,
     val style: TextStyle,
-    val color: UiColor,
-    val align: TextAlign = TextAlign.Center,
-    val titleModifier: Modifier = Modifier.padding(
-        start = 16.dp,
-        end = 16.dp,
-        top = 8.dp,
-        bottom = 8.dp
-    )
+    val color: Color,
+    val align: TextAlign = TextAlign.Start,
+    val titleModifier: Modifier = Modifier,
+    val titlePadding: PaddingValues
 )
 
 object TitleCardViewDefaults {
     @Composable
     fun noticeStyle(
-        background: UiColor = Appspiriment.uiColors.primary,
-        color: UiColor = Appspiriment.uiColors.onPrimary,
+        background: Color = Appspiriment.colors.primary,
+        color: Color = Appspiriment.colors.onPrimary,
         style: TextStyle = Appspiriment.typography.textMedium.semiBold,
         align: TextAlign = TextAlign.Center,
-        titleModifier: Modifier = Modifier.padding(
-            start = 16.dp,
-            end = 16.dp,
-            top = 8.dp,
-            bottom = 8.dp
+        titleModifier: Modifier = Modifier.fillMaxWidth(),
+        titlePadding: PaddingValues = PaddingValues(
+            start = sizes.paddingMedium,
+            end = sizes.paddingMedium,
+            top = sizes.paddingSmall,
+            bottom = sizes.paddingSmall
         )
     ) = TitledCardViewTitleStyle(
         background = background,
         style = style,
         color = color,
         align = align,
-        titleModifier = titleModifier
+        titleModifier = titleModifier,
+        titlePadding = titlePadding
     )
 
     @Composable
     fun titleAtStart(
-        background: UiColor = UiColor.Transparent,
-        color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
+        background: Color = Color.Transparent,
+        color: Color = Appspiriment.colors.onPrimaryCardContainer,
         style: TextStyle = Appspiriment.typography.textSmall.semiBold,
-        titleModifier: Modifier = Modifier.padding(
-            start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
+        titleModifier: Modifier = Modifier,
+        titlePadding: PaddingValues = PaddingValues(
+            start = sizes.paddingMedium,
+            end = sizes.paddingMedium,
+            top = sizes.paddingSmall,
         )
     ) = TitledCardViewTitleStyle(
         background = background,
         style = style,
         color = color,
         align = TextAlign.Start,
-        titleModifier = titleModifier
+        titleModifier = titleModifier,
+        titlePadding = titlePadding
     )
 
     @Composable
     fun centerTitle(
-        background: UiColor = UiColor.Transparent,
-        color: UiColor = Appspiriment.uiColors.onPrimaryCardContainer,
+        background: Color = Color.Transparent,
+        color: Color = Appspiriment.colors.onPrimaryCardContainer,
         style: TextStyle = Appspiriment.typography.textMedium.semiBold,
-        titleModifier: Modifier = Modifier.padding(
-            start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp
+        titleModifier: Modifier = Modifier.fillMaxWidth(),
+        titlePadding: PaddingValues = PaddingValues(
+            start = sizes.paddingMedium,
+            end = sizes.paddingMedium,
+            top = sizes.paddingSmall,
         )
     ) = TitledCardViewTitleStyle(
         background = background,
         style = style,
         color = color,
         align = TextAlign.Center,
-        titleModifier = titleModifier
+        titleModifier = titleModifier,
+        titlePadding = titlePadding
     )
 }
 

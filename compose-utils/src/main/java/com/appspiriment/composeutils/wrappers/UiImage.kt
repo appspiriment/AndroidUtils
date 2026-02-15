@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
@@ -26,7 +25,6 @@ sealed class UiImage(
 ) {
     abstract fun setDescription(contentDescription: String?): UiImage
     abstract fun setTint(tint: UiColor? = null): UiImage
-
     data class ImageVectorIcon(
         val imageVector: ImageVector,
         override val description: String? = null,
@@ -108,7 +106,9 @@ sealed class UiImage(
             is ImageVectorIcon -> rememberVectorPainter(image = imageVector)
             is VectorResourceIcon -> painterResource(id = resId)
             is DrawableResourceIcon -> painterResource(id = resId)
-            is DrawableIcon -> BitmapPainter(drawable.toBitmap().asImageBitmap())
+            is DrawableIcon -> remember(drawable) {
+                BitmapPainter(drawable.toBitmap().asImageBitmap())
+            }
             is PainterIcon -> painter
         }
     }

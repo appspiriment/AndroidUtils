@@ -18,7 +18,6 @@ import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.uiImageResource
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -26,14 +25,14 @@ fun CircularButton(
     icon: UiImage,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier.padding(Appspiriment.sizes.paddingXSmall),
-    buttonColor: UiColor = Appspiriment.uiColors.primary,
+    buttonColor: Color = Appspiriment.colors.primary,
     onClick: () -> Unit
 ) {
 
     Box(
         modifier = modifier
             .size(Appspiriment.sizes.floatingButtonSize)
-            .background(buttonColor.asColor(LocalContext.current), shape = RoundedCornerShape(50)),
+            .background(buttonColor, shape = RoundedCornerShape(50)),
         contentAlignment = Alignment.Center
     ) {
         AppsImage(

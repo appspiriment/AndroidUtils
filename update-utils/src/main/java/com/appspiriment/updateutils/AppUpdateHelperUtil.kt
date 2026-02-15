@@ -1,6 +1,7 @@
 package com.appspiriment.updateutils
 
 import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -27,15 +28,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.appspiriment.composeutils.components.containers.AppBarTitle
 import com.appspiriment.composeutils.components.containers.AppsPageScaffold
 import com.appspiriment.composeutils.components.containers.NavigationMode
 import com.appspiriment.composeutils.components.core.buttons.TextButton
 import com.appspiriment.composeutils.components.core.buttons.types.ButtonStyle
 import com.appspiriment.composeutils.components.core.text.MalayalamText
-import com.appspiriment.composeutils.components.core.text.types.toUiText
-import com.appspiriment.composeutils.components.core.text.types.uiTextResource
 import com.appspiriment.composeutils.components.messages.MessageDialog
 import com.appspiriment.composeutils.theme.Appspiriment
+import com.appspiriment.composeutils.theme.bold
+import com.appspiriment.composeutils.wrappers.toUiText
+import com.appspiriment.composeutils.wrappers.uiImageResouce
+import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.utils.extensions.launchPlayStorePage
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -196,7 +200,9 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
         if(showUpdateDialog.value){
         MessageDialog(
             title = "Update ${stringResource(appName)}?".toUiText(),
-            visibilityState = showUpdateDialog,
+            onDismissRequest = {
+                showUpdateDialog.value = false
+            },
         ) {
 
             Image(
@@ -231,7 +237,7 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
                 TextButton(
                     text = "UPDATE".toUiText(),
                     buttonStyle = ButtonStyle.primaryPositive()
-                        .copy(buttonColor = Appspiriment.colors.accentedBlueText)
+                        .copy(buttonColor = Appspiriment.uiColors.accentedBlueText)
                 ) {
                     dismissDialog()
                 }
@@ -243,12 +249,6 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
                     .fillMaxWidth()
                     .padding(top = 16.dp)
             ) {
-//                MalayalamText(
-//                    text = "UPDATE FROM",
-//                    color = Colorschemes.subText,
-//                    fontSize = 10.5.sp,
-//                    fontWeight = FontWeight.Medium
-//                )
                 Image(
                     painter = painterResource(R.drawable.ic_logo_get_it_on_google_play),
                     contentDescription = null,
@@ -263,18 +263,21 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
     fun ImmediateUpdateScreen(
         @StringRes appName: Int,
         @DrawableRes logoResId: Int,
-        @DrawableRes brandLogoId: Int,
+        @DrawableRes brandLogoId: Int?,
         @StringRes updateMessageId: Int,
     ) {
-        val context = LocalContext.current
-        AppsPageScaffold(brandLogoId = brandLogoId,
-            title = appName.toUiText(),
-            navMode = NavigationMode.EMPTY,
+        val activity = LocalActivity.current as Activity
+        AppsPageScaffold(
+            appBarTitle = brandLogoId?.let{
+                AppBarTitle.BrandLogo(image = uiImageResouce(logoResId))
+            } ?: AppBarTitle.ScreenTitleWithIcon(icon = uiImageResouce(logoResId), title = uiTextResource(appName)),
+            navMode = NavigationMode.CLOSE,
+            navIconClick = {activity.finish()},
             actions = emptyList()
         ) {
 
             Column(modifier = Modifier
-                .padding(this)
+                .padding(it)
                 .fillMaxSize()
                 .padding(
                     start = 16.dp, end = 16.dp, top = 32.dp, bottom = 16.dp
@@ -282,7 +285,7 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
             ) {
                 MalayalamText(
                     text = "Update ${stringResource(appName)}".toUiText(),
-                    style = Appspiriment.typography.textLargeBold
+                    style = Appspiriment.typography.textLarge.bold
                 )
 
                 Image(
@@ -303,9 +306,9 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
                 TextButton(
                     text = "UPDATE".toUiText(),
                     modifier = Modifier.padding(top=16.dp),
-                    buttonStyle = ButtonStyle.primaryPositive().copy(buttonColor = Appspiriment.colors.accentedBlueTitle)
+                    buttonStyle = ButtonStyle.primaryPositive().copy(buttonColor = Appspiriment.uiColors.accentedBlueTitle)
                 ) {
-                    context.launchPlayStorePage()
+                    activity.launchPlayStorePage()
                 }
                 Spacer(Modifier.weight(1f))
 
@@ -318,7 +321,7 @@ class AppUpdateHelperUtilImpl : AppUpdateHelperUtil {
                         contentDescription = null,
                         modifier = Modifier
                             .padding(top = 4.dp)
-                            .clickable { context.launchPlayStorePage() }
+                            .clickable { activity.launchPlayStorePage() }
                     )
                 }
             }

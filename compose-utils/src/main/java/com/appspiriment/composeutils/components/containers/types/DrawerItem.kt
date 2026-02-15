@@ -3,6 +3,7 @@ package com.appspiriment.composeutils.components.containers.types
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import com.appspiriment.composeutils.components.containers.DrawerIdentifier
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.theme.Appspiriment
@@ -14,13 +15,13 @@ data class DrawerItem(
     val showTopDivider: Boolean = false,
     val showBottomDivider: Boolean = false,
     val closeDrawer: Boolean = true,
-    val textStyle: TextStyle,
-    val verticalPadding: Dp,
-    val onMenuClick: () -> Unit,
+    val textStyle: TextStyle? = null,
+    val verticalPadding: Dp? = null,
+    val drawerIdentifier: () -> DrawerIdentifier,
 ) {
     companion object {
         @Composable
-        fun from(
+        fun <T>from(
             menuTitle: UiText,
             icon: UiImage? = null,
             trailingIcon: UiImage? = null,
@@ -29,7 +30,7 @@ data class DrawerItem(
             closeDrawer: Boolean = true,
             textStyle: TextStyle = Appspiriment.typography.textMedium,
             verticalPadding: Dp = Appspiriment.sizes.paddingSmallMedium,
-            onMenuClick: () -> Unit,
+            drawerIdentifier: () -> DrawerIdentifier,
         ) = DrawerItem(
             menuTitle = menuTitle,
             icon = icon,
@@ -39,7 +40,7 @@ data class DrawerItem(
             closeDrawer = closeDrawer,
             textStyle = textStyle,
             verticalPadding = verticalPadding,
-            onMenuClick = onMenuClick
+            drawerIdentifier = drawerIdentifier
         )
     }
 }

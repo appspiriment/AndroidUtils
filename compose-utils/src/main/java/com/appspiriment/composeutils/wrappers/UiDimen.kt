@@ -5,12 +5,14 @@ import android.content.res.Resources
 import androidx.annotation.DimenRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.w3c.dom.Text
 
 /**
  * A sealed class to handle different types of dimensions in Compose UI.
@@ -55,11 +57,17 @@ sealed class UiDimen {
      * @param context The context used to resolve dimension resources.
      * @return The resolved Dp value, or null if the resource is not found.
      */
-    fun asDp(context: Context): Dp? {
+    @Composable
+    fun asDp(): Dp {
+        val context = LocalContext.current
+        return asDp(context = context)
+    }
+
+    fun asDp(context: Context): Dp {
         return when (this) {
             is DynamicDp -> value
             is DimenResource -> context.resources.getDimension(resId).dp
-            is DynamicTextUnit -> null
+            is DynamicTextUnit -> throw RuntimeException("For Dp, DynamicTextUnit type should not be used")
         }
     }
 
@@ -69,11 +77,18 @@ sealed class UiDimen {
      * @param context The context used to resolve dimension resources.
      * @return The resolved TextUnit (sp) value, or null if the resource is not found.
      */
-    fun asSp(context: Context): TextUnit? {
+
+    @Composable
+    fun asSp(): TextUnit {
+        val context = LocalContext.current
+        return asSp(context = context)
+    }
+
+    fun asSp(context: Context): TextUnit {
         return when (this) {
             is DynamicTextUnit -> value
             is DimenResource -> context.resources.getDimension(resId).sp
-            is DynamicDp -> null
+            is DynamicDp -> throw RuntimeException("For Sp, DynamicDp type should not be used")
         }
     }
 }

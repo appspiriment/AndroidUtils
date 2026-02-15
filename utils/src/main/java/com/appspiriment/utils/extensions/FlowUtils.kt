@@ -153,13 +153,12 @@ private suspend fun <R> Flow<R>.collect(
             loadingListener.invoke(false)
         }.collect {
             successListener.invoke(it)
-            delay(100)
+            delay(200)
             loadingListener.invoke(false)
         }
-
     } catch (e: Exception) {
-        loadingListener.invoke(false)
         errorListener.invoke(e)
+        loadingListener.invoke(false)
     }
 }
 

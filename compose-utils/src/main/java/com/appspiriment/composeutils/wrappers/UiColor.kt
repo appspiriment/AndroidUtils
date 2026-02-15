@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 
 /**
@@ -47,8 +48,14 @@ sealed class UiColor {
         }
     }
 
+    @Composable
+    fun asColor(): Color {
+        val context = LocalContext.current
+        return asColor(context = context)
+    }
+
     /**
-     * Resolves the UiColor to a Color.
+     * Resolves the Color to a Color.
      *
      * @param context The context used to resolve color resources.
      * @return The resolved Color.
@@ -73,25 +80,25 @@ sealed class UiColor {
 }
 
 /**
- * Extension function to convert a Color to a UiColor.
+ * Extension function to convert a Color to a Color.
  */
 fun Color.toUiColor() = UiColor.DynamicColor(this)
 
 /**
- * Extension function to convert a color resource id to a UiColor.
+ * Extension function to convert a color resource id to a Color.
  */
 fun Int.toUiColorResource() = UiColor.ColorResource(this)
 
 /**
- * Extension function to convert a hex string to a UiColor.
+ * Extension function to convert a hex string to a Color.
  */
 fun String.toUiColorHex() = UiColor.HexColor(this)
 
 /**
- * Composable function to get a UiColor from a color resource ID.
+ * Composable function to get a Color from a color resource ID.
  *
  * @param id The color resource ID.
- * @return The UiColor representing the color resource.
+ * @return The Color representing the color resource.
  */
 @Composable
 fun uiColorResource(id: Int): UiColor {

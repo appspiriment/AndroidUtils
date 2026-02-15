@@ -26,7 +26,6 @@ import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.wrappers.uiTextResource
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -34,7 +33,7 @@ fun AppspirimentText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = Appspiriment.typography.textMedium,
-    color: UiColor = Appspiriment.uiColors.onMainSurface,
+    color: Color = Appspiriment.colors.onMainSurface,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -49,7 +48,7 @@ fun AppspirimentText(
         modifier = modifier.offset(y = Appspiriment.flags.notoFontPadding),
         style = style,
         letterSpacing = letterSpacing,
-        color = color.asColor(LocalContext.current),
+        color = color,
         textDecoration = textDecoration,
         textAlign = textAlign,
         lineHeight = lineHeight,
@@ -65,7 +64,7 @@ fun AppspirimentText(
     text: UiText,
     modifier: Modifier = Modifier,
     style: TextStyle = Appspiriment.typography.textMedium,
-    color: UiColor = Appspiriment.uiColors.onMainSurface,
+    color: Color = Appspiriment.colors.onMainSurface,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -81,7 +80,7 @@ fun AppspirimentText(
         modifier = modifier.offset(y = Appspiriment.flags.notoFontPadding),
         style = style,
         letterSpacing = letterSpacing,
-        color = color.asColor(LocalContext.current),
+        color = color,
         textDecoration = textDecoration,
         textAlign = textAlign,
         lineHeight = lineHeight,

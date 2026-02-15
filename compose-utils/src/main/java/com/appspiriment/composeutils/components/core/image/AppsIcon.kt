@@ -16,7 +16,7 @@ fun AppsIcon(
     modifier: Modifier = Modifier,
     iconHeight: Dp? = Appspiriment.sizes.iconStandard,
 ) {
-    val iconTint = icon.tint?.asColor(LocalContext.current) ?: LocalContentColor.current
+    val iconTint = icon.tint?.asColor() ?: LocalContentColor.current
     val iconModifier = iconHeight?.let{modifier.height(iconHeight)} ?: modifier
     icon.getImageVector()?.let {
         Icon(

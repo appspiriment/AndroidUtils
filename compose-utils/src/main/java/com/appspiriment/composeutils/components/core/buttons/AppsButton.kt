@@ -11,6 +11,7 @@ fun AppsButton(
     text: UiText,
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
+    enabled: Boolean = true,
     buttonStyle: ButtonStyle = ButtonStyle.primary(),
     onClick: () -> Unit
 ) {
@@ -19,6 +20,7 @@ fun AppsButton(
         text = text,
         modifier = modifier,
         textModifier = textModifier,
+        enabled = enabled,
         buttonStyle = buttonStyle,
         onClick = onClick
     )

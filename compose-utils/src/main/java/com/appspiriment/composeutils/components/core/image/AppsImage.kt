@@ -39,7 +39,7 @@ fun AppsImage(
             modifier = modifier,
             contentDescription = image.description,
             alignment = alignment, contentScale = contentScale, alpha = alpha,
-            colorFilter = image.tint?.let { ColorFilter.tint(it.asColor(LocalContext.current)) } ?: colorFilter
+            colorFilter = image.tint?.asColor()?.let { ColorFilter.tint(it) } ?: colorFilter
         )
     } else AppsIcon(
         icon = image,

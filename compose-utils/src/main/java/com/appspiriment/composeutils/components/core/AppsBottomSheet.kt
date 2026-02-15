@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -47,43 +48,29 @@ fun AppsBottomSheet(
     titlePadding: PaddingValues = PaddingValues(16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     modifier: Modifier = Modifier,
-    content: @Composable() (ColumnScope.() -> Unit)
+    content: @Composable (ColumnScope.() -> Unit)
 ) {
-    val bottomSheetContent: @Composable() (ColumnScope.() -> Unit) = {
-        BottomSheetContent(
-            title = title,
-            dismissSheet = dismissSheet,
-            showCloseButton = showCloseButton,
-            contentAlignment = contentAlignment,
-            contentArrangement = contentArrangement,
-            titlePadding = titlePadding,
-            titleAlignment = titleAlignment,
-            contentPadding = contentPadding,
-            content = content,
-        )
-    }
     if (showSheet) {
-        if (showDragHandle) {
-            ModalBottomSheet(
-                modifier = modifier,
-                onDismissRequest = dismissSheet,
-                sheetState = state,
-                shape = shape,
-                containerColor = containerColor,
-            ) {
-                bottomSheetContent()
-            }
-        } else {
-            ModalBottomSheet(
-                modifier = modifier,
-                onDismissRequest = dismissSheet,
-                sheetState = state,
-                shape = shape,
-                dragHandle = null,
-                containerColor = containerColor,
-            ) {
-                bottomSheetContent()
-            }
+        ModalBottomSheet(
+            modifier = modifier,
+            onDismissRequest = dismissSheet,
+            sheetState = state,
+            shape = shape,
+            containerColor = containerColor,
+            // Optimization: Pass null to hide drag handle without duplicating the block
+            dragHandle = if (showDragHandle) { { BottomSheetDefaults.DragHandle() } } else null
+        ) {
+            BottomSheetContent(
+                title = title,
+                dismissSheet = dismissSheet,
+                showCloseButton = showCloseButton,
+                contentAlignment = contentAlignment,
+                contentArrangement = contentArrangement,
+                titlePadding = titlePadding,
+                titleAlignment = titleAlignment,
+                contentPadding = contentPadding,
+                content = content,
+            )
         }
     }
 }

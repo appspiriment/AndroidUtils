@@ -37,22 +37,23 @@ fun AppsImageButton(
     modifier: Modifier = Modifier,
     iconPadding: Dp = Appspiriment.sizes.paddingXXXXLarge,
     textModifier: Modifier = Modifier,
+    enabled: Boolean = true,
     buttonStyle: ButtonStyle = ButtonStyle.primary(),
     contentPadding: PaddingValues = PaddingValues(horizontal = sizes.paddingMedium, vertical = sizes.noPadding),
     onClick: () -> Unit
 ) {
-    val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val backgroundColor = if(isPressed) buttonStyle.buttonPressedColor else buttonStyle.buttonColor
     Button(
         colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor.asColor(context),
-            contentColor = buttonStyle.textColor.asColor(context),
+            containerColor = backgroundColor,
+            contentColor = buttonStyle.textColor,
         ),
+        enabled = enabled,
         modifier = modifier.border(
             width = 2.dp,
-            color = buttonStyle.strokeColor.asColor(context),
+            color = buttonStyle.strokeColor,
             shape = buttonStyle.buttonShape
         ),
         contentPadding = contentPadding,

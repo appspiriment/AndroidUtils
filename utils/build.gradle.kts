@@ -4,6 +4,7 @@ plugins {
     alias(appspirimentlibs.plugins.google.android.library)
     alias(appspirimentlibs.plugins.kotlin.android)
     alias(libs.plugins.vanniktech.publish)
+    alias(appspirimentlibs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -41,6 +42,7 @@ android {
 
 dependencies {
     implementation(appspirimentlibs.bundles.android.base)
+    implementation(appspirimentlibs.kotlinx.serialize)
     testImplementation(appspirimentlibs.junit.test)
 
 }

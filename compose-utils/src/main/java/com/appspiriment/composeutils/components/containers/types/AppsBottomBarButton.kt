@@ -2,4 +2,11 @@ package com.appspiriment.composeutils.components.containers.types
 
 import com.appspiriment.composeutils.wrappers.UiImage
 
-data class AppsBottomBarButton <T : Any>(val name: String, val route: T, val icon: UiImage)
+/**
+ * A data class representing an item in the bottom navigation bar.
+ *
+ * @param name The text label to display for the item.
+ * @param route The destination route from your NavGraph (typically a serializable object).
+ * @param icon The icon to display for the item.
+ */
+data class AppsBottomBarButton(val name: String, val route: Any, val icon: UiImage)

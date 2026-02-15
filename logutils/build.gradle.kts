@@ -9,6 +9,7 @@ android {
     namespace = "com.appspiriment.logutils"
 
     defaultConfig{
+        consumerProguardFiles("src/main/consumer-rules.pro")
         aarMetadata {
             minCompileSdk = appspirimentlibs.versions.minSdk.get().toInt()
         }

@@ -36,10 +36,8 @@ import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.wrappers.UiColor
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.UiText
-import com.appspiriment.composeutils.wrappers.toUiColor
 import com.appspiriment.composeutils.wrappers.toUiImage
 
 
@@ -63,7 +61,7 @@ sealed class SelectableBackground(
  * Sealed class representing the text content and its styling based on selection state.
  */
 sealed class TextState(
-    open val textColor: UiColor,
+    open val textColor: Color,
     open val textStyle: TextStyle,
     open val isHtml: Boolean = false,
     open val letterSpacing: TextUnit = TextUnit.Unspecified,
@@ -76,7 +74,7 @@ sealed class TextState(
     open val onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     data class Selected(
-        override val textColor: UiColor,
+        override val textColor: Color,
         override val textStyle: TextStyle,
         override val isHtml: Boolean = false,
         override val letterSpacing: TextUnit = TextUnit.Unspecified,
@@ -94,7 +92,7 @@ sealed class TextState(
     )
 
     data class Unselected(
-        override val textColor: UiColor,
+        override val textColor: Color,
         override val textStyle: TextStyle,
         override val isHtml: Boolean = false,
         override val letterSpacing: TextUnit = TextUnit.Unspecified,
@@ -169,7 +167,7 @@ sealed class SelectableState(
 object AppsSelectableDefaults{
 
     @Composable fun selectedText(
-        textColor: UiColor = Appspiriment.uiColors.onMainSurface,
+        textColor: Color = Appspiriment.colors.onMainSurface,
         textStyle: TextStyle = Appspiriment.typography.textMedium,
         isHtml: Boolean = false,
         letterSpacing: TextUnit = TextUnit.Unspecified,
@@ -195,7 +193,7 @@ object AppsSelectableDefaults{
     )
 
     @Composable fun unselectedText(
-        textColor: UiColor = Appspiriment.uiColors.onMainSurface,
+        textColor: Color = Appspiriment.colors.onMainSurface,
         textStyle: TextStyle = Appspiriment.typography.textMedium,
         isHtml: Boolean = false,
         letterSpacing: TextUnit = TextUnit.Unspecified,
@@ -389,14 +387,14 @@ fun AppsSelectableTextPreview() {
             AppsSelectableText(
                 unselectedState = AppsSelectableDefaults.unselectedState(
                     textState = AppsSelectableDefaults.unselectedText(
-                        textColor = Color.DarkGray.toUiColor() // Updated to use extension function
+                        textColor = Color.DarkGray // Updated to use extension function
                     ),
                     background = AppsSelectableDefaults.unselectedBackground(),
                     iconState = null // No icon when unselected
                 ),
                 selectedState = AppsSelectableDefaults.selectedState(
                     textState = AppsSelectableDefaults.selectedText(
-                        textColor = MaterialTheme.colorScheme.primary.toUiColor() // Updated to use extension function
+                        textColor = MaterialTheme.colorScheme.primary // Updated to use extension function
                     ),
                     background = AppsSelectableDefaults.selectedBackground(color = MaterialTheme.colorScheme.secondaryContainer),
                     iconState = AppsSelectableDefaults.selectedIcon(
@@ -417,7 +415,7 @@ fun AppsSelectableTextPreview() {
             AppsSelectableText(
                 unselectedState = AppsSelectableDefaults.unselectedState(
                     textState = AppsSelectableDefaults.unselectedText(
-                        textColor = Color.Red.toUiColor() // Updated to use extension function
+                        textColor = Color.Red // Updated to use extension function
                     ),
                     background = AppsSelectableDefaults.unselectedBackground(color = Color(0xFFD1E7DD)),
                     iconState = AppsSelectableDefaults.unselectedIcon(
@@ -428,7 +426,7 @@ fun AppsSelectableTextPreview() {
                 ),
                 selectedState = AppsSelectableDefaults.selectedState(
                     textState = AppsSelectableDefaults.selectedText(
-                        textColor = Color.Green.toUiColor() // Updated to use extension function
+                        textColor = Color.Green // Updated to use extension function
                     ),
                     background = AppsSelectableDefaults.selectedBackground(color = Color(0xFFD1E7DD)),
                     iconState = AppsSelectableDefaults.selectedIcon(

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -17,7 +18,6 @@ import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.components.containers.TitleCardViewDefaults
 import com.appspiriment.composeutils.components.containers.TitledCardView
 import com.appspiriment.composeutils.theme.semiBold
-import com.appspiriment.composeutils.wrappers.UiColor
 
 
 @Composable
@@ -26,9 +26,9 @@ fun KeyValuePairText(
     value: UiText,
     modifier: Modifier = Modifier,
     prefix: UiText? = null,
-    keyColor: UiColor = Appspiriment.uiColors.onMainSurface,
-    prefixColor: UiColor = Appspiriment.uiColors.onMainSurface,
-    valueColor: UiColor = Appspiriment.uiColors.onMainSurface,
+    keyColor: Color = Appspiriment.colors.onMainSurface,
+    prefixColor: Color = Appspiriment.colors.onMainSurface,
+    valueColor: Color = Appspiriment.colors.onMainSurface,
     keyStyle: TextStyle = Appspiriment.typography.textMedium.semiBold,
     valueStyle: TextStyle = Appspiriment.typography.textMedium,
     prefixStyle: TextStyle = Appspiriment.typography.textMedium,
@@ -68,8 +68,7 @@ fun KeyValuePairText(
 @Composable
 fun DetailsListItemPreview() {
     TitledCardView(
-        background = Appspiriment.uiColors.primaryCardContainer,
-        titleStyle = TitleCardViewDefaults.titleAtStart()
+        background = Appspiriment.colors.primaryCardContainer,
     ) {
         KeyValuePairText(key = "Appspiriment".toUiText(), value = "Labs".toUiText())
         KeyValuePairText(key = "Appspiriment".toUiText(), value = "Labs".toUiText())

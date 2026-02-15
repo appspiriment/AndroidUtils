@@ -26,24 +26,22 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
-import com.appspiriment.composeutils.components.core.FillerSpacer
 import com.appspiriment.composeutils.components.core.HorizontalSpacer
 import com.appspiriment.composeutils.components.core.image.AppsImage
-import com.appspiriment.composeutils.wrappers.UiText
-import com.appspiriment.composeutils.wrappers.uiTextResource
-import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.uiImageResource
-import com.appspiriment.composeutils.wrappers.uiVectorResource
-import com.appspiriment.composeutils.wrappers.toUiText
 import com.appspiriment.composeutils.theme.Appspiriment
-import com.appspiriment.composeutils.wrappers.UiColor
+import com.appspiriment.composeutils.wrappers.UiImage
+import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiText
+import com.appspiriment.composeutils.wrappers.uiImageResource
+import com.appspiriment.composeutils.wrappers.uiTextResource
+import com.appspiriment.composeutils.wrappers.uiVectorResource
 
 
 @Composable
 fun AppsImageText(
     text: UiText,
     modifier: Modifier = Modifier,
-    color: UiColor = Appspiriment.uiColors.onMainSurface,
+    color: Color = Appspiriment.colors.onMainSurface,
     style: TextStyle = Appspiriment.typography.textMedium,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,

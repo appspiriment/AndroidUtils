@@ -8,6 +8,6 @@ import com.appspiriment.composeutils.wrappers.UiImage
 data class AppsTopBarButton(
     val icon: UiImage,
     val modifier: Modifier = Modifier,
-    val tint: UiColor = UiColor.DynamicColor(Color.Gray),
+    val tint: Color = Color.Gray,
     val onClick: () -> Unit,
 )

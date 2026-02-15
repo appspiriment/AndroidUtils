@@ -5,14 +5,14 @@
 [versions]
 #App Versions
 minSdk = "26"
-targetSdk = "35"
-compileSdk = "35"
+targetSdk = "36"
+compileSdk = "36"
 javaVersion = "21"
 
-appspiriment = "0.0.10"
+appspiriment = "0.0.11"
 appspirimentLogUtils = "0.0.1"
-appspirimentUtils = "0.0.3"
-appspirimentComposeUtils = "0.0.3"
+appspirimentUtils = "0.0.5"
+appspirimentComposeUtils = "0.0.5"
 appspirimentUpdateUtils = "0.0.1"
 
 #Classpath Version

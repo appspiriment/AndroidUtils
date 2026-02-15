@@ -28,7 +28,7 @@ fun AppsIconButton(
     iconHeight: Dp? = Appspiriment.sizes.actionButtonSize,
     onClick: () -> Unit
 ) {
-    val iconTint = icon.tint?.asColor(LocalContext.current) ?: LocalContentColor.current
+    val iconTint = icon.tint?.asColor() ?: LocalContentColor.current
     val heightAdjustedIconModifier = iconHeight?.let{iconModifier.height(iconHeight)} ?: modifier
     IconButton(
         onClick = onClick,
