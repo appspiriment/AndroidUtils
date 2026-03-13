@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(appspirimentlibs.plugins.google.android.library)
@@ -37,11 +38,16 @@ android {
         // Or using the older syntax if the above doesn't work in your AGP version:
         // disable += "NullSafeMutableLiveData"
     }
-    kotlinOptions {
-        jvmTarget = appspirimentlibs.versions.javaVersion.get()
-    }
+
     buildFeatures {
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(appspirimentlibs.versions.javaVersion.get())
+        )
     }
 }
 

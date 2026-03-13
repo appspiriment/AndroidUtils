@@ -1,5 +1,6 @@
 package com.appspiriment.composeutils.utils
 
+
 import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -48,7 +49,9 @@ import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiImage
 import java.io.File
 
-// --- Models ---
+// ────────────────────────────────────────────────
+// Models
+// ────────────────────────────────────────────────
 
 data class PhotoPickerActions(
     val openGallery: () -> Unit,
@@ -75,7 +78,9 @@ sealed class PickerInteraction {
     data class Custom(val onClick: () -> Unit) : PickerInteraction()
 }
 
-// --- Logic ---
+// ────────────────────────────────────────────────
+// rememberPhotoPicker – launcher factory
+// ────────────────────────────────────────────────
 
 @Composable
 fun rememberPhotoPicker(
@@ -86,17 +91,21 @@ fun rememberPhotoPicker(
     var tempUri by remember { mutableStateOf<Uri?>(null) }
 
     val handleResult: (Uri) -> Unit = { uri ->
-        if (onTriggerCrop != null) onTriggerCrop(uri) else onImagePicked(uri)
+        if (onTriggerCrop != null) {
+            onTriggerCrop(uri)
+        } else {
+            onImagePicked(uri)
+        }
     }
 
     val galleryLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ) { uri -> uri?.let { handleResult(it) } }
+    ) { uri -> uri?.let(handleResult) }
 
     val cameraLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { success ->
-        if (success) tempUri?.let { handleResult(it) }
+        if (success) tempUri?.let(handleResult)
     }
 
     val cameraPermissionLauncher = rememberPermissionRequest(
@@ -104,7 +113,7 @@ fun rememberPhotoPicker(
             AppPermission(android.Manifest.permission.CAMERA, "Camera", isRequired = true)
         ),
         onActionGranted = {
-            val uri = createLibraryTempUri(context)
+            val uri = createTempCaptureUri(context)
             tempUri = uri
             cameraLauncher.launch(uri)
         }
@@ -113,52 +122,60 @@ fun rememberPhotoPicker(
     return remember {
         PhotoPickerActions(
             openGallery = {
-                galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                galleryLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
             },
             openCamera = cameraPermissionLauncher
         )
     }
 }
 
-private fun createLibraryTempUri(context: Context): Uri {
-    val tempFile = File(context.cacheDir, "camera_capture_${System.currentTimeMillis()}.jpg")
-    return FileProvider.getUriForFile(context, "${context.packageName}.provider", tempFile)
+private fun createTempCaptureUri(context: Context): Uri {
+    val file = File(context.cacheDir, "capture_${System.currentTimeMillis()}.jpg")
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.appspiriment.fileprovider",
+        file
+    )
 }
+
+// ────────────────────────────────────────────────
+// Main Composable – reusable circle image picker
+// ────────────────────────────────────────────────
+
 @Composable
 fun AppCircleImagePicker(
     modifier: Modifier = Modifier,
-    currentImage: Any?, // The initial URL or Resource
+    currentImage: Any?,                   // parent-controlled image (url, uri, resource, etc.)
     size: Dp = 120.dp,
     borderStroke: BorderStroke = BorderStroke(2.dp, Appspiriment.colors.primary),
-    onImageProcessed: (Uri) -> Unit,
+    onImagePicked: (Uri) -> Unit = {},    // called when new image is selected (before crop)
     cropContract: PhotoCropContract? = null,
     interaction: PickerInteraction = PickerInteraction.Default(),
-    imageContent: @Composable (data: Any?) -> Unit // Slot only needs the active data
+    imageContent: @Composable (Any?) -> Unit
 ) {
-    var showInternalSheet by remember { mutableStateOf(false) }
-    var pickedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var localPickedUri by remember { mutableStateOf<Uri?>(null) }
 
-    val photoPicker = rememberPhotoPicker(
+    val picker = rememberPhotoPicker(
         onImagePicked = { uri ->
-            pickedImageUri = uri
-            onImageProcessed(uri)
+            localPickedUri = uri
+            onImagePicked(uri)
         },
-        onTriggerCrop = { rawUri ->
+        onTriggerCrop = { uri ->
             if (cropContract != null) {
-                cropContract.onHandleCrop(rawUri)
+                cropContract.onHandleCrop(uri)
             } else {
-                pickedImageUri = rawUri
-                onImageProcessed(rawUri)
+                localPickedUri = uri
+                onImagePicked(uri)
             }
         }
     )
 
-    val onBoxClick = {
-        when (interaction) {
-            is PickerInteraction.Default -> showInternalSheet = true
-            is PickerInteraction.Custom -> interaction.onClick()
-        }
-    }
+    // Decide what to show: parent's authoritative image wins after upload/sync
+    // localPickedUri is only used for temporary preview during the current session
+    val displayImage = currentImage ?: localPickedUri
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -166,13 +183,16 @@ fun AppCircleImagePicker(
                 .size(size)
                 .clip(CircleShape)
                 .border(borderStroke, CircleShape)
-                .clickable { onBoxClick() }
+                .clickable {
+                    when (interaction) {
+                        is PickerInteraction.Default -> showBottomSheet = true
+                        is PickerInteraction.Custom -> interaction.onClick()
+                    }
+                }
         ) {
-            // Logic: Use the locally picked image if it exists,
-            // otherwise fall back to the remote/current image.
-            imageContent(pickedImageUri ?: currentImage)
+            imageContent(displayImage)
 
-            // Camera Overlay Icon
+            // Semi-transparent overlay with camera icon
             Surface(
                 color = Color.Black.copy(alpha = 0.4f),
                 modifier = Modifier
@@ -181,10 +201,9 @@ fun AppCircleImagePicker(
                     .height(size / 4)
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    val icon = if (interaction is PickerInteraction.Default) {
-                        interaction.config.cameraIcon
-                    } else {
-                        Icons.Default.Camera.toUiImage(tint = Appspiriment.uiColors.primary)
+                    val icon = when (interaction) {
+                        is PickerInteraction.Default -> interaction.config.cameraIcon
+                        else -> Icons.Default.Camera.toUiImage(tint = Appspiriment.uiColors.primary)
                     }
                     AppsIcon(icon = icon, modifier = Modifier.size(size / 8))
                 }
@@ -192,31 +211,35 @@ fun AppCircleImagePicker(
         }
     }
 
-    if (showInternalSheet && interaction is PickerInteraction.Default) {
+    if (showBottomSheet && interaction is PickerInteraction.Default) {
         ImageSourceBottomSheet(
             config = interaction.config,
-            hasActiveImage = pickedImageUri != null || (currentImage != null && currentImage != ""),
-            onDismiss = { showInternalSheet = false },
+            hasActiveImage = displayImage != null,
+            onDismiss = { showBottomSheet = false },
             onCameraClick = {
-                showInternalSheet = false
-                photoPicker.openCamera()
+                showBottomSheet = false
+                picker.openCamera()
             },
             onGalleryClick = {
-                showInternalSheet = false
-                photoPicker.openGallery()
+                showBottomSheet = false
+                picker.openGallery()
             },
             onRemoveClick = {
-                showInternalSheet = false
-                pickedImageUri = null
+                showBottomSheet = false
+                localPickedUri = null
                 interaction.config.onImageRemoved?.invoke()
             }
         )
     }
 }
 
+// ────────────────────────────────────────────────
+// Bottom sheet & list item
+// ────────────────────────────────────────────────
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImageSourceBottomSheet(
+private fun ImageSourceBottomSheet(
     config: PhotoPickerConfig,
     hasActiveImage: Boolean,
     onDismiss: () -> Unit,
@@ -234,8 +257,18 @@ fun ImageSourceBottomSheet(
                 .fillMaxWidth()
                 .padding(bottom = 32.dp, top = 8.dp)
         ) {
-            SourceItem(icon = config.cameraIcon, text = config.cameraText, onClick = onCameraClick)
-            SourceItem(icon = config.galleryIcon, text = config.galleryText, onClick = onGalleryClick)
+            SourceItem(
+                icon = config.cameraIcon,
+                text = config.cameraText,
+                textColor = Appspiriment.colors.onMainSurface,
+                onClick = onCameraClick
+            )
+            SourceItem(
+                icon = config.galleryIcon,
+                text = config.galleryText,
+                textColor = Appspiriment.colors.onMainSurface,
+                onClick = onGalleryClick
+            )
 
             if (config.onImageRemoved != null && hasActiveImage) {
                 HorizontalDivider(
@@ -276,3 +309,19 @@ private fun SourceItem(
         )
     }
 }
+
+// ────────────────────────────────────────────────
+// FileProvider – avoids manifest merge conflicts
+// Add to AndroidManifest.xml:
+//     <provider
+//         android:name=".utils.AppspirimentFileProvider"
+//         android:authorities="${applicationId}.appspiriment.fileprovider"
+//         android:exported="false"
+//         android:grantUriPermissions="true">
+//         <meta-data
+//             android:name="android.support.FILE_PROVIDER_PATHS"
+//             android:resourceName="@xml/file_paths" />
+//     </provider>
+// ────────────────────────────────────────────────
+
+class AppspirimentFileProvider : FileProvider()

@@ -1,5 +1,7 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(appspirimentlibs.plugins.google.android.library)
     alias(appspirimentlibs.plugins.kotlin.android)
@@ -34,11 +36,14 @@ android {
             targetCompatibility = it
         }
     }
-    kotlinOptions {
-        jvmTarget = appspirimentlibs.versions.javaVersion.get()
+
+}
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(appspirimentlibs.versions.javaVersion.get())
+        )
     }
 }
-
 
 dependencies {
     implementation(appspirimentlibs.bundles.android.base)

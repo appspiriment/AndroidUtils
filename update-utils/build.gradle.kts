@@ -1,7 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-    alias(appspirimentlibs.plugins.appspiriment.library.base)
+    alias(appspirimentlibs.plugins.appspiriment.library)
     alias(appspirimentlibs.plugins.kotlin.compose)
     alias(libs.plugins.vanniktech.publish)
 }

@@ -15,4 +15,8 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="remove_photo">Delete</string>
+    <string name="field_required">* Required field</string>
+    <string name="invalid_email_format">Invalid email address</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="no_special_characters_allowed">No special characters allowed</string>
 </resources>

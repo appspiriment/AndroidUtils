@@ -1,9 +1,36 @@
-//    Current Appspiriment Plugin version: "0.0.9.dev-55"
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.util.Properties
+// ╔════════════════════════════════════════════════════════════╗
+// ║              Appspiriment Convention Plugins               ║
+// ║                                                            ║
+// ║  Current version: 0.0.14.dev-203                              ║
+// ║                                                            ║
+// ║  To check for updates or upgrade:                          ║
+// ║  1. Visit: https://github.com/appspiriment/AndroidConventionPlugins/releases
+// ║  2. Copy the latest version number (e.g. "0.1.0")          ║
+// ║  3. Update/Uncomment the line inside plugins { } block:    ║
+// ║ id("io.github.appspiriment.project") version "0.0.14.dev-203" ║
+// ║                                                            ║
+// ║  Or run: ./gradlew dependencyUpdates                       ║
+// ║     (after adding com.github.ben-manes.versions plugin)    ║
+// ║                                                            ║
+// ║  Full changelog & documentation:                           ║
+// ║  https://github.com/appspiriment/AndroidConventionPlugins  ║
+// ╚════════════════════════════════════════════════════════════╝
+
 plugins {
-//    id("io.github.appspiriment.project") version "0.0.9.+"
+    // id("io.github.appspiriment.project") version "0.0.14.dev-203"
+    alias(appspirimentlibs.plugins.appspiriment.library.hilt) apply false
+    alias(appspirimentlibs.plugins.appspiriment.library.compose) apply false
+    alias(appspirimentlibs.plugins.appspiriment.library.hilt.compose) apply false
+
+
+
+
+
+    alias(appspirimentlibs.plugins.appspiriment.application) apply false
+    alias(appspirimentlibs.plugins.appspiriment.library) apply false
+    alias(appspirimentlibs.plugins.appspiriment.data) apply false
+
+
     alias(appspirimentlibs.plugins.google.android.application) apply false
     alias(appspirimentlibs.plugins.google.android.library) apply false
     alias(appspirimentlibs.plugins.kotlin.android) apply false
@@ -13,45 +40,3 @@ plugins {
     alias(appspirimentlibs.plugins.dagger.hilt.android) apply false
     alias(appspirimentlibs.plugins.kotlinx.serialization) apply false
 }
-//val libversionFile = "${project.rootDir.path}/libraryversion.properties"
-//subprojects {
-//    project.ext.set("libVersion", getLibraryDevVersion())
-//    tasks.register("updateVersionForPortal") {
-//        File(libversionFile).apply {
-//            val props = Properties()
-//            props.load(FileInputStream(this))
-//            props.getOrDefault("LASTDEV", 1).let {
-//                writeText(
-//                    "MAJOR=${libs.versions.appspirimentUtils.get()}\nLASTDEV=$it"
-//                )
-//            }
-//        }
-//    }
-//    tasks.register("updateVersionForLocal") {
-//        File(libversionFile).apply {
-//            val props = Properties()
-//            props.load(FileInputStream(this))
-//            props.getOrDefault("DEV", props.getOrDefault("LASTDEV", 1)).toString().toInt().inc()
-//                .let {
-//                    writeText("MAJOR=${libs.versions.appspirimentUtils.get()}\nDEV=${it}\nLASTDEV=$it")
-//                }
-//        }
-//    }
-//}
-//internal fun getLibraryDevVersion(): String {
-//    val propsFile = File(libversionFile)
-//    if (propsFile.exists().not()) {
-//        propsFile.writeText("MAJOR=${libs.versions.appspirimentUtils.get()}\nDEV=1\nLASTDEV=1")
-//    }
-//    if (propsFile.exists()) {
-//        val props = Properties()
-//        props.load(FileInputStream(propsFile))
-//        val major = props["MAJOR"].toString()
-//        val dev = if (true && props.containsKey("DEV")) {
-//            props["DEV"].toString().padStart(2, '0').let { ".dev-$it" }
-//        } else null
-//        return dev?.let { "$major$it" } ?: major
-//    } else {
-//        throw FileNotFoundException("Could not read libraryversion.properties!")
-//    }
-//}

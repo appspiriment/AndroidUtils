@@ -1,7 +1,7 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.SonatypeHost
 plugins {
-    alias(appspirimentlibs.plugins.appspiriment.library.base)
+    alias(appspirimentlibs.plugins.appspiriment.library)
     alias(libs.plugins.vanniktech.publish)
 }
 
