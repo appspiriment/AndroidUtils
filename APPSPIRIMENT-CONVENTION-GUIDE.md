@@ -1,7 +1,7 @@
 # Appspiriment Convention Plugin Guide
 
-**Plugin version**: 0.0.14.dev-203
-**Last auto-updated**: 2026-03-07
+**Plugin version**: 0.0.14.dev-206
+**Last auto-updated**: 2026-03-17
 
 This project uses the Appspiriment convention plugins to standardize Android project setup, dependencies, and architecture.
 
@@ -72,7 +72,7 @@ See default names: [Theme Resources Repository](https://github.com/appspiriment/
 
 ## 5. Maintenance & Updates
 
-Current version: `id("io.github.appspiriment.project") version "0.0.14.dev-203"`
+Current version: `id("io.github.appspiriment.project") version "0.0.14.dev-206"`
 
 To update:
 1. Check [Releases](https://github.com/appspiriment/AndroidConventionPlugins/releases)

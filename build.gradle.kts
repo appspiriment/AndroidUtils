@@ -1,13 +1,13 @@
 // ╔════════════════════════════════════════════════════════════╗
 // ║              Appspiriment Convention Plugins               ║
 // ║                                                            ║
-// ║  Current version: 0.0.14.dev-203                              ║
+// ║  Current version: 0.0.14.dev-206                              ║
 // ║                                                            ║
 // ║  To check for updates or upgrade:                          ║
 // ║  1. Visit: https://github.com/appspiriment/AndroidConventionPlugins/releases
 // ║  2. Copy the latest version number (e.g. "0.1.0")          ║
 // ║  3. Update/Uncomment the line inside plugins { } block:    ║
-// ║ id("io.github.appspiriment.project") version "0.0.14.dev-203" ║
+// ║ id("io.github.appspiriment.project") version "0.0.14.dev-206" ║
 // ║                                                            ║
 // ║  Or run: ./gradlew dependencyUpdates                       ║
 // ║     (after adding com.github.ben-manes.versions plugin)    ║
@@ -17,7 +17,8 @@
 // ╚════════════════════════════════════════════════════════════╝
 
 plugins {
-    // id("io.github.appspiriment.project") version "0.0.14.dev-203"
+    // id("io.github.appspiriment.project") version "0.0.14.dev-206"
+
     alias(appspirimentlibs.plugins.appspiriment.library.hilt) apply false
     alias(appspirimentlibs.plugins.appspiriment.library.compose) apply false
     alias(appspirimentlibs.plugins.appspiriment.library.hilt.compose) apply false
