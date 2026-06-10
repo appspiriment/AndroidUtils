@@ -169,22 +169,15 @@ sealed class UiText {
         return when (this) {
             is DynamicString -> value.isBlank()
             is DynamicAnnotatedString -> value.text.isBlank()
-            else -> throw Exception("For non-DynamicString values use isEmpty with context")
-
+            else -> false // Resource-backed types are never considered blank without a Context
         }
     }
 
-    /**
-     * Checks if the UiText is empty without a context.
-     * This is only applicable to DynamicString and DynamicAnnotatedString.
-     *
-     * @return True if the UiText is empty, false otherwise.
-     */
     fun isEmpty(): Boolean {
         return when (this) {
             is DynamicString -> value.isEmpty()
             is DynamicAnnotatedString -> value.text.isEmpty()
-            else -> throw Exception("For non-DynamicString values use isEmpty with context")
+            else -> false // Resource-backed types are never considered empty without a Context
         }
     }
 

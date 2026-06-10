@@ -19,5 +19,5 @@ abstract class UiEventsViewModel <EventType:Any, UiEventType:Any>: ViewModel() {
         }
     }
 
-    internal abstract fun onEvent(event: EventType)
+    abstract fun onEvent(event: EventType)
 }

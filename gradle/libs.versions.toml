@@ -4,10 +4,10 @@
 
 [versions]
 #App Versions
-appspirimentUtils = "0.0.5.dev-11"
-logUtils = "0.0.1"
-composeUtils = "0.0.6.dev-87"
-updateUtils = "0.0.1"
+appspirimentUtils = "0.1.0"
+logUtils = "0.1.0"
+composeUtils = "0.1.0"
+updateUtils = "0.1.0"
 vanniktechPublish = "0.30.0"
 agp = "8.4.2"
 kotlin = "2.0.0"

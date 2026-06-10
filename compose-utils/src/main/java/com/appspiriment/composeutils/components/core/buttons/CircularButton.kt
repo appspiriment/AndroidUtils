@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.appspiriment.composeutils.R
 import com.appspiriment.composeutils.components.core.image.AppsImage
@@ -30,16 +29,17 @@ fun CircularButton(
 ) {
 
     Box(
+        // clickable on the Box ensures the entire coloured circle is tappable,
+        // not just the inner image pixels.
         modifier = modifier
             .size(Appspiriment.sizes.floatingButtonSize)
+            .clickable { onClick() }
             .background(buttonColor, shape = RoundedCornerShape(50)),
         contentAlignment = Alignment.Center
     ) {
         AppsImage(
             image = icon,
-            modifier = iconModifier.clickable {
-                onClick()
-            },
+            modifier = iconModifier,
         )
     }
 }

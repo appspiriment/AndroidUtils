@@ -24,8 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.appspiriment.composeutils.components.containers.types.AppBarTitle
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
+import com.appspiriment.composeutils.components.containers.types.DrawerIdentifier
 import com.appspiriment.composeutils.components.containers.types.DrawerItem
+import com.appspiriment.composeutils.components.containers.types.NavigationMode
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
 import com.appspiriment.composeutils.components.core.VerticalSpacer
 import com.appspiriment.composeutils.components.core.image.AppsIcon
@@ -35,19 +38,6 @@ import com.appspiriment.composeutils.theme.Appspiriment.sizes
 import com.appspiriment.composeutils.theme.Appspiriment.typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-/**
- * A marker interface to provide a common type for all drawer item identifiers.
- * This allows for type-safe handling of click events in the `onDrawerItemClicked` callback.
- *
- * Example:
- * ```
- * enum class MyDrawerItems : DrawerIdentifier {
- *     HOME, SETTINGS, PROFILE
- * }
- * ```
- */
-interface DrawerIdentifier
 
 /**
  * A high-level, opinionated scaffold that provides a navigation drawer with a pre-configured

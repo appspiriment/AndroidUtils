@@ -11,7 +11,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.UiImage
@@ -29,7 +28,8 @@ fun AppsIconButton(
     onClick: () -> Unit
 ) {
     val iconTint = icon.tint?.asColor() ?: LocalContentColor.current
-    val heightAdjustedIconModifier = iconHeight?.let{iconModifier.height(iconHeight)} ?: modifier
+    // When iconHeight is null fall back to iconModifier, NOT the button's outer modifier.
+    val heightAdjustedIconModifier = iconHeight?.let { iconModifier.height(it) } ?: iconModifier
     IconButton(
         onClick = onClick,
         modifier = modifier,

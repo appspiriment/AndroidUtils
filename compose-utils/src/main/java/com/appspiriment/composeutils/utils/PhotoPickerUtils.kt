@@ -203,7 +203,7 @@ fun AppCircleImagePicker(
                 Box(contentAlignment = Alignment.Center) {
                     val icon = when (interaction) {
                         is PickerInteraction.Default -> interaction.config.cameraIcon
-                        else -> Icons.Default.Camera.toUiImage(tint = Appspiriment.uiColors.primary)
+                        else -> Icons.Default.Camera.toUiImage(tint = Appspiriment.colors.primary.toUiColor())
                     }
                     AppsIcon(icon = icon, modifier = Modifier.size(size / 8))
                 }

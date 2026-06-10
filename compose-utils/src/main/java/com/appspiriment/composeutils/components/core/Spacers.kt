@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontVariation.weight
 import androidx.compose.ui.unit.Dp
 import com.appspiriment.composeutils.theme.Appspiriment
 

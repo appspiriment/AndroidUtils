@@ -7,28 +7,21 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person3
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import com.appspiriment.composeutils.components.containers.types.AppBarTitle
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
+import com.appspiriment.composeutils.components.containers.types.NavigationMode
 import com.appspiriment.composeutils.components.containers.types.ScaffoldColors
 import com.appspiriment.composeutils.components.core.progress.FullscreenLoader
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.theme.Appspiriment.sizes
-import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.UiText
 import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.wrappers.toUiText
 
@@ -40,7 +33,7 @@ fun AppsPageScaffold(
     appBarTitle: AppBarTitle? = null,
     actions: List<AppsTopBarButton>? = null,
     actionsContent: @Composable RowScope.(Color) -> Unit = {},
-    bottomBar: (@Composable () -> Unit) = {},
+    bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     isLoading: Boolean = false,
     colors: ScaffoldColors = ScaffoldColors.defaults(),
@@ -56,26 +49,25 @@ fun AppsPageScaffold(
                 actionsContent = actionsContent,
                 appBarTitle = appBarTitle,
                 background = colors.topBarBackground,
-                onTopBarColor = colors.onTopBarColor
+                onTopBarColor = colors.onTopBarColor,
             )
         },
         bottomBar = bottomBar,
         modifier = modifier,
         isLoading = isLoading,
         floatingActionButton = floatingActionButton,
-        backgroundColor = colors.backgroundColor
-    ) { scaffoldPadding -> // The padding from the underlying Scaffold
+        backgroundColor = colors.backgroundColor,
+    ) { scaffoldPadding ->
         Column(
             modifier = Modifier
-                .padding(scaffoldPadding) // Apply scaffold padding first to avoid content going under bars
+                .padding(scaffoldPadding)
                 .fillMaxSize()
-                .padding(contentPadding)  // Then apply any additional custom padding
+                .padding(contentPadding),
         ) {
-            content() // Your content is placed here, with ColumnScope
+            content()
         }
     }
 }
-
 
 @Composable
 fun PageScaffold(
@@ -83,52 +75,20 @@ fun PageScaffold(
     isLoading: Boolean = false,
     topBar: (@Composable () -> Unit)? = null,
     floatingActionButton: @Composable () -> Unit = {},
-    bottomBar: (@Composable () -> Unit) = {},
+    bottomBar: @Composable () -> Unit = {},
     backgroundColor: Color = Appspiriment.colors.background,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
-        topBar = {
-            topBar?.invoke()
-        },
+        topBar = { topBar?.invoke() },
         bottomBar = bottomBar,
         modifier = modifier.fillMaxSize(),
         floatingActionButton = floatingActionButton,
-        containerColor = backgroundColor
+        containerColor = backgroundColor,
     ) { innerPadding ->
-        content.invoke(innerPadding)
-        if (isLoading) {
-            FullscreenLoader()
-        }
+        content(innerPadding)
+        if (isLoading) FullscreenLoader()
     }
-}
-
-sealed class NavigationMode(val icon: UiImage, val contentDescription: String? = null) {
-    data object EMPTY : NavigationMode(Icons.Default.Home.toUiImage(), null)
-    data object BACK : NavigationMode(Icons.AutoMirrored.Filled.ArrowBack.toUiImage(), "Back")
-    data object CLOSE : NavigationMode(Icons.Default.Close.toUiImage(), "Close")
-    data object DRAWER : NavigationMode(Icons.Default.Menu.toUiImage(), "Menu")
-    data object HOME : NavigationMode(Icons.Default.Home.toUiImage(), "Home")
-}
-
-sealed class AppBarTitle(open val modifier: Modifier) {
-    data object None : AppBarTitle(Modifier)
-    data class BrandLogo(val image: UiImage, override val modifier: Modifier = Modifier) :
-        AppBarTitle(modifier)
-
-    data class ScreenTitle(val title: UiText, override val modifier: Modifier = Modifier) :
-        AppBarTitle(modifier)
-
-    data class ScreenTitleWithIcon(
-        val icon: UiImage,
-        val iconHeight: Dp = 40.dp,
-        val title: UiText,
-        val subTitle: UiText? = null,
-        val titleStyle: TextStyle? = null,
-        val subTitleStyle: TextStyle? = null,
-        val iconPadding: Dp = 12.dp,
-        override val modifier: Modifier = Modifier
-    ) : AppBarTitle(modifier)
 }
 
 @Preview
@@ -141,12 +101,9 @@ fun PreviewPageScaffold() {
             title = "Test Application".toUiText(),
         ),
         actions = listOf(
-            AppsTopBarButton(
-                icon = Icons.Filled.Menu.toUiImage(),
-                onClick = {}
-            ),
-        )
+            AppsTopBarButton(icon = Icons.Filled.Menu.toUiImage(), onClick = {}),
+        ),
     ) {
-        AppspirimentText("Appspirimnet Labs")
+        AppspirimentText("Appspiriment Labs")
     }
 }

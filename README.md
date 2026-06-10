@@ -1,95 +1,201 @@
-# Android Convention Plugins
+# Appspiriment Android Utils
 
-Welcome to the **Android Convention Plugins** repository! These Gradle plugins are designed to simplify the configuration and setup of Android projects by providing out-of-the-box solutions for common requirements such as Dependency Injection, version management, and library setup.
+A collection of Android utility libraries for Jetpack Compose projects, published under `io.github.appspiriment`.
 
-[![Latest Version](https://img.shields.io/badge/Version-0.1.1-blue)](https://github.com/appspiriment/AndroidConventionPlugins)
+## Libraries
 
-## Plugins Overview
-
-### 1. **Android Application Convention Plugin**
-
-- **ID:** `io.github.appspiriment.application`
-- **Description:** Configures Android application modules with Hilt Dependency Injection (DI) and automatic versioning. It updates the `version.properties` file with each build and integrates seamlessly with Hilt.
-- **Features:**
-  - Automatic Hilt DI setup.
-  - Version management via `version.properties`.
-  - **Warning:** Avoid manually modifying the `appspirimentlibs.versions.toml` file as it may be overwritten during updates.
-- **Tags:** android, application, conventions
-
-### 2. **Android Library Convention Plugin**
-
-- **ID:** `io.github.appspiriment.library`
-- **Description:** Configures Android Library modules with Hilt DI (via KSP) and optional Compose capabilities. The plugin updates the `appspirimentlibs.versions.toml` file to include required dependencies.
-- **Features:**
-  - Hilt DI support using KSP.
-  - Optional Compose setup with `isComposeLibrary` extension.
-  - Automatic dependency management.
-- **Tags:** android, library, conventions
-
-### 3. **Android Project Root Convention Plugin**
-
-- **ID:** `io.github.appspiriment.project`
-- **Description:** Simplifies initial project setup and version management. Automatically configures `appspirimentlibs.versions.toml` and adjusts the root `settings.gradle.kts` file.
-- **Features:**
-  - Clean project initialization.
-  - Automatic migration to Kotlin DSL if using Groovy.
-  - Updates plugin versions easily by syncing.
-  - **Note:** Removes existing configurations in the app module's Gradle file.
-- **Tags:** android, settings, conventions
-
-### 4. **Android Room Convention Plugin**
-
-- **ID:** `io.github.appspiriment.room`
-- **Description:** Simplifies Room setup by applying necessary libraries and configurations. Fetches required Room versions from `appspirimentlibs.versions.toml`.
-- **Features:**
-  - Automatic Room integration.
-  - Ensures compatibility with specified versions.
-- **Tags:** android, room, conventions
-
-## Getting Started
-
-1. Add the desired plugin to your `build.gradle.kts` or `settings.gradle.kts` file. Ensure you specify the correct version.
-2. Sync your project to apply the plugin.
-3. Follow any specific configuration instructions provided by each plugin.
-
-## Installation
-
-### Using the Plugins DSL
-Add the plugin directly to your `build.gradle.kts` file:
-
-```kotlin
-plugins {
-    id("io.github.appspiriment.application") version "<plugin-version>"
-}
-```
-
-### Using Legacy Apply Method
-If your project does not use the Plugins DSL, you can apply the plugin as follows:
-
-```kotlin
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("io.github.appspiriment:conventions:<plugin-version>")
-    }
-}
-
-apply(plugin = "io.github.appspiriment.application")
-```
-
-Replace `<plugin-version>` with the desired version of the plugin.
-
-## Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests to improve these plugins.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+| Artifact | Version | Description |
+|---|---|---|
+| `compose-utils` | [![compose-utils](https://img.shields.io/badge/compose--utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Compose UI components, theme system, wrappers |
+| `utils` | [![utils](https://img.shields.io/badge/utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Kotlin extension functions and Android utilities |
+| `logutils-dev` / `logutils-prod` | [![logutils](https://img.shields.io/badge/logutils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Logging utilities with dev/prod flavours |
+| `update-utils` | [![update-utils](https://img.shields.io/badge/update--utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Firebase Remote Config–driven app update flows |
 
 ---
 
-For more details, visit the [GitHub Repository](https://github.com/appspiriment/AndroidConventionPlugins).
+## Installation
 
+Add `mavenCentral()` (or `mavenLocal()` for local builds) to your `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        // mavenLocal() // for local snapshot builds
+    }
+}
+```
+
+### compose-utils
+
+Compose components, a theme system, `UiText`/`UiColor`/`UiImage`/`UiDimen` wrappers, navigation animations, ViewModel base classes, and more.
+
+```kotlin
+// settings.gradle.kts / libs.versions.toml
+[versions]
+appspirimentComposeUtils = "0.1.0"
+
+[libraries]
+appspiriment-compose = { group = "io.github.appspiriment", name = "compose-utils", version.ref = "appspirimentComposeUtils" }
+```
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    implementation(libs.appspiriment.compose)
+}
+```
+
+### utils
+
+Core Kotlin/Android extension functions, serialization helpers, and common utilities.
+
+```kotlin
+[versions]
+appspirimentUtils = "0.1.0"
+
+[libraries]
+appspiriment-utils = { group = "io.github.appspiriment", name = "utils", version.ref = "appspirimentUtils" }
+```
+
+### logutils
+
+Logging utilities with separate `dev` (verbose) and `prod` (silent/crash-only) flavour artifacts.
+
+```kotlin
+[versions]
+appspirimentLogUtils = "0.1.0"
+
+[libraries]
+appspiriment-logutils-dev  = { group = "io.github.appspiriment", name = "logutils-dev",  version.ref = "appspirimentLogUtils" }
+appspiriment-logutils-prod = { group = "io.github.appspiriment", name = "logutils-prod", version.ref = "appspirimentLogUtils" }
+```
+
+```kotlin
+// build.gradle.kts — pick one per build variant
+dependencies {
+    debugImplementation(libs.appspiriment.logutils.dev)
+    releaseImplementation(libs.appspiriment.logutils.prod)
+}
+```
+
+### update-utils
+
+Composable update-gate UI powered by Firebase Remote Config — handles immediate and flexible update flows.
+
+```kotlin
+[versions]
+appspirimentUpdateUtils = "0.1.0"
+
+[libraries]
+appspiriment-update = { group = "io.github.appspiriment", name = "update-utils", version.ref = "appspirimentUpdateUtils" }
+```
+
+---
+
+## compose-utils — Component Reference
+
+### Theme
+| Class / Object | Purpose |
+|---|---|
+| `CompositionBaseProvider` | Root theme provider — wrap your Activity content here |
+| `MalayalamCompositionBaseProvider` | Convenience entry-point defaulting to Noto font |
+| `Appspiriment.colors` | `BaseColors` — semantic color tokens |
+| `Appspiriment.sizes` | `Sizes` — spacing, icon, corner-radius design tokens |
+| `Appspiriment.typography` | `BaseTextStyles` + M3 semantic aliases |
+| `Appspiriment.flags` | `BaseFlags` — `isNotoFont`, `notoFontPadding` |
+| `AppFontFamily` | Sealed class — `Roboto`, `Noto`, `System`, `Custom`, `GmsFont` |
+
+### Navigation Animations
+| API | Use case |
+|---|---|
+| `NavTransition` | Data class holding all four transition lambdas |
+| `NavTransitions.slideFromRight()` | Standard forward push (default) |
+| `NavTransitions.slideFromLeft()` | RTL / reverse push |
+| `NavTransitions.slideFromBottom()` | Full-screen modal |
+| `NavTransitions.slideFromTop()` | Top tray / notification detail |
+| `NavTransitions.fade()` | Tab switch / peer screens |
+| `NavTransitions.scaleAndFade()` | Settings overlay / dialog-like |
+| `NavTransitions.none()` | Instant switch (splash → home) |
+| `animatedComposable<T>(transition)` | `NavGraphBuilder` extension — replaces `composable<T>` |
+| `defaultEnterTransition` etc. | Top-level vals for `NavHost` global defaults |
+
+### Containers
+| Component | Description |
+|---|---|
+| `AppsPageScaffold` / `PageScaffold` | Scaffold with top bar, bottom bar, and fullscreen loader slot |
+| `AppsDrawerScaffold` | Navigation drawer scaffold |
+| `AppsTopBar` | Opinionated top app bar supporting image titles, back, and action buttons |
+| `AppsBottomNavigation` | Bottom navigation bar (NavController-aware) |
+| `AppsBottomNavigationNavHost` | Scaffold + NavHost + bottom bar integrated |
+| `SwipeableActionsBox` | Swipe-to-reveal action container |
+| `TitledCardView` | Card with floating title header |
+| `SmartPullToRefreshBox` | Pull-to-refresh wrapper |
+| `AppsBottomSheet` | Modal bottom sheet with optional title/close |
+
+### Core Components
+| Component | Description |
+|---|---|
+| `AppsText` | Primary text composable (replaces `AppspirimentText`) |
+| `AppsImageText` | Text with leading/trailing icon |
+| `AppsImage` | Unified image composable (`UiImage`-backed) |
+| `AppsIcon` | Icon composable (`ImageVector` or `Painter`) |
+| `AppsButton` | Standard button |
+| `AppsIconButton` | Icon-only button with `UiImage` |
+| `AppsImageButton` | Button with text + icon |
+| `CircularButton` | Round floating-action-style button |
+| `AppsDropdown` | Material 3 animated dropdown (generic + `UiText` overloads) |
+| `AppsValidatedTextField` | Stateful text field with `ValidatedTextFieldState` |
+| `AppsSelectableText` | Toggling chip / selectable text |
+| `FullscreenLoader` | Blocking loading overlay |
+| `MessageDialog` | Configurable alert dialog |
+| `VerticalSpacer` / `HorizontalSpacer` | Typed spacers |
+| `Modifier.shimmerEffect()` | Skeleton loading shimmer modifier |
+| `Modifier.circleBackground` | Circle background modifier |
+
+### Wrappers
+| Class | Description |
+|---|---|
+| `UiText` | Sealed class — `DynamicString`, `StringResource`, `PluralResource`, `AnnotatedString` |
+| `UiColor` | Sealed class — `DynamicColor`, `ColorResource`, `HexColor` |
+| `UiImage` | Sealed class — vector, drawable, URL, painter |
+| `UiDimen` | Sealed class — `DynamicDp`, `DynamicTextUnit`, `DimenResource` |
+| `SerializedColor` | `@JvmInline` value class with `KSerializer` for persisting `Color` |
+
+### ViewModel Base Classes
+| Class | Generics | Purpose |
+|---|---|---|
+| `UiStateEventsViewModel<S, E, U>` | State, Event, UiEvent | State + event channel |
+| `UiEventsViewModel<E, U>` | Event, UiEvent | Event channel only (stateless) |
+| `UiStateEventsAndroidViewModel<S, E, U>` | State, Event, UiEvent | `AndroidViewModel` variant |
+
+### Utilities
+| Utility | Description |
+|---|---|
+| `rememberPermissionRequest(…)` | Dialog-driven permission flow |
+| `PermissionHandler` | Full-screen permission gate composable |
+| `rememberPhotoPicker` | Photo picker + crop integration |
+| `rememberSpeechToText` | Speech-to-text launcher |
+| `Flow<T>.observeWithLifecycle(…)` | Lifecycle-aware flow collector |
+| `DisableSoftKeyboard` | Composable that suppresses the soft keyboard |
+| `genericNavType<T>()` | Parcelable/Serializable nav type factory |
+| `EventStabilizers` | `stabilize()` / `stabilizeLambda()` for stable callbacks |
+
+---
+
+## Version History
+
+| Version | Highlights |
+|---|---|
+| **0.1.0** | Theme system rewrite (`AppFontFamily`, non-composable factories, M3 aliases); `NavTransition` + 6 preset animations; `AppsText` canonical name; item-based `AppsDropdown` overload; critical bug fixes (Toast recomposition, `UiDimen` px/dp, `AppsImageText` click, `ActionFinder` offset, flow coroutine leak) |
+| 0.0.6 | Dropdown improvements, various component updates |
+| 0.0.5 | Initial public release |
+
+---
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
+
+For more details, visit the [GitHub Repository](https://github.com/appspiriment/AndroidUtils).

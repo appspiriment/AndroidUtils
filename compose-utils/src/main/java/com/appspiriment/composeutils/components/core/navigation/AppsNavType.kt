@@ -10,8 +10,8 @@ import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 inline fun <reified T> genericNavType(
-    isNullableAllowd: Boolean = false
-) = object : NavType<T>(isNullableAllowed = isNullableAllowd){
+    isNullableAllowed: Boolean = false
+) = object : NavType<T>(isNullableAllowed = isNullableAllowed){
     override fun get(bundle: SavedState, key: String): T? {
         return  bundle.getString(key)?.toValue()
     }
@@ -32,7 +32,7 @@ inline fun <reified T> genericNavType(
         if(this === other) return true
         if(other !is NavType<*>) return false
         if(other::class.java != this::class.java) return false
-        if(isNullableAllowd != other.isNullableAllowed) return false
+        if(isNullableAllowed != other.isNullableAllowed) return false
         return true
     }
 
@@ -48,5 +48,5 @@ inline fun <reified T> SavedStateHandle.toValue(key:String): T = Json.decodeFrom
 
 inline fun <reified T> typeMapOf(): Pair<KType, NavType<T>>{
     val type = typeOf<T>()
-    return type to genericNavType<T>(isNullableAllowd = type.isMarkedNullable)
+    return type to genericNavType<T>(isNullableAllowed = type.isMarkedNullable)
 }

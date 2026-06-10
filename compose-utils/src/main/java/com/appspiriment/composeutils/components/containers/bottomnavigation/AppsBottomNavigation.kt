@@ -148,11 +148,14 @@ fun AppsBottomNavBar(
             itemContent(route, isSelected, selectedColor, unselectedColor)
         }
 
+        // Hoist remember calls outside the conditional so they are always called
+        // unconditionally — required by the Compose rules of hooks.
+        var showMoreMenu by remember { mutableStateOf(false) }
+        val isMoreSelected = remember(currentRoute, hiddenRoutes) {
+            hiddenRoutes.any { it.route == currentRoute }
+        }
+
         if (hiddenRoutes.isNotEmpty()) {
-            var showMoreMenu by remember { mutableStateOf(false) }
-            val isMoreSelected = remember(currentRoute, hiddenRoutes) {
-                hiddenRoutes.any { it.route == currentRoute }
-            }
             DefaultBottomNavigationItem(
                 route = AppsBottomBarButton(
                     name = "More",
@@ -200,7 +203,7 @@ fun RowScope.DefaultBottomNavigationItem(
     BottomNavigationItem(
         icon = {
             AppsIcon(
-                icon = route.icon.setTint(if (isSelected) selectedColor.toUiColor() else unselectedColor.toUiColor()),
+                icon = route.icon.withTint(if (isSelected) selectedColor.toUiColor() else unselectedColor.toUiColor()),
                 iconHeight = Appspiriment.sizes.iconMedium
             )
         },

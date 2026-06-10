@@ -55,7 +55,7 @@ fun SwipeableActionsBox(
   content: @Composable BoxScope.() -> Unit
 ) = Box(modifier) {
   state.also {
-    it.swipeThresholdPx = GetScreenWidthPercentageInPx(swipeThreshold)
+    it.swipeThresholdPx = screenWidthFractionPx(swipeThreshold)
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     it.actions = remember(endActions, startActions, isRtl) {
       ActionFinder(
@@ -152,12 +152,8 @@ private fun Modifier.drawOverContent(onDraw: DrawScope.() -> Unit): Modifier {
 
 
 @Composable
-fun GetScreenWidthPercentageInPx(percentage: Float): Float {
+private fun screenWidthFractionPx(fraction: Float): Float {
   val configuration = LocalConfiguration.current
-  val screenWidthPx = configuration.screenWidthDp.dp.value * LocalDensity.current.density // More direct way to Px
-  // Or, if you have access to a view context (less common in pure Compose):
-  // val displayMetrics = LocalContext.current.resources.displayMetrics
-  // val screenWidthPx = displayMetrics.widthPixels
-
-  return screenWidthPx * percentage
+  val screenWidthPx = configuration.screenWidthDp.dp.value * LocalDensity.current.density
+  return screenWidthPx * fraction
 }

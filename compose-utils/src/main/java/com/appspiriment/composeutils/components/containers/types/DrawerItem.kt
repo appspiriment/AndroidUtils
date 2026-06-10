@@ -3,10 +3,20 @@ package com.appspiriment.composeutils.components.containers.types
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import com.appspiriment.composeutils.components.containers.DrawerIdentifier
+import com.appspiriment.composeutils.theme.Appspiriment
 import com.appspiriment.composeutils.wrappers.UiImage
 import com.appspiriment.composeutils.wrappers.UiText
-import com.appspiriment.composeutils.theme.Appspiriment
+
+/**
+ * Marker interface for drawer item identifiers. Implement this in an enum or sealed class
+ * to provide type-safe identifiers for click events in drawer navigation.
+ *
+ * Example:
+ * ```
+ * enum class MyDrawerItems : DrawerIdentifier { HOME, SETTINGS, PROFILE }
+ * ```
+ */
+interface DrawerIdentifier
 
 data class DrawerItem(
     val menuTitle: UiText,
@@ -21,7 +31,7 @@ data class DrawerItem(
 ) {
     companion object {
         @Composable
-        fun <T>from(
+        fun from(
             menuTitle: UiText,
             icon: UiImage? = null,
             trailingIcon: UiImage? = null,
@@ -40,7 +50,7 @@ data class DrawerItem(
             closeDrawer = closeDrawer,
             textStyle = textStyle,
             verticalPadding = verticalPadding,
-            drawerIdentifier = drawerIdentifier
+            drawerIdentifier = drawerIdentifier,
         )
     }
 }

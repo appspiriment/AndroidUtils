@@ -84,7 +84,10 @@ fun AppsBottomNavigationNavHost(
                 }
             }
         },
-        modifier = modifier.navigationBarsPadding()
+        // Do NOT also add navigationBarsPadding() here — the Scaffold's content padding
+        // (it.calculateBottomPadding()) already accounts for the bottom bar inset.
+        // Adding both causes the content to be double-padded on the bottom.
+        modifier = modifier
     ) {
         NavHost(
             navController = navController,

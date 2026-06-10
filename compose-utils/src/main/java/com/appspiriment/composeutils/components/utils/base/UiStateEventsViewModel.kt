@@ -17,13 +17,13 @@ abstract class UiStateEventsViewModel <StateType: Any, EventType:Any, UiEventTyp
 
     val uiEventFlow = _uiEventChannel.receiveAsFlow()
 
-    fun sendUiEvent(uiEvent: UiEventType){
+    protected fun sendUiEvent(uiEvent: UiEventType){
         viewModelScope.launch {
             _uiEventChannel.send(uiEvent)
         }
     }
 
-    fun updateUiState(transform: (StateType)->StateType){
+    protected fun updateUiState(transform: (StateType)->StateType){
         _uiState.update {
             transform(it)
         }

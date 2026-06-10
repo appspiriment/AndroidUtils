@@ -1,6 +1,7 @@
 package com.appspiriment.composeutils.theme
 
-import androidx.compose.runtime.Composable
+import android.content.Context
+import androidx.annotation.DimenRes
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -10,6 +11,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 import com.appspiriment.composeutils.R
 
@@ -36,6 +40,25 @@ object GoogleFonts {
         Font(R.font.noto_extra_bold, FontWeight.ExtraBold),
         Font(R.font.noto_black, FontWeight.Black),
     )
+}
+
+/**
+ * Describes which font family the theme should use.
+ *
+ * - [Roboto]  — bundled Roboto (9 weights). Default.
+ * - [Noto]    — bundled Noto Sans (8 weights). [fontPadding] applies a vertical offset in
+ *               [AppspirimentText] to compensate for Noto's taller metrics.
+ * - [System]  — lets the OS/Material3 choose the default font.
+ * - [Custom]  — any [FontFamily] you supply.
+ * - [GmsFont] — resolved at runtime via Google Play Services fonts. Silently falls back to
+ *               [System] on devices without GMS.
+ */
+sealed class AppFontFamily {
+    data object Roboto : AppFontFamily()
+    data class Noto(val fontPadding: Dp = 4.dp) : AppFontFamily()
+    data object System : AppFontFamily()
+    data class Custom(val fontFamily: FontFamily) : AppFontFamily()
+    data class GmsFont(val create: (GoogleFont.Provider) -> FontFamily) : AppFontFamily()
 }
 
 object TextStyles {
@@ -79,11 +102,13 @@ data class BaseTextStyles(
     val textXBig: TextStyle = TextStyle.Default,
     val textHuge: TextStyle = TextStyle.Default,
     val textGiant: TextStyle = TextStyle.Default,
-
 )
 
-@Composable
-internal fun createBaseTypography(baseSize: Sizes, fontFamily: FontFamily?): BaseTextStyles {
+internal fun createBaseTypography(context: Context, fontFamily: FontFamily?): BaseTextStyles {
+    val res = context.resources
+    val scaledDensity = res.displayMetrics.scaledDensity
+    fun @receiver:DimenRes Int.toSp() = (res.getDimension(this) / scaledDensity).sp
+
     val baseTextStyle = TextStyle.Default.copy(
         fontFamily = fontFamily,
         fontWeight = FontWeight.Normal,
@@ -94,65 +119,66 @@ internal fun createBaseTypography(baseSize: Sizes, fontFamily: FontFamily?): Bas
     return BaseTextStyles(
         baseTextStyle = baseTextStyle,
         textMinimum = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeMinimum
+            fontSize = R.dimen.font_size_minimum.toSp()
         ),
         textTiny = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeTiny
+            fontSize = R.dimen.font_size_tiny.toSp()
         ),
         textXXXSmall = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXXXSmall
+            fontSize = R.dimen.font_size_xxxsmall.toSp()
         ),
         textXXSmall = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXXSmall
+            fontSize = R.dimen.font_size_xxsmall.toSp()
         ),
         textXSmall = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXSmall
+            fontSize = R.dimen.font_size_xsmall.toSp()
         ),
         textXSmallMedium = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXSmallMedium
+            fontSize = R.dimen.font_size_xsmall_medium.toSp()
         ),
         textSmall = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeSmall
+            fontSize = R.dimen.font_size_small.toSp()
         ),
         textSmallMedium = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeSmallMedium
+            fontSize = R.dimen.font_size_small_medium.toSp()
         ),
         textMedium = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeMedium
+            fontSize = R.dimen.font_size_medium.toSp()
         ),
         textMediumMid = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeMediumMid
+            fontSize = R.dimen.font_size_medium_mid.toSp()
         ),
         textMediumLarge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeMediumLarge
+            fontSize = R.dimen.font_size_medium_large.toSp()
         ),
         textLarge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeLarge
+            fontSize = R.dimen.font_size_large.toSp()
         ),
         textXLarge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXLarge
+            fontSize = R.dimen.font_size_xlarge.toSp()
         ),
         textXXLarge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXXLarge
+            fontSize = R.dimen.font_size_xxlarge.toSp()
         ),
         textXXXLarge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXXXLarge
+            fontSize = R.dimen.font_size_xxxlarge.toSp()
         ),
         textBig = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeBig
+            fontSize = R.dimen.font_size_big.toSp()
         ),
         textXBig = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeXBig
+            fontSize = R.dimen.font_size_xbig.toSp()
         ),
         textHuge = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeHuge
+            fontSize = R.dimen.font_size_huge.toSp()
         ),
         textGiant = baseTextStyle.copy(
-            fontSize = baseSize.fontSizeGiant
+            fontSize = R.dimen.font_size_giant.toSp()
         ),
-
     )
 }
+
+// ── Weight extensions ─────────────────────────────────────────────────────────
 
 val TextStyle.thin get() = this.copy(fontWeight = FontWeight.Thin)
 val TextStyle.extraLight get() = this.copy(fontWeight = FontWeight.ExtraLight)
@@ -164,7 +190,7 @@ val TextStyle.bold get() = this.copy(fontWeight = FontWeight.Bold)
 val TextStyle.extraBold get() = this.copy(fontWeight = FontWeight.ExtraBold)
 val TextStyle.black get() = this.copy(fontWeight = FontWeight.Black)
 
-
+// ── Style extensions ──────────────────────────────────────────────────────────
 
 val TextStyle.italic get() = this.copy(fontStyle = FontStyle.Italic)
 val TextStyle.thinItalic get() = this.copy(fontWeight = FontWeight.Thin, fontStyle = FontStyle.Italic)
@@ -176,5 +202,43 @@ val TextStyle.boldItalic get() = this.copy(fontWeight = FontWeight.Bold, fontSty
 val TextStyle.extraBoldItalic get() = this.copy(fontWeight = FontWeight.ExtraBold, fontStyle = FontStyle.Italic)
 val TextStyle.blackItalic get() = this.copy(fontWeight = FontWeight.Black, fontStyle = FontStyle.Italic)
 
-val LocalTypography  by lazy { staticCompositionLocalOf { BaseTextStyles() } }
+// ── Material3-aligned semantic aliases ───────────────────────────────────────
+// Maps to the nearest size tier. Use these when building components that should
+// align with M3 guidelines, and use the numeric tiers for app-specific sizing.
 
+/** M3 labelSmall — 11sp */
+val BaseTextStyles.labelSmall: TextStyle get() = textXSmallMedium
+/** M3 labelMedium — 12sp medium */
+val BaseTextStyles.labelMedium: TextStyle get() = textSmall.medium
+/** M3 labelLarge — 14sp medium */
+val BaseTextStyles.labelLarge: TextStyle get() = textMedium.medium
+
+/** M3 bodySmall — 12sp */
+val BaseTextStyles.bodySmall: TextStyle get() = textSmall
+/** M3 bodyMedium — 14sp */
+val BaseTextStyles.bodyMedium: TextStyle get() = textMedium
+/** M3 bodyLarge — 16sp */
+val BaseTextStyles.bodyLarge: TextStyle get() = textMediumLarge
+
+/** M3 titleSmall — 14sp semiBold */
+val BaseTextStyles.titleSmall: TextStyle get() = textMedium.semiBold
+/** M3 titleMedium — 16sp semiBold */
+val BaseTextStyles.titleMedium: TextStyle get() = textMediumLarge.semiBold
+/** M3 titleLarge — 20sp (nearest tier to M3's 22sp) */
+val BaseTextStyles.titleLarge: TextStyle get() = textXLarge
+
+/** M3 headlineSmall — 24sp */
+val BaseTextStyles.headlineSmall: TextStyle get() = textXXLarge
+/** M3 headlineMedium — 28sp */
+val BaseTextStyles.headlineMedium: TextStyle get() = textXXXLarge
+/** M3 headlineLarge — 32sp */
+val BaseTextStyles.headlineLarge: TextStyle get() = textBig
+
+/** M3 displaySmall — 36sp */
+val BaseTextStyles.displaySmall: TextStyle get() = textXBig
+/** M3 displayMedium — 40sp */
+val BaseTextStyles.displayMedium: TextStyle get() = textHuge
+/** M3 displayLarge — 48sp (nearest tier to M3's 57sp) */
+val BaseTextStyles.displayLarge: TextStyle get() = textGiant
+
+val LocalTypography  by lazy { staticCompositionLocalOf { BaseTextStyles() } }

@@ -27,23 +27,19 @@ fun PrefixedText(
 
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         prefix?.let {
-            (prefixStyle).run {
-                AppspirimentText(
-                    text = it,
-                    color = prefixColor,
-                    style = prefixStyle,
-                    modifier = prefixModifier.padding(end = prefixPadding)
-                )
-            }
-        }
-        textStyle.run {
             AppspirimentText(
-                text = text,
-                color = color,
-                style = textStyle,
-                modifier = textModifier
+                text = it,
+                color = prefixColor,
+                style = prefixStyle,
+                modifier = prefixModifier.padding(end = prefixPadding)
             )
         }
+        AppspirimentText(
+            text = text,
+            color = color,
+            style = textStyle,
+            modifier = textModifier
+        )
     }
 }
 

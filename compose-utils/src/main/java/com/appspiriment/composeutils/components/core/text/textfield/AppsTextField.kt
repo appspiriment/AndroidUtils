@@ -51,7 +51,14 @@ import com.appspiriment.composeutils.theme.semiBold
 import com.appspiriment.composeutils.wrappers.UiText
 import kotlinx.coroutines.flow.collectLatest
 
-@Deprecated("Use new stateful textfield")
+@Deprecated(
+    message = "Use AppsValidatedTextField with a TextFieldState for stateful, validated input.",
+    replaceWith = ReplaceWith(
+        "AppsValidatedTextField(state = state)",
+        "com.appspiriment.composeutils.components.core.text.textfield.AppsValidatedTextField"
+    ),
+    level = DeprecationLevel.WARNING
+)
 @Composable
 fun AppsTextField(
     value: String,

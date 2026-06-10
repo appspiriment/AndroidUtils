@@ -1,7 +1,5 @@
 package com.appspiriment.composeutils.components.core.dropdowns
 
-import android.R.attr.scaleX
-import android.R.attr.scaleY
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -143,7 +141,7 @@ fun DropdownPlaceholder(
 
 @Composable
 fun DropdownChevron(
-    tint: UiColor = Appspiriment.uiColors.iconTint
+    tint: UiColor = Appspiriment.colors.iconTint.toUiColor()
 ) {
     AppsIcon(
         icon = Icons.Default.ArrowDropDown.toUiImage(tint = tint),
@@ -401,9 +399,7 @@ fun AppsDropdown(
         trailingIcon = trailingIcon,
         colors = colors,
         itemStyle = itemStyle,
-        selectedItemExtractor = {
-            options.getOrElse(selectedIndex) { "".toUiText() }
-        },
+        selectedItemExtractor = { it },
         itemContent = { text, isSelected ->
             val style = rememberEffectiveItemStyle(itemStyle)(isSelected)
 
@@ -418,6 +414,55 @@ fun AppsDropdown(
         },
         matchFieldWidth = matchFieldWidth,
         maxMenuHeight = maxMenuHeight
+    )
+}
+
+
+@Composable
+fun <T> AppsDropdown(
+    options: List<T>,
+    selectedItem: T?,
+    onItemSelected: (T) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    labelText: UiText? = null,
+    selectedItemExtractor: (T) -> UiText,
+    placeholderText: UiText? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = { DropdownChevron() },
+    colors: DropdownColors = AppsDropdownDefaults.defaultColors(),
+    itemStyle: ((Boolean) -> DropdownItemStyle)? = null,
+    itemContent: @Composable (T, Boolean) -> Unit = { item, isSelected ->
+        val style = rememberEffectiveItemStyle(itemStyle)(isSelected)
+        AppspirimentText(
+            text = selectedItemExtractor(item),
+            style = style.textStyle,
+            color = style.color,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = sizes.paddingMedium, vertical = sizes.paddingSmallMedium)
+        )
+    },
+    matchFieldWidth: Boolean = true,
+    maxMenuHeight: Dp = 280.dp
+) {
+    val selectedIndex = options.indexOf(selectedItem)
+    AppsDropdown(
+        options = options,
+        selectedIndex = selectedIndex,
+        onItemSelected = { onItemSelected(options[it]) },
+        modifier = modifier,
+        enabled = enabled,
+        labelText = labelText,
+        selectedItemExtractor = selectedItemExtractor,
+        placeholderText = placeholderText,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        colors = colors,
+        itemStyle = itemStyle,
+        itemContent = itemContent,
+        matchFieldWidth = matchFieldWidth,
+        maxMenuHeight = maxMenuHeight,
     )
 }
 

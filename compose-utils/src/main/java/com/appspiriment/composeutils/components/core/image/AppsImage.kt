@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appspiriment.composeutils.R
@@ -31,20 +28,25 @@ fun AppsImage(
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
-    usePainter: Boolean = true
-){
-    if(usePainter || image.getImageVector() == null) {
+    // false = auto-route vectors through AppsIcon (ImageVector) and bitmaps through Painter.
+    // Set true to force the Painter path for all image types.
+    usePainter: Boolean = false,
+) {
+    // isVectorBased() is a non-composable O(1) check — no resource loading.
+    // When the vector path is taken, AppsIcon calls getImageVector() exactly once internally.
+    if (usePainter || !image.isVectorBased()) {
         Image(
             painter = image.getPainter(),
             modifier = modifier,
             contentDescription = image.description,
-            alignment = alignment, contentScale = contentScale, alpha = alpha,
-            colorFilter = image.tint?.asColor()?.let { ColorFilter.tint(it) } ?: colorFilter
+            alignment = alignment,
+            contentScale = contentScale,
+            alpha = alpha,
+            colorFilter = image.tint?.asColor()?.let { ColorFilter.tint(it) } ?: colorFilter,
         )
-    } else AppsIcon(
-        icon = image,
-        modifier = modifier
-    )
+    } else {
+        AppsIcon(icon = image, modifier = modifier)
+    }
 }
 
 
@@ -60,7 +62,7 @@ fun PreviewSsImage() {
             modifier = Modifier.height(88.dp)
         )
         AppsImage(
-            image = uiImageResource(R.drawable.ic_action_config, tint = Appspiriment.uiColors.error),
+            image = uiImageResource(R.drawable.ic_action_config, tint = Appspiriment.colors.error.toUiColor()),
         )
     }
 }

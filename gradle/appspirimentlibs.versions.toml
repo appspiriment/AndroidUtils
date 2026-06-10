@@ -8,7 +8,7 @@ compileSdk = "35"
 javaVersion = "21"
 
 # Appspiriment Plugin Versions
-appspiriment = "0.0.14.dev-206"
+appspiriment = "0.0.14.dev-209"
 appspirimentLogUtils = "0.0.1"
 appspirimentUtils = "0.0.5.dev-11"
 appspirimentComposeUtils = "0.0.6.dev-89"

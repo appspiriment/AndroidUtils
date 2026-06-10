@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bi_brand">#C20F2F</color>
-
     <!-- Night Theme Colors -->
     <color name="primary">#BB86FC</color>
     <color name="onPrimary">#FFFFFF</color>

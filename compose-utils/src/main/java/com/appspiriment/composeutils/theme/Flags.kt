@@ -8,4 +8,4 @@ data class BaseFlags(
     val isNotoFont: Boolean = false,
     val notoFontPadding: Dp = 0.dp
 )
-val LocalFlags  by lazy { staticCompositionLocalOf { BaseFlags() } }
+val LocalFlags = staticCompositionLocalOf { BaseFlags() }

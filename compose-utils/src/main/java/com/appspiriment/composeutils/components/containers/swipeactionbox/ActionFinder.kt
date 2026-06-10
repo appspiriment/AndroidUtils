@@ -49,7 +49,9 @@ internal data class ActionFinder(
       if (offset <= actionEndX) {
         return action
       }
-      offsetSoFar += actionEndX
+      // Accumulate only this action's width, not its end position (which already
+      // includes offsetSoFar and would double-count on every iteration).
+      offsetSoFar += actionWidth
     }
 
     // Precision error in the above loop maybe?

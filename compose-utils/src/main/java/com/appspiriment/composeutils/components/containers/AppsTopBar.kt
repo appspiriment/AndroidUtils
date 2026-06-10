@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.appspiriment.composeutils.components.core.image.AppsIcon
+import com.appspiriment.composeutils.components.containers.types.AppBarTitle
 import com.appspiriment.composeutils.components.containers.types.AppsTopBarButton
+import com.appspiriment.composeutils.components.containers.types.NavigationMode
 import com.appspiriment.composeutils.components.core.HorizontalSpacer
 import com.appspiriment.composeutils.components.core.buttons.AppsIconButton
+import com.appspiriment.composeutils.components.core.image.AppsIcon
 import com.appspiriment.composeutils.components.core.image.AppsImage
 import com.appspiriment.composeutils.components.core.text.AppspirimentText
 import com.appspiriment.composeutils.theme.Appspiriment
@@ -45,19 +47,16 @@ fun AppsTopBar(
     actions: List<AppsTopBarButton>? = null,
     actionsContent: @Composable RowScope.(Color) -> Unit = {},
 ) {
-    val backgroundColor = background
     val contentColor = onTopBarColor
     TopAppBar(
         navigationIcon = {
-            if (navMode != NavigationMode.EMPTY) {
+            navMode.icon?.let { navIcon ->
                 AppsIconButton(
-                    icon = navMode.icon,
+                    icon = navIcon,
                     iconModifier = Modifier.size(sizes.iconStandard),
-                    onClick = {
-                        navIconClick?.invoke()
-                    }
+                    onClick = { navIconClick?.invoke() },
                 )
-            } else HorizontalSpacer()
+            } ?: HorizontalSpacer()
         },
         title = {
             appBarTitle?.let {
@@ -68,8 +67,8 @@ fun AppsTopBar(
             }
         },
         colors = TopAppBarColors(
-            containerColor = backgroundColor,
-            scrolledContainerColor = backgroundColor,
+            containerColor = background,
+            scrolledContainerColor = background,
             navigationIconContentColor = contentColor,
             titleContentColor = contentColor,
             actionIconContentColor = contentColor
@@ -77,7 +76,7 @@ fun AppsTopBar(
         actions = {
             actions?.forEach { btn ->
                 AppsIcon(
-                    icon = btn.icon.setTint(tint = onTopBarColor.toUiColor()),
+                    icon = btn.icon.withTint(tint = onTopBarColor.toUiColor()),
                     modifier = btn.modifier
                         .padding(end = 4.dp)
                         .size(sizes.actionButtonSize)

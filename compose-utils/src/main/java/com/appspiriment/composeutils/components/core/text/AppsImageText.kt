@@ -63,9 +63,8 @@ fun AppsImageText(
     onClick: (() -> Unit)? = null
 ) {
     Box(
-        modifier = modifier.apply {
-            onClick?.let { clickable { it.invoke() } }
-        },
+        // modifier.apply{} does NOT chain the modifier — use then() instead.
+        modifier = if (onClick != null) modifier.clickable { onClick() } else modifier,
         contentAlignment = Alignment.Center
     ) {
         Row(

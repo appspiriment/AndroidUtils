@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.core.content.ContextCompat
 
 /**
  * A sealed class to handle different types of colors in Compose UI.
@@ -73,7 +74,7 @@ sealed class UiColor {
     fun getColor(context: Context): Color {
         return when (this) {
             is DynamicColor -> value
-            is ColorResource -> Color(context.resources.getColor(resId))
+            is ColorResource -> Color(ContextCompat.getColor(context, resId))
             is HexColor -> Color(android.graphics.Color.parseColor(hex))
         }
     }

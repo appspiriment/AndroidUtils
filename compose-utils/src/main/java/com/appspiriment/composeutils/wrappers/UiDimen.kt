@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.w3c.dom.Text
 
 /**
  * A sealed class to handle different types of dimensions in Compose UI.
@@ -66,7 +65,8 @@ sealed class UiDimen {
     fun asDp(context: Context): Dp {
         return when (this) {
             is DynamicDp -> value
-            is DimenResource -> context.resources.getDimension(resId).dp
+            // getDimension() returns pixels; divide by density to recover dp.
+            is DimenResource -> (context.resources.getDimension(resId) / context.resources.displayMetrics.density).dp
             is DynamicTextUnit -> throw RuntimeException("For Dp, DynamicTextUnit type should not be used")
         }
     }
@@ -87,7 +87,8 @@ sealed class UiDimen {
     fun asSp(context: Context): TextUnit {
         return when (this) {
             is DynamicTextUnit -> value
-            is DimenResource -> context.resources.getDimension(resId).sp
+            // getDimension() returns pixels; divide by scaledDensity to recover sp.
+            is DimenResource -> (context.resources.getDimension(resId) / context.resources.displayMetrics.scaledDensity).sp
             is DynamicDp -> throw RuntimeException("For Sp, DynamicDp type should not be used")
         }
     }
@@ -187,6 +188,13 @@ object DimensionUtils {
 @Composable
 @ReadOnlyComposable
 fun textSizeResource(@DimenRes id: Int): TextUnit {
-    return dimensionResource(id = id).value.sp
+    val context = LocalContext.current
+    val res = context.resources
+    // getDimension returns pixels (value × scaledDensity for sp resources).
+    // Dividing by scaledDensity recovers the raw sp number so Compose can
+    // apply user text-scaling exactly once at render time.
+    // Using dimensionResource().value.sp here would double-count scaling
+    // on devices where the user has changed system text size.
+    return (res.getDimension(id) / res.displayMetrics.scaledDensity).sp
 }
 

@@ -29,6 +29,40 @@ import com.appspiriment.composeutils.theme.Appspiriment
 
 
 @Composable
+fun AppsText(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = Appspiriment.typography.textMedium,
+    color: Color = Appspiriment.colors.onMainSurface,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+) = AppspirimentText(
+    text = text,
+    modifier = modifier,
+    style = style,
+    color = color,
+    letterSpacing = letterSpacing,
+    textDecoration = textDecoration,
+    textAlign = textAlign,
+    lineHeight = lineHeight,
+    overflow = overflow,
+    softWrap = softWrap,
+    maxLines = maxLines,
+    onTextLayout = onTextLayout,
+)
+
+@Deprecated(
+    message = "Use AppsText instead.",
+    replaceWith = ReplaceWith("AppsText(text, modifier, style, color, letterSpacing, textDecoration, textAlign, lineHeight, overflow, softWrap, maxLines, onTextLayout)"),
+    level = DeprecationLevel.WARNING
+)
+@Composable
 fun AppspirimentText(
     text: String,
     modifier: Modifier = Modifier,
@@ -59,6 +93,42 @@ fun AppspirimentText(
     )
 }
 
+@Composable
+fun AppsText(
+    text: UiText,
+    modifier: Modifier = Modifier,
+    style: TextStyle = Appspiriment.typography.textMedium,
+    color: Color = Appspiriment.colors.onMainSurface,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    isHtml: Boolean = false,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+) = AppspirimentText(
+    text = text,
+    modifier = modifier,
+    style = style,
+    color = color,
+    letterSpacing = letterSpacing,
+    textDecoration = textDecoration,
+    textAlign = textAlign,
+    lineHeight = lineHeight,
+    overflow = overflow,
+    softWrap = softWrap,
+    maxLines = maxLines,
+    isHtml = isHtml,
+    onTextLayout = onTextLayout,
+)
+
+@Deprecated(
+    message = "Use AppsText instead.",
+    replaceWith = ReplaceWith("AppsText(text, modifier, style, color, letterSpacing, textDecoration, textAlign, lineHeight, overflow, softWrap, maxLines, isHtml, onTextLayout)"),
+    level = DeprecationLevel.WARNING
+)
 @Composable
 fun AppspirimentText(
     text: UiText,
