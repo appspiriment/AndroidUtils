@@ -39,6 +39,7 @@ import com.appspiriment.composeutils.theme.Appspiriment.colors
 import com.appspiriment.composeutils.theme.Appspiriment.sizes
 import com.appspiriment.composeutils.wrappers.UiColor
 import com.appspiriment.composeutils.wrappers.UiText
+import com.appspiriment.composeutils.wrappers.toUiColor
 import com.appspiriment.composeutils.wrappers.toUiImage
 import com.appspiriment.composeutils.wrappers.toUiText
 

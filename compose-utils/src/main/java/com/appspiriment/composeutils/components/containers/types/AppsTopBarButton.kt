@@ -4,7 +4,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.appspiriment.composeutils.wrappers.UiColor
 import com.appspiriment.composeutils.wrappers.UiImage
-import com.appspiriment.composeutils.wrappers.withTint
 
 data class AppsTopBarButton(
     val icon: UiImage,

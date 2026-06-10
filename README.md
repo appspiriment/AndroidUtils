@@ -4,40 +4,42 @@ A collection of Android utility libraries for Jetpack Compose projects, publishe
 
 ## Libraries
 
-| Artifact | Version | Description |
+| Artifact | Latest Version | Status |
 |---|---|---|
-| `compose-utils` | [![compose-utils](https://img.shields.io/badge/compose--utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Compose UI components, theme system, wrappers |
-| `utils` | [![utils](https://img.shields.io/badge/utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Kotlin extension functions and Android utilities |
-| `logutils-dev` / `logutils-prod` | [![logutils](https://img.shields.io/badge/logutils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Logging utilities with dev/prod flavours |
-| `update-utils` | [![update-utils](https://img.shields.io/badge/update--utils-0.1.0-blue)](https://github.com/appspiriment/AndroidUtils) | Firebase Remote Config–driven app update flows |
+| `compose-utils` | ![compose-utils](https://img.shields.io/badge/compose--utils-0.1.0-brightgreen) | ✅ Updated |
+| `utils` | ![utils](https://img.shields.io/badge/utils-0.0.5.dev--11-blue) | Stable |
+| `logutils-dev` / `logutils-prod` | ![logutils](https://img.shields.io/badge/logutils-0.0.1-blue) | Stable |
+| `update-utils` | ![update-utils](https://img.shields.io/badge/update--utils-0.0.1-blue) | Stable |
 
 ---
 
 ## Installation
 
-Add `mavenCentral()` (or `mavenLocal()` for local builds) to your `settings.gradle.kts`:
+Add `mavenCentral()` to your `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // mavenLocal() // for local snapshot builds
     }
 }
 ```
 
-### compose-utils
+---
 
-Compose components, a theme system, `UiText`/`UiColor`/`UiImage`/`UiDimen` wrappers, navigation animations, ViewModel base classes, and more.
+## compose-utils `0.1.0` ✅
 
-```kotlin
-// settings.gradle.kts / libs.versions.toml
+Compose components, a theme system, `UiText` / `UiColor` / `UiImage` / `UiDimen` wrappers,
+navigation animations, ViewModel base classes, and more.
+
+```toml
+# libs.versions.toml
 [versions]
-appspirimentComposeUtils = "0.1.0"
+composeUtils = "0.1.0"
 
 [libraries]
-appspiriment-compose = { group = "io.github.appspiriment", name = "compose-utils", version.ref = "appspirimentComposeUtils" }
+appspiriment-compose = { group = "io.github.appspiriment", name = "compose-utils", version.ref = "composeUtils" }
 ```
 
 ```kotlin
@@ -47,155 +49,182 @@ dependencies {
 }
 ```
 
-### utils
+### What's new in 0.1.0
 
-Core Kotlin/Android extension functions, serialization helpers, and common utilities.
+#### Theme system
+- **`AppFontFamily` sealed class** — `Roboto`, `Noto(fontPadding)`, `System`, `Custom`, `GmsFont`; replaces the old lambda-based font API
+- **Non-composable theme factories** — `baseColors(context)`, `createSizes(context)`, `createBaseTypography(context, font)` are now plain functions, enabling correct `remember {}` memoization in `CompositionBaseProvider`
+- **Fixed `isNotoFont`** — was always `false` due to a lambda equality bug; now correctly checks `fontFamily is AppFontFamily.Noto`
+- **Fixed `notoFontPadding`** — was always `0.dp`; now reads `Noto.fontPadding` (default `4.dp`)
+- **Fixed `textSizeResource()`** — `dimensionResource().value.sp` was double-applying text scaling; now uses `getDimension() / scaledDensity`
+- **Fixed `Dimens.kt` copy-paste bugs** — `paddingTiny` and `cornerRadiusXXXLarge` were both reading wrong resource IDs
+- **M3 type-scale aliases** — 15 extension properties on `BaseTextStyles` (`labelSmall` → `displayLarge`) for Material 3 interop
 
-```kotlin
-[versions]
-appspirimentUtils = "0.1.0"
+#### Navigation animations
+- **`NavTransition` data class** — bundles all four lambdas (`enter`, `exit`, `popEnter`, `popExit`) into one object; pass directly to `NavHost` or `animatedComposable`
+- **`NavTransitions` preset factory** — six ready-made transitions:
 
-[libraries]
-appspiriment-utils = { group = "io.github.appspiriment", name = "utils", version.ref = "appspirimentUtils" }
-```
+  | Preset | Use case |
+  |---|---|
+  | `slideFromRight()` | Standard forward push (default) |
+  | `slideFromLeft()` | RTL / reverse-direction push |
+  | `slideFromBottom()` | Full-screen modal rising from bottom |
+  | `slideFromTop()` | Top tray, notification detail |
+  | `fade()` | Tab switches, peer-level screens |
+  | `scaleAndFade()` | Settings overlay, dialog-like |
+  | `none()` | Instant switch (splash → home) |
 
-### logutils
+- **`animatedComposable<T>(transition)`** — fixed; old implementation used `AnimatedVisibility` inside `composable<T>` causing a double-animation layer and an exit that never played
+- **Fixed `SlideInRightToLeft.exit`** — was `+x` (wrong direction); now correctly `-x`
+- **Correct `popEnter` / `popExit`** — were identical to `enter`/`exit`; now distinct for proper back-navigation feel
 
-Logging utilities with separate `dev` (verbose) and `prod` (silent/crash-only) flavour artifacts.
+  ```kotlin
+  // Before (broken)
+  NavHost { animatedComposable<HomeRoute> { HomeScreen() } }
 
-```kotlin
-[versions]
-appspirimentLogUtils = "0.1.0"
+  // After
+  NavHost(
+      enterTransition    = defaultEnterTransition,
+      exitTransition     = defaultExitTransition,
+      popEnterTransition = defaultPopEnterTransition,
+      popExitTransition  = defaultPopExitTransition,
+  ) {
+      animatedComposable<HomeRoute>    { HomeScreen() }
+      animatedComposable<DetailRoute>(NavTransitions.slideFromBottom()) { DetailScreen() }
+      animatedComposable<SettingsRoute>(NavTransitions.scaleAndFade())  { SettingsScreen() }
+  }
+  ```
 
-[libraries]
-appspiriment-logutils-dev  = { group = "io.github.appspiriment", name = "logutils-dev",  version.ref = "appspirimentLogUtils" }
-appspiriment-logutils-prod = { group = "io.github.appspiriment", name = "logutils-prod", version.ref = "appspirimentLogUtils" }
-```
+#### Bug fixes
+| Location | Bug | Fix |
+|---|---|---|
+| `Toast.kt` | `Toast.show()` called directly in composition — fires on every recomposition | Wrapped in `LaunchedEffect` |
+| `UiDimen.kt` | `getDimension(resId).dp` — `getDimension()` returns **px**, not dp; values were `density×` too large on HDPI | Divide by `displayMetrics.density` |
+| `AppsImageText.kt` | `modifier.apply { clickable {} }` — `apply` does not chain `Modifier`; click silently dropped | Changed to `modifier.then(Modifier.clickable {})` |
+| `ActionFinder.kt` | `offsetSoFar += actionEndX` — accumulated end position instead of width; wrong swipe boundaries for all actions after the first | Changed to `+= actionWidth` |
+| `ComposeFlowUtils.kt` | `lifecycleScope.launch` inside `LaunchedEffect` — inner coroutine outlives composition (leak) | Removed inner `launch`; collect directly in `LaunchedEffect` |
+| `UiText.isBlank()` / `isEmpty()` | Threw `Exception` for resource-backed types | Returns `false` (safe no-Context default) |
 
-```kotlin
-// build.gradle.kts — pick one per build variant
-dependencies {
-    debugImplementation(libs.appspiriment.logutils.dev)
-    releaseImplementation(libs.appspiriment.logutils.prod)
-}
-```
+#### API & ergonomics
+- **`AppsText`** — canonical name for the text composable; `AppspirimentText` soft-deprecated with `ReplaceWith`
+- **Item-based `AppsDropdown` overload** — `AppsDropdown(options, selectedItem: T?, onItemSelected: (T) -> Unit)` — no more manual index tracking
+- **`AppsTextField` deprecation improved** — now includes `ReplaceWith(AppsValidatedTextField(state))` and `DeprecationLevel.WARNING`
+- **`screenWidthFractionPx` privatised** — was public PascalCase `GetScreenWidthPercentageInPx`; renamed and made private
+- **`DrawerItem.from()` unused `<T>` generic removed**
+- **`animationDurationMs = 4_00` → `400`** — misleading numeric literal fixed
 
-### update-utils
+#### SOLID / access-modifier fixes
+- `UiEventsViewModel.onEvent` `internal` → `abstract fun` — `internal abstract` in a published library breaks the override contract for consumers in other modules
+- `UiStateEventsViewModel.sendUiEvent` / `updateUiState` → `protected` — prevents external callers from bypassing the event channel
+- `UiStateEventsAndroidViewModel.sendUiEvent` → `protected` — matches `UiStateEventsViewModel` pattern
 
-Composable update-gate UI powered by Firebase Remote Config — handles immediate and flexible update flows.
-
-```kotlin
-[versions]
-appspirimentUpdateUtils = "0.1.0"
-
-[libraries]
-appspiriment-update = { group = "io.github.appspiriment", name = "update-utils", version.ref = "appspirimentUpdateUtils" }
-```
+#### Cleanup
+- Deleted `Lottie.kt` — entire file was commented-out dead code
+- Deleted empty `values-xhdpi/dimen.xml` and `values-xxhdpi/dimen.xml` (vestigial View-era files)
+- Removed dead `bi_brand` color resource
+- Removed unused `LocalContext.current` imports in button components
 
 ---
 
-## compose-utils — Component Reference
+### Component Reference
 
-### Theme
-| Class / Object | Purpose |
+#### Theme
+| API | Purpose |
 |---|---|
-| `CompositionBaseProvider` | Root theme provider — wrap your Activity content here |
-| `MalayalamCompositionBaseProvider` | Convenience entry-point defaulting to Noto font |
+| `CompositionBaseProvider` | Root theme provider |
+| `MalayalamCompositionBaseProvider` | Convenience wrapper defaulting to Noto font |
 | `Appspiriment.colors` | `BaseColors` — semantic color tokens |
 | `Appspiriment.sizes` | `Sizes` — spacing, icon, corner-radius design tokens |
-| `Appspiriment.typography` | `BaseTextStyles` + M3 semantic aliases |
-| `Appspiriment.flags` | `BaseFlags` — `isNotoFont`, `notoFontPadding` |
-| `AppFontFamily` | Sealed class — `Roboto`, `Noto`, `System`, `Custom`, `GmsFont` |
+| `Appspiriment.typography` | `BaseTextStyles` + M3 aliases |
+| `AppFontFamily` | `Roboto` · `Noto` · `System` · `Custom` · `GmsFont` |
 
-### Navigation Animations
-| API | Use case |
-|---|---|
-| `NavTransition` | Data class holding all four transition lambdas |
-| `NavTransitions.slideFromRight()` | Standard forward push (default) |
-| `NavTransitions.slideFromLeft()` | RTL / reverse push |
-| `NavTransitions.slideFromBottom()` | Full-screen modal |
-| `NavTransitions.slideFromTop()` | Top tray / notification detail |
-| `NavTransitions.fade()` | Tab switch / peer screens |
-| `NavTransitions.scaleAndFade()` | Settings overlay / dialog-like |
-| `NavTransitions.none()` | Instant switch (splash → home) |
-| `animatedComposable<T>(transition)` | `NavGraphBuilder` extension — replaces `composable<T>` |
-| `defaultEnterTransition` etc. | Top-level vals for `NavHost` global defaults |
-
-### Containers
+#### Containers
 | Component | Description |
 |---|---|
-| `AppsPageScaffold` / `PageScaffold` | Scaffold with top bar, bottom bar, and fullscreen loader slot |
+| `AppsPageScaffold` / `PageScaffold` | Scaffold with top bar, loader slot |
 | `AppsDrawerScaffold` | Navigation drawer scaffold |
-| `AppsTopBar` | Opinionated top app bar supporting image titles, back, and action buttons |
-| `AppsBottomNavigation` | Bottom navigation bar (NavController-aware) |
-| `AppsBottomNavigationNavHost` | Scaffold + NavHost + bottom bar integrated |
+| `AppsTopBar` | Top app bar with image title, back, action buttons |
+| `AppsBottomNavigation` | NavController-aware bottom navigation bar |
+| `AppsBottomNavigationNavHost` | Scaffold + NavHost + bottom bar |
 | `SwipeableActionsBox` | Swipe-to-reveal action container |
-| `TitledCardView` | Card with floating title header |
+| `TitledCardView` | Card with floating title |
 | `SmartPullToRefreshBox` | Pull-to-refresh wrapper |
-| `AppsBottomSheet` | Modal bottom sheet with optional title/close |
+| `AppsBottomSheet` | Modal bottom sheet |
 
-### Core Components
+#### Core
 | Component | Description |
 |---|---|
-| `AppsText` | Primary text composable (replaces `AppspirimentText`) |
-| `AppsImageText` | Text with leading/trailing icon |
+| `AppsText` | Primary text composable |
+| `AppsImageText` | Text with leading / trailing icon |
 | `AppsImage` | Unified image composable (`UiImage`-backed) |
-| `AppsIcon` | Icon composable (`ImageVector` or `Painter`) |
-| `AppsButton` | Standard button |
-| `AppsIconButton` | Icon-only button with `UiImage` |
-| `AppsImageButton` | Button with text + icon |
-| `CircularButton` | Round floating-action-style button |
-| `AppsDropdown` | Material 3 animated dropdown (generic + `UiText` overloads) |
+| `AppsIcon` | Icon composable |
+| `AppsButton` / `AppsIconButton` / `AppsImageButton` / `CircularButton` | Button variants |
+| `AppsDropdown` | Material 3 dropdown — generic, `UiText`, and item-based overloads |
 | `AppsValidatedTextField` | Stateful text field with `ValidatedTextFieldState` |
-| `AppsSelectableText` | Toggling chip / selectable text |
 | `FullscreenLoader` | Blocking loading overlay |
 | `MessageDialog` | Configurable alert dialog |
-| `VerticalSpacer` / `HorizontalSpacer` | Typed spacers |
-| `Modifier.shimmerEffect()` | Skeleton loading shimmer modifier |
+| `Modifier.shimmerEffect()` | Skeleton loading shimmer |
 | `Modifier.circleBackground` | Circle background modifier |
 
-### Wrappers
-| Class | Description |
+#### Wrappers
+| Class | Variants |
 |---|---|
-| `UiText` | Sealed class — `DynamicString`, `StringResource`, `PluralResource`, `AnnotatedString` |
-| `UiColor` | Sealed class — `DynamicColor`, `ColorResource`, `HexColor` |
-| `UiImage` | Sealed class — vector, drawable, URL, painter |
-| `UiDimen` | Sealed class — `DynamicDp`, `DynamicTextUnit`, `DimenResource` |
-| `SerializedColor` | `@JvmInline` value class with `KSerializer` for persisting `Color` |
+| `UiText` | `DynamicString` · `StringResource` · `PluralResource` · `StringArrayResource` · `DynamicAnnotatedString` |
+| `UiColor` | `DynamicColor` · `ColorResource` · `HexColor` |
+| `UiImage` | Vector · Drawable · URL · Painter |
+| `UiDimen` | `DynamicDp` · `DynamicTextUnit` · `DimenResource` |
+| `SerializedColor` | `@JvmInline` + `KSerializer` for persisting `Color` |
 
-### ViewModel Base Classes
-| Class | Generics | Purpose |
-|---|---|---|
-| `UiStateEventsViewModel<S, E, U>` | State, Event, UiEvent | State + event channel |
-| `UiEventsViewModel<E, U>` | Event, UiEvent | Event channel only (stateless) |
-| `UiStateEventsAndroidViewModel<S, E, U>` | State, Event, UiEvent | `AndroidViewModel` variant |
+#### ViewModel base classes
+| Class | Purpose |
+|---|---|
+| `UiStateEventsViewModel<S, E, U>` | State flow + UI event channel |
+| `UiEventsViewModel<E, U>` | UI event channel only (stateless) |
+| `UiStateEventsAndroidViewModel<S, E, U>` | `AndroidViewModel` variant |
 
-### Utilities
+#### Utilities
 | Utility | Description |
 |---|---|
 | `rememberPermissionRequest(…)` | Dialog-driven permission flow |
-| `PermissionHandler` | Full-screen permission gate composable |
-| `rememberPhotoPicker` | Photo picker + crop integration |
-| `rememberSpeechToText` | Speech-to-text launcher |
-| `Flow<T>.observeWithLifecycle(…)` | Lifecycle-aware flow collector |
-| `DisableSoftKeyboard` | Composable that suppresses the soft keyboard |
-| `genericNavType<T>()` | Parcelable/Serializable nav type factory |
-| `EventStabilizers` | `stabilize()` / `stabilizeLambda()` for stable callbacks |
+| `PermissionHandler` | Full-screen permission gate |
+| `rememberPhotoPicker` | Photo picker + crop |
+| `Flow<T>.observeWithLifecycle(…)` | Lifecycle-aware flow collection |
+| `DisableSoftKeyboard` | Suppresses soft keyboard |
+| `genericNavType<T>()` | Serializable nav type factory |
 
 ---
 
-## Version History
+## Other Libraries
 
-| Version | Highlights |
-|---|---|
-| **0.1.0** | Theme system rewrite (`AppFontFamily`, non-composable factories, M3 aliases); `NavTransition` + 6 preset animations; `AppsText` canonical name; item-based `AppsDropdown` overload; critical bug fixes (Toast recomposition, `UiDimen` px/dp, `AppsImageText` click, `ActionFinder` offset, flow coroutine leak) |
-| 0.0.6 | Dropdown improvements, various component updates |
-| 0.0.5 | Initial public release |
+### utils `0.0.5`
+Core Kotlin/Android extension functions and common utilities.
+
+```toml
+[libraries]
+appspiriment-utils = { group = "io.github.appspiriment", name = "utils", version = "0.0.5.dev-11" }
+```
+
+### logutils `0.0.1`
+Verbose `dev` and silent `prod` logging flavours.
+
+```kotlin
+dependencies {
+    debugImplementation("io.github.appspiriment:logutils-dev:0.0.1")
+    releaseImplementation("io.github.appspiriment:logutils-prod:0.0.1")
+}
+```
+
+### update-utils `0.0.1`
+Firebase Remote Config–driven app update flow with Compose UI.
+
+```kotlin
+dependencies {
+    implementation("io.github.appspiriment:update-utils:0.0.1")
+}
+```
 
 ---
 
 ## License
 
-This project is licensed under the [Apache License 2.0](LICENSE).
-
-For more details, visit the [GitHub Repository](https://github.com/appspiriment/AndroidUtils).
+[Apache License 2.0](LICENSE) · [GitHub](https://github.com/appspiriment/AndroidUtils)
