@@ -10,6 +10,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Deprecated(
+    message = "Use MviViewModel<State, Intent, Effect> instead. " +
+        "If you need Application context, inject it via your DI framework rather than extending AndroidViewModel.",
+    replaceWith = ReplaceWith("MviViewModel<StateType, EventType, UiEventType>"),
+    level = DeprecationLevel.WARNING,
+)
 abstract class UiStateEventsAndroidViewModel<StateType : Any, EventType : Any, UiEventType : Any>(
     application: Application,
     private val initialState: StateType

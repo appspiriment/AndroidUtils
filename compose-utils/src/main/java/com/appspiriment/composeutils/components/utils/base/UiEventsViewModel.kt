@@ -6,6 +6,11 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
+@Deprecated(
+    message = "Use MviViewModel<Unit, EventType, UiEventType> or MviStateViewModel<Unit, UiEventType> instead.",
+    replaceWith = ReplaceWith("MviViewModel<Unit, EventType, UiEventType>"),
+    level = DeprecationLevel.WARNING,
+)
 abstract class UiEventsViewModel <EventType:Any, UiEventType:Any>: ViewModel() {
 
 

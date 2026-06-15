@@ -9,6 +9,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Deprecated(
+    message = "Use MviViewModel<State, Intent, Effect> instead.",
+    replaceWith = ReplaceWith("MviViewModel<StateType, EventType, UiEventType>"),
+    level = DeprecationLevel.WARNING,
+)
 abstract class UiStateEventsViewModel <StateType: Any, EventType:Any, UiEventType:Any>(private val initialState: StateType): ViewModel(){
     private val _uiState = MutableStateFlow<StateType>(initialState)
     val uiState = _uiState.asStateFlow()
